@@ -1,4 +1,4 @@
 runningprogram
 ==============
 
-An sport mobile application using Cordova.
+A sport mobile application using Cordova.
