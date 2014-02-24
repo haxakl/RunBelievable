@@ -1,23 +1,27 @@
 <!DOCTYPE html>
-<html ng-app="appTest">
+<html ng-app="runbelievable">
     <head>
         <meta charset="utf-8" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width,  target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <script type="text/javascript" src="js/angular.min.js"></script>
-         <script type="text/javascript" src="js/angular-route.min.js"></script>
+        <script type="text/javascript" src="js/angular-route.min.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
-        <title>Hello World</title>
+
+        <!-- Controllers de l'application -->
+        <script type="text/javascript" src="js/controller/NavController.js"></script>
+        <script type="text/javascript" src="js/controller/SessionController.js"></script>
+        <title>Runbelievable</title>
     </head>
 
     
 
     <body >
-      <section id="TestApp"  ng-controller="AppControler">
+      <section id="App"  ng-controller="AppControler">
 
          <header class="header">
-              Mon app de tests
+              Runbelievable
          </header>
              <!-- Section principale de l'application -->
             <section class="view" ng-view> 
@@ -25,9 +29,9 @@
 
 
           <!-- Barre de navigation -->
-         <nav class="nav">
-            <a href="#home" class="active">home</a>
-            <a href="#about">about</a>
+         <nav class="nav" ng-controller="NavController">
+            <a href="#home" ng-click="menu='home'" ng-class="{active: menu=='home'}">home</a>
+            <a href="#about" ng-click="menu='about'" ng-class="{active: menu=='about'}">about</a>
          </nav>
 
        </section>

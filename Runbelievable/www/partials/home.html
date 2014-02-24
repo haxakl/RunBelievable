@@ -1,8 +1,8 @@
-<section class="panel panel-padding">
-<center><button ng-click="test()">Acquisition</button></center>
-<ul>
-	<li ng-repeat="ligne in liste">
-		{{ligne.test}}
-	</li>
-</ul>
+<section class="panel panel-padding" ng-controller="SessionController">
+	<center><button ng-click="test()">Acquisition</button></center>
+	<ul>
+		<li ng-repeat="ligne in liste">
+			{{ligne.test}}
+		</li>
+	</ul>
 </section>
