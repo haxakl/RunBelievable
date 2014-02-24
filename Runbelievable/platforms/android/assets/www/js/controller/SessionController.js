@@ -1,58 +1,43 @@
 function SessionController($scope) {
 
-	$scope.liste = [
-			{test : 'aaa', testaaa : 'bbb'},
-			{test : 'aaa2', testaaa : 'bbb2'},
-			{test : 'aaa3-', testaaa : 'bbb3-'},
-			{test : 'aaa4', testaaa : 'bbb4'}
-	];
+    $scope.liste = [];
 
-	$scope.acquisition=function() {
-		//console.log($scope.liste[0].test);
+    if (!navigator.geolocation) {
+        $(".alert").html("<h3>Erreur</h3>Le Gps n'a pas été trouvé.");
+        $(".alert").addClass("alert-danger");
+    } else {
+        $(".alert").html("<h3>Statut</h3>Le Gps a été trouvé.");
+        $(".alert").addClass("alert-success");
+    }
+    
+    function onDeviceReady() {
+        $(".alert").html("<h3>Statut</h3>La simulation est prête.");
+        
+        $("#debut_geo").click(function() {
+            
+            $(this).text("Arrêter la simulation");
 
-		alert('test');
+            /**
+             * Succès de la geolocalisation
+             * @param {type} position
+             * @returns {undefined}
+             */
+            function onSuccess(position) {
+                $("#geolocalisation").append("<tr><td>" + position.coords.latitude + "</td><td>" + position.coords.longitude + "</td></tr>");
+                $(".alert").hide();
+            }
 
-		// onSuccess Callback
-		// This method accepts a Position object, which contains the
-		// current GPS coordinates
-		//
-		var onSuccess = function(position) {
-		    alert('Latitude: '          + position.coords.latitude          + '\n'/* +
-		          'Longitude: '         + position.coords.longitude         + '\n' +
-		          'Altitude: '          + position.coords.altitude          + '\n' +
-		          'Accuracy: '          + position.coords.accuracy          + '\n' +
-		          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-		          'Heading: '           + position.coords.heading           + '\n' +
-		          'Speed: '             + position.coords.speed             + '\n' +
-		          'Timestamp: '         + position.timestamp                + '\n'*/);
+            function onError(error) {
+                $(".alert").html("<h3>Erreur " + error.code + "</h3>" + error.message + ".");
+                $(".alert").addClass("alert-danger");
+            }
 
-		    /*
-		   	$scope.geolocation = [{
-				latitude:  position.coords.latitude,
-		        longitude: position.coords.longitude,
-		        altitude: position.coords.altitude,
-		        accuracy: position.coords.accuracy,
-		        altitudeAccuracy: position.coords.altitudeAccuracy,
-		        heading: position.coords.heading,
-		        speed: position.coords.speed,
-		        timestamp: position.timestamp
-		   	}];*/
-		};
+            navigator.geolocation.watchPosition(onSuccess, onError);
 
-		// onError Callback receives a PositionError object
-		//
-		function onError(error) {
-		    alert('code: '    + error.code    + '\n' +
-		          'message: ' + error.message + '\n');
+        });
+    }
+    
+//    document.addEventListener("deviceready", onDeviceReady, false);
+    onDeviceReady();
 
-		    $scope.error = [{
-		    	code: error.code,
-		    	message: error.message
-		    }];
-		}
-
-		navigator.geolocation.getCurrentPosition(onSuccess, onError);
-
-		alert('fin test');
-	}
 }

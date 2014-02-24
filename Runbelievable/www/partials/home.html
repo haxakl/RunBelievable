@@ -1,21 +1,27 @@
 <section class="panel panel-padding" ng-controller="SessionController">
-	<center><button ng-click="acquisition()">Acquisition</button></center>
-	<ul>
-		<li ng-repeat="ligne in liste">
-			{{ligne.test}}
-		</li>
-	</ul>
+    <center><a id="debut_geo" class="btn btn-primary btn-sm">Acquisition</a></center><br/>
+    
+    <div class="alert">
+        
+    </div>
+    
+    <ul>
+        <li ng-repeat="ligne in liste">
+            {{ligne.test}}
+        </li>
+    </ul>
 
-	<TABLE BORDER="1"> 
-	 	<TR> 
-		 	<TH> Latitude</TH> 
-		 	<TD> {{geolocation[0].latitude}} </TD>
-	  	</TR> 
-	</TABLE> 
-	{{geolocation[0]}}
-
-	</br>
-	Erreur : code {{error[0].code}} - {{error[0].message}}
-	</br>
-	{{error[0]}}
+    <table id="geolocalisation" class="table table-striped"> 
+        <thead>
+            <tr> 
+                <th>Latitude</th> 
+                <th>Longitude</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 </section>
+
+<script>
+    
+</script>

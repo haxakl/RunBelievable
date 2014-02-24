@@ -1,4 +1,4 @@
-E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\Runbelievable-debug-unaligned.apk : \
-E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\Runbelievable.ap_ \
-E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\classes.dex \
-E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\CordovaLib\bin\classes.jar \
+C:\Users\Guillaume\Documents\GitHub\runningprogram\Runbelievable\platforms\android\bin\Runbelievable-debug-unaligned.apk : \
+C:\Users\Guillaume\Documents\GitHub\runningprogram\Runbelievable\platforms\android\bin\Runbelievable.ap_ \
+C:\Users\Guillaume\Documents\GitHub\runningprogram\Runbelievable\platforms\android\bin\classes.dex \
+C:\Users\Guillaume\Documents\GitHub\runningprogram\Runbelievable\platforms\android\CordovaLib\bin\classes.jar \
