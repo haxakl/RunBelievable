@@ -4,7 +4,7 @@ document.addEventListener('deviceready', function(){
 }, false);
 
 
-var app = angular.module('appTest', ['ngRoute']);
+var app = angular.module('runbelievable', ['ngRoute']);
 
 
 /**
@@ -19,12 +19,10 @@ app.config(function($routeProvider) {
 });
 
 
-
+/**
+*	 Controller principal de l'application.
+*
+*/
 app.controller('AppControler', function($scope){
-        $scope.liste = [
-			{test : 'aaa', testaaa : 'bbb'},
-			{test : 'aaa2', testaaa : 'bbb2'},
-			{test : 'aaa3', testaaa : 'bbb3'}
-		];
 	}
 );

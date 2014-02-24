@@ -6,4 +6,9 @@ E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\classes\fr\miage\
 E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\classes\fr\miage\runbelievable\R$xml.class \
 E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\classes\fr\miage\runbelievable\R.class \
 E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\classes\fr\miage\runbelievable\Runbelievable.class \
+E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\classes\org\apache\cordova\geolocation\CordovaLocationListener$LocationTimeoutTask.class \
+E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\classes\org\apache\cordova\geolocation\CordovaLocationListener.class \
+E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\classes\org\apache\cordova\geolocation\GeoBroker.class \
+E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\classes\org\apache\cordova\geolocation\GPSListener.class \
+E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\classes\org\apache\cordova\geolocation\NetworkListener.class \
 E:\Wamp\www\Cordova\Projet\Runbelievable\platforms\android\bin\dexedLibs\classes-46d0deb4c43a0726b891cbb6a3f57aae.jar \

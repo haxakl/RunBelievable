@@ -5,4 +5,17 @@
 			{{ligne.test}}
 		</li>
 	</ul>
+
+	<TABLE BORDER="1"> 
+	 	<TR> 
+		 	<TH> Latitude</TH> 
+		 	<TD> {{geolocation[0].latitude}} </TD>
+	  	</TR> 
+	</TABLE> 
+	{{geolocation[0]}}
+
+	</br>
+	Erreur : code {{error[0].code}} - {{error[0].message}}
+	</br>
+	{{error[0]}}
 </section>
