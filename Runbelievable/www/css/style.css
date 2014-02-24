@@ -59,3 +59,7 @@
 .panel-padding {
     padding: 0 25px;
 }
+
+#debut_geo {
+    display: none;
+}
