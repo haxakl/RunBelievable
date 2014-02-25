@@ -1,10 +1,6 @@
 function SessionController($scope) {
 
-	
-
     var gps = new Gps(this);
-
-    $scope.compteur = 1;
 
 	/**
 	* Méthode permettant d'ajouter au scope une acquisition de position GPS
