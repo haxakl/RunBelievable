@@ -55,8 +55,14 @@ function Gps() {
 
         // Change le bouton
         $("#debut_geo").text("Arrêter l'acquisition espagnole");
+
+        console.log($("#debug_geo"));
         $("#debug_geo").unbind();
-        $("#debug_geo").off('click');
+        $("#debug_geo").unbind("click");
+        $("#debug_geo").off("click");
+        $("#debug_geo").onclick="";
+        console.log($("#debug_geo"));
+
         $("#debut_geo").click(function() {
             gps.stopAcquisition();
         });
