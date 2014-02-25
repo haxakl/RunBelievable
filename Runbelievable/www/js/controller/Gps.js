@@ -14,102 +14,39 @@ function Gps($controler) {
      * Test si le gps est activé.
      * @returns {undefined}
      */
-    this.isEnabled = function() {
-        afficherAlerte("Information", "Test de votre Gps en cours ...", "info");
+    this.isEnabled = function(hook) {
 
         // Test si le Gps existe sur le téléphone
-        !navigator.geolocation ? afficherAlerte("Erreur", "Le Gps n'est pas fonctionnel sur ce téléphone", "danger") : "";
+        if (!navigator.geolocation)
+            return false;
 
-        var gps = this;
-
-        // Essaie de récupérer la position
         navigator.geolocation.getCurrentPosition(function() {
-            afficherAlerte("Succès", "Votre Gps est bien activé", "succes");
-            $("#debut_geo").show();
-
-            $("#debut_geo").click(function() {
-                gps.lancerAcquisition();
-            });
-            gps.gps_actif = true;
-            setTimeout(function() {
-                cacherAlerte();
-            }, 3000);
+            hook(true);
         }, function() {
-            afficherAlerte("Erreur", "Le Gps n'est pas fonctionnel sur ce téléphone", "danger");
+            hook(false);
         }, {maximumAge: 3000, timeout: 20000, enableHighAccuracy: true});
     };
 
     /**
-     * Démarre l'acquisition
+     * Recuperer l'acquisition actuelle
      * @returns {undefined}
      */
-    this.lancerAcquisition = function() {
+    this.getAcquisition = function() {
+        var acquisition = null;
 
-        // Test si le Gps est actif
-        if (!this.gps_actif) {
-            return false;
-        }
+   
+        navigator.geolocation.getCurrentPosition(function(position) {
+            // On créer l'objet contenant les informations de l'acquisition de données
+            acquisition = {
+                    latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            };
 
-        var gps = this;
-
-        // Change le bouton
-        $("#debut_geo").text("Arrêter l'acquisition espagnole");
-
-        $("#debut_geo").unbind();
-
-        $("#debut_geo").click(function() {
-            gps.stopAcquisition();
-        });
-
-        // Essaie de récupérer les données. Ancienne version avec watchPosition
-        /*this.timeout_gps = navigator.geolocation.watchPosition(function(position) {
-            $("#geolocalisation").append("<tr><td>" + position.coords.latitude + "</td><td>" + position.coords.longitude + "</td></tr>");
-            $(".alert").hide();
         }, function() {
 
-        }, {maximumAge: 1000, timeout: 1000, enableHighAccuracy: true});*/
+        }, {maximumAge: 1000, timeout: 1000, enableHighAccuracy: true});
 
-        // Boucle de récuperation des données
-        boucleID = setInterval(function() {
-             navigator.geolocation.getCurrentPosition(function(position) {
-                // On créer l'objet contenant les informations de l'acquisition de données
-                $acquisition = {
-                        latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                };
-
-                // On ajoute l'acquisition à la liste
-                $controler.ajouterAcquisitionGPS($acquisition);
-                $(".alert").hide();
-            }, function() {
-
-            }, {maximumAge: 1000, timeout: 1000, enableHighAccuracy: true});
-
-        }, this.interval_acquisition);
-
+        return acquisition;
     };
-
-    /**
-     * Arrête l'acquisition
-     * @returns {undefined}
-     */
-    this.stopAcquisition = function() {
-
-        // Test si le Gps est actif
-        if (!this.gps_actif) {
-            return false;
-        }
-
-        // On arrete l'acquisition
-        clearInterval(boucleID);
-        
-        // On change le texte
-        $("#debut_geo").text("Acquisition");
-
-        this.gps_actif = true;
-
-    };
-
-    // Test si le Gps est allumé
-    this.isEnabled();
+    
 }
