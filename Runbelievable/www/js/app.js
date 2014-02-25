@@ -1,9 +1,15 @@
+/**
+* Fichier contenant les données de l'application mère d'angular.
+*
+*/
+
+// Code au lancement de l'appli
 document.addEventListener('deviceready', function() {
-    // Code au lancement de l'appli
+    
 
 }, false);
 
-
+// Création du module angular correspondant à notre application
 var app = angular.module('runbelievable', ['ngRoute']);
 
 
@@ -24,8 +30,9 @@ app.config(function($routeProvider) {
 
 /**
 * La factory, chargée de stocker des données
+* A réutiliser ? Pour l'instant on stock dans le controller principale les informations partagées
 *
-*/
+*//*
 app.factory('listeAcquisitions', function() {
     var listeAcquisitions = [];
     var itemsService = {};
@@ -39,7 +46,7 @@ app.factory('listeAcquisitions', function() {
     };
 
     return itemsService;
-});
+});*/
 
 
 /**
@@ -47,5 +54,6 @@ app.factory('listeAcquisitions', function() {
  *
  */
 app.controller('AppControler', function($scope) {
+    // Création de la liste des acquisitions GPS
 	$scope.listeAcquisitions = [];
 });

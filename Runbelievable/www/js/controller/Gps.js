@@ -1,9 +1,10 @@
-
-// Classe Javascript pour la gestion du Gps
+/**
+*   Classe Javascript pour la gestion du Gps
+*
+*/ 
 function Gps($controler) {
 
     this.gps_actif = false;
-    this.timeout_gps = null;
 
     // L'interval de temps entre 2 acquisitions
     this.interval_acquisition = 1000;
@@ -60,7 +61,7 @@ function Gps($controler) {
             gps.stopAcquisition();
         });
 
-        // Essaie de récupérer les données
+        // Essaie de récupérer les données. Ancienne version avec watchPosition
         /*this.timeout_gps = navigator.geolocation.watchPosition(function(position) {
             $("#geolocalisation").append("<tr><td>" + position.coords.latitude + "</td><td>" + position.coords.longitude + "</td></tr>");
             $(".alert").hide();
@@ -104,6 +105,8 @@ function Gps($controler) {
         
         // On change le texte
         $("#debut_geo").text("Acquisition");
+
+        this.gps_actif = true;
 
     };
 

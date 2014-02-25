@@ -1,9 +1,13 @@
+/**
+* Controler d'une session.
+*
+*/
 function SessionController($scope) {
 
     var gps = new Gps(this);
 
 	/**
-	* Méthode permettant d'ajouter au scope une acquisition de position GPS
+	* Méthode permettant d'ajouter acquisition de position GPS
 	*/
     this.ajouterAcquisitionGPS = function(item) {
     	$scope.listeAcquisitions.push(item);
