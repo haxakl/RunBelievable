@@ -5,6 +5,10 @@ function Gps() {
     this.gps_actif = false;
     this.timeout_gps = null;
 
+    // L'interval de temps entre 2 acquisitions
+    this.interval_acquisition = 1000;
+    var boucleID;
+
     /**
      * Test si le gps est activé.
      * @returns {undefined}
@@ -40,6 +44,8 @@ function Gps() {
      */
     this.lancerAcquisition = function() {
 
+        alert('acquisition lancee');
+
         // Test si le Gps est actif
         if (!this.gps_actif) {
             return false;
@@ -48,19 +54,31 @@ function Gps() {
         var gps = this;
 
         // Change le bouton
-        $("#debut_geo").text("Arrêter l'acquisition");
+        $("#debut_geo").text("Arrêter l'acquisition espagnole");
         $("#debug_geo").unbind();
+        $("#debug_geo").off('click');
         $("#debut_geo").click(function() {
             gps.stopAcquisition();
         });
 
         // Essaie de récupérer les données
-        this.timeout_gps = navigator.geolocation.watchPosition(function(position) {
+        /*this.timeout_gps = navigator.geolocation.watchPosition(function(position) {
             $("#geolocalisation").append("<tr><td>" + position.coords.latitude + "</td><td>" + position.coords.longitude + "</td></tr>");
             $(".alert").hide();
         }, function() {
 
-        }, {maximumAge: 1000, timeout: 1000, enableHighAccuracy: true});
+        }, {maximumAge: 1000, timeout: 1000, enableHighAccuracy: true});*/
+
+        // Boucle de récuperation des données
+        boucleID = setInterval(function() {
+             navigator.geolocation.getCurrentPosition(function(position) {
+                $("#geolocalisation").append("<tr><td>" + boucleID + " - " + position.coords.latitude + "</td><td>" + position.coords.longitude + "</td></tr>");
+                $(".alert").hide();
+            }, function() {
+
+            }, {maximumAge: 1000, timeout: 1000, enableHighAccuracy: true});
+
+        }, this.interval_acquisition);
 
     };
 
@@ -70,13 +88,19 @@ function Gps() {
      */
     this.stopAcquisition = function() {
 
+        alert('acquisition stopee');
+
         // Test si le Gps est actif
         if (!this.gps_actif) {
             return false;
         }
 
         // Test s'il y a une acquisition en cours
-        navigator.geolocation.clearWatch(this.timeout_gps);
+        //navigator.geolocation.clearWatch(this.timeout_gps);
+
+        // On arrete l'acquisition
+        clearInterval(boucleID);
+
 
         $("#debut_geo").text("Acquisition");
 
