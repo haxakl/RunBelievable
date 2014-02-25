@@ -6,21 +6,14 @@ function SessionController($scope) {
 
     var gps = new Gps(this);
 
-    this.interval_acquisition = 1000;
+    var interval_acquisition = 1000;
     var boucleID;
 
-	/**
-	* Méthode permettant d'ajouter une acquisition de position GPS
-	*/
-    this.ajouterAcquisitionGPS = function(item) {
-    	$scope.listeAcquisitions.push(item);
 
-    	// Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-    	if(!$scope.$$phase) {
-			$scope.$apply();
-		}
-    }
-
+    /**
+    *   Permet de verifier si le GPS fonctionne correctement sur le mobile.
+    *
+    */
     this.verifierGPS = function(){
         var controller = this;
 
@@ -29,8 +22,11 @@ function SessionController($scope) {
         var isEnabled = gps.isEnabled(controller.autoriserAcquisition);
     }
 
+    /**
+    * Permet de mettre à jour l'application si le GPS est autorisé ou non
+    *
+    */
     this.autoriserAcquisition = function(isAutorise) {
-        $controler = this;
 
         if (isAutorise) {
             // On met à jour l'IHM
@@ -40,8 +36,7 @@ function SessionController($scope) {
             $("#debut_geo").show();
             $("#debut_geo").unbind();
             $("#debut_geo").click(function() {
-                console.log($controler);
-                $controler.lancerAcquisition();
+                lancerAcquisition();
             });
 
             // On active le gps
@@ -61,7 +56,7 @@ function SessionController($scope) {
      * Démarre l'acquisition
      * @returns {undefined}
      */
-    this.lancerAcquisition = function() {
+    function lancerAcquisition() {
 
         var controller = this;
 
@@ -75,26 +70,25 @@ function SessionController($scope) {
         $("#debut_geo").text("Arrêter l'acquisition espagnole");
         $("#debut_geo").unbind();
         $("#debut_geo").click(function() {
-            gps.stopAcquisition();
+            stopAcquisition();
         });
 
          // Boucle de récuperation des données
-        boucleID = setInterval(function() {
+        controller.boucleID = setInterval(function() {
 
-            var acquisition = gps.getAcquisition();
-
-            if (acquisition != null)
-                controller.ajouterAcquisitionGPS($acquisition);
+            gps.getAcquisition(ajouterAcquisitionGPS);
 
             $(".alert").hide();
-        }, this.interval_acquisition);
+        }, interval_acquisition);
     }
 
     /**
      * Arrête l'acquisition
      * @returns {undefined}
      */
-    this.stopAcquisition = function() {
+    function stopAcquisition() {
+
+        var controller = this;
 
         // Test si le Gps n'est pas actif on ne fait rien
         if (!gps.gps_actif) {
@@ -102,13 +96,30 @@ function SessionController($scope) {
         }
 
         // On arrete l'acquisition
-        clearInterval(boucleID);
+        clearInterval(controller.boucleID);
         
         // On change le texte
-        $("#debut_geo").text("Acquisition");
-
-        gps.gps_actif = false;
+        $("#debut_geo").text("Relancer l'acquisition");
+        $("#debut_geo").unbind();
+            $("#debut_geo").click(function() {
+                lancerAcquisition();
+        });
     };
+
+        /**
+    * Méthode permettant d'ajouter une acquisition de position GPS.
+    */
+    ajouterAcquisitionGPS = function(item) {
+        if (item == null)
+            return;
+
+        $scope.listeAcquisitions.push(item);
+
+        // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
+        if(!$scope.$$phase) {
+            $scope.$apply();
+        }
+    }
 
     // Test si le Gps est allumé
     this.verifierGPS();

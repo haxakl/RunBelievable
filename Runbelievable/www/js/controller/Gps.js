@@ -11,7 +11,7 @@ function Gps($controler) {
     var boucleID;
 
     /**
-     * Test si le gps est activé.
+     * Test si le gps est activé et appel le hook passé en paramètre.
      * @returns {undefined}
      */
     this.isEnabled = function(hook) {
@@ -28,25 +28,24 @@ function Gps($controler) {
     };
 
     /**
-     * Recuperer l'acquisition actuelle
+     * Recuperer l'acquisition actuelle et appel le hook passé en paramètre.
      * @returns {undefined}
      */
-    this.getAcquisition = function() {
+    this.getAcquisition = function(hook) {
         var acquisition = null;
 
-   
         navigator.geolocation.getCurrentPosition(function(position) {
             // On créer l'objet contenant les informations de l'acquisition de données
             acquisition = {
                     latitude: position.coords.latitude,
-                longitude: position.coords.longitude
+                    longitude: position.coords.longitude
             };
+
+            hook(acquisition);
 
         }, function() {
 
-        }, {maximumAge: 1000, timeout: 1000, enableHighAccuracy: true});
-
-        return acquisition;
+        }, {maximumAge: 1000, timeout: 1000, enableHighAccuracy: true});        
     };
     
 }
