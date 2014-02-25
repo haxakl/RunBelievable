@@ -44,8 +44,6 @@ function Gps() {
      */
     this.lancerAcquisition = function() {
 
-        alert('acquisition lancee');
-
         // Test si le Gps est actif
         if (!this.gps_actif) {
             return false;
@@ -56,12 +54,7 @@ function Gps() {
         // Change le bouton
         $("#debut_geo").text("Arrêter l'acquisition espagnole");
 
-        console.log($("#debug_geo"));
-        $("#debug_geo").unbind();
-        $("#debug_geo").unbind("click");
-        $("#debug_geo").off("click");
-        $("#debug_geo").onclick="";
-        console.log($("#debug_geo"));
+        $("#debut_geo").unbind();
 
         $("#debut_geo").click(function() {
             gps.stopAcquisition();
@@ -94,20 +87,15 @@ function Gps() {
      */
     this.stopAcquisition = function() {
 
-        alert('acquisition stopee');
-
         // Test si le Gps est actif
         if (!this.gps_actif) {
             return false;
         }
 
-        // Test s'il y a une acquisition en cours
-        //navigator.geolocation.clearWatch(this.timeout_gps);
-
         // On arrete l'acquisition
         clearInterval(boucleID);
-
-
+        
+        // On change le texte
         $("#debut_geo").text("Acquisition");
 
     };
