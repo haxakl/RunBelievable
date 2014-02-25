@@ -1,6 +1,6 @@
 
 // Classe Javascript pour la gestion du Gps
-function Gps() {
+function Gps($controler) {
 
     this.gps_actif = false;
     this.timeout_gps = null;
@@ -71,7 +71,14 @@ function Gps() {
         // Boucle de récuperation des données
         boucleID = setInterval(function() {
              navigator.geolocation.getCurrentPosition(function(position) {
-                $("#geolocalisation").append("<tr><td>" + boucleID + " - " + position.coords.latitude + "</td><td>" + position.coords.longitude + "</td></tr>");
+                // On créer l'objet contenant les informations de l'acquisition de données
+                $acquisition = {
+                        latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                };
+
+                // On ajoute l'acquisition à la liste
+                $controler.ajouterAcquisitionGPS($acquisition);
                 $(".alert").hide();
             }, function() {
 

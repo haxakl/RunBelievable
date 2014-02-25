@@ -4,12 +4,6 @@
     <div class="alert">
         
     </div>
-    
-    <ul>
-        <li ng-repeat="ligne in liste">
-            {{ligne.test}}
-        </li>
-    </ul>
 
     <table id="geolocalisation" class="table table-striped"> 
         <thead>
@@ -18,10 +12,18 @@
                 <th>Longitude</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody >
+            <tr ng-repeat="item in listeAcquisitions">
+                <td>
+                {{item.latitude}}
+                </td>
+                <td>
+                {{item.longitude}}
+                </td>
+            <tr>
+        </tbody>
     </table>
 </section>
-
 <script>
     
 </script>

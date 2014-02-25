@@ -19,10 +19,33 @@ app.config(function($routeProvider) {
 });
 
 
+
+
+
+/**
+* La factory, chargée de stocker des données
+*
+*/
+app.factory('listeAcquisitions', function() {
+    var listeAcquisitions = [];
+    var itemsService = {};
+
+    itemsService.add = function(item) {
+        listeAcquisitions.push(item);
+        console.log(listeAcquisitions);
+    };
+    itemsService.list = function() {
+        return listeAcquisitions;
+    };
+
+    return itemsService;
+});
+
+
 /**
  *	 Controller principal de l'application.
  *
  */
 app.controller('AppControler', function($scope) {
-}
-);
+	$scope.listeAcquisitions = [];
+});
