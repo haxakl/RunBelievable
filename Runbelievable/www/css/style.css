@@ -2,14 +2,22 @@
 /*----------------------------------*\
                 $INTERFACE
 \*----------------------------------*/
+
 .header {
     position: absolute;
     top: 0; left: 0;right: 0;
     height: 60px; line-height: 60px;
     color: #FFF;
     text-transform: uppercase;
-    text-align: center;
-    background-color: #11a7ab;
+    background-color: #222;
+    padding: 0px 20px;
+}
+
+#icone_gps {
+    position: absolute;
+    top: 0px;
+    font-size: 20px;
+    right: 10px;
 }
 
 .view {
@@ -62,4 +70,16 @@
 
 #debut_geo {
     display: none;
+}
+
+/*----------------------------------*\
+    Module Alerte
+\*----------------------------------*/
+
+#module_alerte {
+    position: absolute;
+    z-index: 100;
+    display: none;
+    border-radius: 0px;
+    width: 100%;
 }

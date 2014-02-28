@@ -1,46 +1,31 @@
 /**
-* Controler d'une session.
-*
-*/
+ * Controler d'une session.
+ * @param {type} $scope Données du controler
+ */
 function SessionController($scope) {
 
-    var gps = new Gps(this);
-
+    var bouton_acquisition = $("#debut_geo");
     var interval_acquisition = 1000;
-    var boucleID;
-
+    var boucleID = null;
 
     /**
-    *   Permet de verifier si le GPS fonctionne correctement sur le mobile.
-    *
-    */
-    this.verifierGPS = function(){
-        var controller = this;
-
-        afficherAlerte("Information", "Test de votre Gps en cours ...", "info");
-
-        var isEnabled = gps.isEnabled(controller.autoriserAcquisition);
+     *   Permet de verifier si le GPS fonctionne correctement sur le mobile.
+     */
+    function verifierGPS() {
+        gps.modifIcone("info");
+        gps.isEnabled(autoriserAcquisition);
     }
 
     /**
-    * Permet de mettre à jour l'application si le GPS est autorisé ou non
-    *
-    */
-    this.autoriserAcquisition = function(isAutorise) {
+     * Permet de mettre à jour l'application si le GPS est autorisé ou non
+     */
+    function autoriserAcquisition() {
 
-        if (isAutorise) {
-            // On met à jour l'IHM
-            afficherAlerte("Succès", "Votre Gps est bien activé", "succes");
+        // Si le gps a été autorisé
+        if (gps.gps_actif) {
 
             // Ajout des fonctionnalités au bouton
-            $("#debut_geo").show();
-            $("#debut_geo").unbind();
-            $("#debut_geo").click(function() {
-                lancerAcquisition();
-            });
-
-            // On active le gps
-            gps.gps_actif = true;
+            cleanButton(null, lancerAcquisition);
 
             // On fait disparaitre l'alerte après 3 secondes
             setTimeout(function() {
@@ -53,74 +38,76 @@ function SessionController($scope) {
     }
 
     /**
+     * Enlève tous les évènements du bouton d'acquisition.
+     * @param {type} nouveau_texte Nouveau texte {option}
+     * @param {type} nouveau_evt Nouvel élément {option}
+     */
+    function cleanButton(nouveau_texte, nouveau_evt) {
+        bouton_acquisition.show();
+        bouton_acquisition.unbind();
+        if (nouveau_texte && nouveau_texte !== null) {
+            bouton_acquisition.text(nouveau_texte);
+        }
+        if (nouveau_evt && nouveau_evt !== null) {
+            bouton_acquisition.click(function() {
+                nouveau_evt();
+            });
+        }
+    }
+
+    /**
+     * Méthode permettant d'ajouter une acquisition de position GPS.
+     * @param {type} item Nouvelles données
+     */
+    function ajouterAcquisitionGPS(item) {
+        if (item === null)
+            return;
+
+        $scope.listeAcquisitions.push(item);
+        
+        // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
+        if (!$scope.$$phase) {
+            $scope.$apply();
+        }
+    }
+
+    /**
      * Démarre l'acquisition
-     * @returns {undefined}
      */
     function lancerAcquisition() {
-
         var controller = this;
 
         // Test si le Gps n'est pas actif on ne fait rien
         if (!gps.gps_actif) {
             return false;
         }
-
-
+        
         // Change le bouton de lancement d'acquisition
-        $("#debut_geo").text("Arrêter l'acquisition espagnole");
-        $("#debut_geo").unbind();
-        $("#debut_geo").click(function() {
-            stopAcquisition();
-        });
+        cleanButton("Arrêter l'acquisition", stopAcquisition);
 
-         // Boucle de récuperation des données
-        controller.boucleID = setInterval(function() {
-
+        // Boucle de récuperation des données
+        boucleID = setInterval(function() {
             gps.getAcquisition(ajouterAcquisitionGPS);
-
             $(".alert").hide();
         }, interval_acquisition);
-    }
+    };
 
     /**
      * Arrête l'acquisition
-     * @returns {undefined}
      */
     function stopAcquisition() {
-
-        var controller = this;
-
         // Test si le Gps n'est pas actif on ne fait rien
         if (!gps.gps_actif) {
             return false;
         }
 
         // On arrete l'acquisition
-        clearInterval(controller.boucleID);
-        
+        clearInterval(boucleID);
+
         // On change le texte
-        $("#debut_geo").text("Relancer l'acquisition");
-        $("#debut_geo").unbind();
-            $("#debut_geo").click(function() {
-                lancerAcquisition();
-        });
+        this.cleanButton("Relancer l'acquisition", lancerAcquisition);
     };
 
-        /**
-    * Méthode permettant d'ajouter une acquisition de position GPS.
-    */
-    ajouterAcquisitionGPS = function(item) {
-        if (item == null)
-            return;
-
-        $scope.listeAcquisitions.push(item);
-
-        // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-        if(!$scope.$$phase) {
-            $scope.$apply();
-        }
-    }
-
     // Test si le Gps est allumé
-    this.verifierGPS();
+    verifierGPS();
 }

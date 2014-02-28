@@ -20,21 +20,28 @@
         <script type="text/javascript" src="js/controller/Gps.js"></script>
         <script type="text/javascript" src="js/controller/NavController.js"></script>
         <script type="text/javascript" src="js/controller/SessionController.js"></script>
+
         <title>Runbelievable</title>
     </head>
 
     <body >
         <section id="App"  ng-controller="AppControler">
 
+            <!-- Titre -->
             <header class="header">
                 Runbelievable
+                <div id="icone_gps"><i class="fa fa-map-marker"></i></div>
             </header>
 
+            <!-- Module Alerte -->
+            <div id="module_alerte" class="alert">
+                <button type="button" class="close" onclick="cacherAlerte()" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h3></h3>
+                <p></p>
+            </div>
 
             <!-- Section principale de l'application -->
-            <section class="view" ng-view> 
-            </section>
-
+            <section class="view" ng-view></section>
 
             <!-- Barre de navigation -->
             <nav class="nav" ng-controller="NavController">
@@ -42,6 +49,8 @@
                 <a href="#about" ng-click="menu = 'about'" ng-class="{active: menu == 'about'}"><i class="fa fa-info"></i></a>
             </nav>
 
+            <!-- Script principal -->
+            <script type="text/javascript" src="js/controller/General.js"></script>
         </section>
     </body>
 </html>

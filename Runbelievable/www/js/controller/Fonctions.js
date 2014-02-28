@@ -1,28 +1,42 @@
 
+/* ***********************
+    Alertes
+   *********************** */
+
+/**
+ * Affiche l'alerte.
+ * @param {type} titre Titre
+ * @param {type} msg Message
+ * @param {type} type Type { danger, info, succes }
+ */
 function afficherAlerte(titre, msg, type) {
-    $(".alert").fadeIn();
+    bouton_alerte.show();
     
-    $(".alert").html("<h3>"+titre+"</h3><p>"+msg+"</p>");
+    bouton_alerte.find("h3").text(titre);
+    bouton_alerte.find("p").text(msg);
     
-    $(".alert").removeClass("alert-danger");
-    $(".alert").removeClass("alert-info");
-    $(".alert").removeClass("alert-primary");
-    $(".alert").removeClass("alert-warning");
-    $(".alert").removeClass("alert-success");
+    bouton_alerte.removeClass("alert-danger");
+    bouton_alerte.removeClass("alert-info");
+    bouton_alerte.removeClass("alert-primary");
+    bouton_alerte.removeClass("alert-warning");
+    bouton_alerte.removeClass("alert-success");
     
     switch(type) {
         case "danger":
-            $(".alert").addClass("alert-danger");
+            bouton_alerte.addClass("alert-danger");
             break;
         case "info":
-            $(".alert").addClass("alert-info");
+            bouton_alerte.addClass("alert-info");
             break;
         case "succes":
-            $(".alert").addClass("alert-success");
+            bouton_alerte.addClass("alert-success");
             break;
     }
 }
 
+/**
+ * Cache l'alerte.
+ */
 function cacherAlerte() {
-    $(".alert").fadeOut();
+    bouton_alerte.fadeOut(1000);
 }
