@@ -105,7 +105,7 @@ function SessionController($scope) {
         clearInterval(boucleID);
 
         // On change le texte
-        this.cleanButton("Relancer l'acquisition", lancerAcquisition);
+        cleanButton("Relancer l'acquisition", lancerAcquisition);
     };
 
     // Test si le Gps est allumé
