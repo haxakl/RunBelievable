@@ -1,9 +1,5 @@
 
-/**
- * Cette variable permet d'accéder au Gps dans tous nos scripts Js.
- * @type Gps
- */
-var gps = new Gps();
+
 
 /**
  * Cette variable permet d'accèder à l'élément des alertes

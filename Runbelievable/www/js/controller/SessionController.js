@@ -4,74 +4,43 @@
  */
 function SessionController($scope) {
 
-	var bouton_acquisition = $("#debut_geo");
 	var interval_acquisition = 1000;
 	var boucleID = null;
-	
+
 	// Enum pour les textes dispo pour le bouton (à déplacer dans un endroit approprié dans le futur)
 	var dico_bouton_acquisition = {
 		STOP : "Arrêter l'acquisition",
 		START : "Démarrer l'acquisition",
 		RESTART : "Redémarrer l'acquisition"
 	};
-	
+
 	// Texte par défaut
-	var texte_bouton_acquisition = dico_bouton_acquisition.START;
+	if($scope.listeAcquisitions.length == 0)
+		$scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
+	else if($scope.gps.gps_acquisition_actif)
+		$scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
+	else
+		$scope.texte_bouton_acquisition = dico_bouton_acquisition.RESTART;
+
 
 	/**
-	 * Permet de surveuiller l'état de l'acquisition afin de modifier l'état du bouton (texte pour l'instant)
+	 * Permet de modifier l'état du bouton (texte pour l'instant)
 	 */
-	scope.$watch(gps.gps_acquisition_actif, function(newValue, oldValue) {
-		if(newValue == true)
-			texte_bouton_acquisition = dico_bouton_acquisition.RESTART;
-		else
-			texte_bouton_acquisition = dico_bouton_acquisition.START;
-	});
+	$scope.clickAcquisition = function() {
+		if ($scope.gps.gps_acquisition_actif) {
+			stopAcquisition();
+		} else {
+			lancerAcquisition();
+		}
+	};
 
 	/**
 	 *   Permet de verifier si le GPS fonctionne correctement sur le mobile.
 	 */
 	function verifierGPS() {
-		gps.modifIcone("info");
-		gps.isEnabled(autoriserAcquisition);
-	}
+		$scope.gps.modifIcone("info");
+		$scope.gps.isEnabled();
 
-	/**
-	 * Permet de mettre à jour l'application si le GPS est autorisé ou non
-	 */
-	function autoriserAcquisition() {
-
-		// Si le gps a été autorisé
-		if (gps.gps_actif) {
-
-			// Ajout des fonctionnalités au bouton
-			cleanButton(null, lancerAcquisition);
-
-			// On fait disparaitre l'alerte après 3 secondes
-			setTimeout(function() {
-				cacherAlerte();
-			}, 3000);
-		} else {
-			afficherAlerte("Erreur", "Le Gps n'est pas fonctionnel sur ce téléphone", "danger");
-		}
-	}
-
-	/**
-	 * Enlève tous les évènements du bouton d'acquisition.
-	 * @param {type} nouveau_texte Nouveau texte {option}
-	 * @param {type} nouveau_evt Nouvel élément {option}
-	 */
-	function cleanButton(nouveau_texte, nouveau_evt) {
-		bouton_acquisition.show();
-		bouton_acquisition.unbind();
-		if (nouveau_texte && nouveau_texte !== null) {
-			bouton_acquisition.text(nouveau_texte);
-		}
-		if (nouveau_evt && nouveau_evt !== null) {
-			bouton_acquisition.click(function() {
-				nouveau_evt();
-			});
-		}
 	}
 
 	/**
@@ -94,23 +63,19 @@ function SessionController($scope) {
 	 * Démarre l'acquisition
 	 */
 	function lancerAcquisition() {
-		var controller = this;
 
 		// Test si le Gps n'est pas actif on ne fait rien, et si il n'est pas deja démarré
-		if (!gps.gps_actif || !gps.gps_acquisition_actif) {
+		if (!$scope.gps_actif || $scope.gps.gps_acquisition_actif) {
 			return false;
 		}
-
-		// Change le bouton de lancement d'acquisition
-		cleanButton("Arrêter l'acquisition", stopAcquisition);
+		$scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
 
 		// Acquisition démarée
-		gps.gps_acquisition_actif = true;
+		$scope.gps.gps_acquisition_actif = true;
 
 		// Boucle de récuperation des données
 		boucleID = setInterval(function() {
-			gps.getAcquisition(ajouterAcquisitionGPS);
-			$(".alert").hide();
+			$scope.gps.getAcquisition(ajouterAcquisitionGPS);
 		}, interval_acquisition);
 	};
 
@@ -119,18 +84,18 @@ function SessionController($scope) {
 	 */
 	function stopAcquisition() {
 		// Test si le Gps n'est pas actif on ne fait rien, et si l'acquisition n'est pas deja arêtée
-		if (!gps.gps_actif || gps.gps_acquisition_actif) {
+		if (!$scope.gps_actif || !$scope.gps.gps_acquisition_actif) {
 			return false;
 		}
+
+		$scope.texte_bouton_acquisition = dico_bouton_acquisition.RESTART;
 
 		// On arrete l'acquisition
 		clearInterval(boucleID);
 
 		// Acquisition arêtée
-		gps.gps_acquisition_actif = false;
+		$scope.gps.gps_acquisition_actif = false;
 
-		// On change le texte
-		cleanButton("Relancer l'acquisition", lancerAcquisition);
 	};
 
 	// Test si le Gps est allumé
