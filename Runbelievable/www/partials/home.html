@@ -1,5 +1,5 @@
 <section class="panel panel-padding" ng-controller="SessionController">
-    <center><a id="debut_geo" class="btn btn-primary btn-sm">Débuter l'acquisition</a></center><br/>
+    <center><a id="debut_geo" class="btn btn-primary btn-sm" ng-show="gps.gps_actif">{{texte_bouton_acquisition}}</a></center><br/>
     
     <table id="geolocalisation" class="table table-striped"> 
         <thead>

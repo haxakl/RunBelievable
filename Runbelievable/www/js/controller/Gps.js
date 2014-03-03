@@ -5,6 +5,9 @@ function Gps() {
 
     // Gps actif ou non
     this.gps_actif = false;
+    
+    // Acquisitions en cours
+    this.gps_acquisition_actif = false;
 
     // L'interval de temps entre 2 acquisitions
     this.interval_acquisition = 1000;
