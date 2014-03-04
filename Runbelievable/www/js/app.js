@@ -112,12 +112,13 @@ app.controller('AppControler', function($scope) {
      * Cette variable permet d'accèder à l'icône du Gps
      */
     $scope.icones_gps = $("#icone_gps");
-
+    $scope.map = null;
+    
     /**
      * Cette variable permet d'accéder au Gps dans tous nos scripts Js.
      * @type Gps
      */
     $scope.gps = new Gps($scope);
 
-    $scope.map = null;
+    
 }); 

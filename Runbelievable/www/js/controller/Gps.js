@@ -24,7 +24,7 @@ function Gps($scope) {
      * Test si le gps est activé et appel le hook passé en paramètre.
      * @param {type} hook Hook de la fonction
      */
-    this.isEnabled = function() {
+    this.isEnabled = function(hook) {
 
         // Test si le Gps existe sur le téléphone
         if (!navigator.geolocation)
@@ -33,6 +33,7 @@ function Gps($scope) {
         navigator.geolocation.getCurrentPosition(function() {
             $scope.gps.modifIcone("success");
             $scope.gps_actif = true;
+            hook();
         }, function() {
             $scope.gps.modifIcone("danger");
             $scope.gps_actif = false;
@@ -69,7 +70,12 @@ function Gps($scope) {
                 longitude: position.coords.longitude
             };
 
+            // Si le hook est null on retourne le resultat
+            if (hook === null)
+                return acquisition;
+
             hook(acquisition);
+
 
         }, function() {
 

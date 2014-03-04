@@ -1,7 +1,6 @@
 <section class="panel panel-padding" ng-controller="SessionController">
     <center>
-        <a class="btn btn-primary btn-sm" ng-click="clickAcquisition()">{{texte_bouton_acquisition}}</a>
-        <a class="btn btn-primary btn-sm" ng-click="localiser()">YOU CANT HIDE BITCH</a>
+        <a class="btn btn-primary btn-sm" ng-click="clickAcquisition()" ng-show="gps_actif">{{texte_bouton_acquisition}}</a>
         <a href="#statistiquesSession" class="btn btn-primary btn-sm" ng-click="menu = 'statistiquesSession'" ng-show="true">Statistiques de la session</a>
     </center>
     <br/>
