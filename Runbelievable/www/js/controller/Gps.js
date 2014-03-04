@@ -16,8 +16,8 @@ function Gps($scope) {
      * @param {type} type Type icône
      */
     this.modifIcone = function(type) {
-        icones_gps.removeClass("text-danger text-info text-success");
-        icones_gps.addClass("text-" + type);
+        $scope.icones_gps.removeClass("text-danger text-info text-success");
+        $scope.icones_gps.addClass("text-" + type);
     };
 
     /**
@@ -36,10 +36,10 @@ function Gps($scope) {
         }, function() {
             $scope.gps.modifIcone("danger");
             $scope.gps_actif = false;
-            afficherAlerte("Erreur", "Le Gps n'est pas fonctionnel sur ce téléphone", "danger");
+            $scope.afficherAlerte("Erreur", "Le Gps n'est pas fonctionnel sur ce téléphone", "danger");
             // On fait disparaitre l'alerte après 3 secondes
             setTimeout(function() {
-                cacherAlerte();
+                $scope.cacherAlerte();
             }, 3000);
         }, {
             maximumAge: 3000,

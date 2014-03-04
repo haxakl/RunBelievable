@@ -32,7 +32,7 @@ function SessionController($scope) {
     $scope.clickAcquisition = function() {
         // TODO remplacer ce if par un ng-show sur le bouton acquisition (j'ai essayé mais il veut pas - Chris)
         if (!$scope.gps_actif) {
-            afficherAlerte("Erreur", "Le Gps n'est pas démarré", "danger");
+            $scope.afficherAlerte("Erreur", "Le Gps n'est pas démarré", "danger");
         }
 
         if ($scope.gps.gps_acquisition_actif) {

@@ -16,15 +16,15 @@ var app = angular.module('runbelievable', ['ngRoute']);
  *
  */
 app.config(function($routeProvider) {
-	$routeProvider.when('/home', {
-		templateUrl : 'partials/home.html'
-	}).when('/about', {
-		templateUrl : 'partials/about.html'
-	}).when('/statistiquesSession', {
-		templateUrl : 'partials/statistiquesSession.html'
-	}).otherwise({
-		redirectTo : '/home'
-	});
+    $routeProvider.when('/home', {
+        templateUrl: 'partials/home.html'
+    }).when('/about', {
+        templateUrl: 'partials/about.html'
+    }).when('/statistiquesSession', {
+        templateUrl: 'partials/statistiquesSession.html'
+    }).otherwise({
+        redirectTo: '/home'
+    });
 });
 
 /**
@@ -32,40 +32,92 @@ app.config(function($routeProvider) {
  * A réutiliser ? Pour l'instant on stock dans le controller principale les informations partagées
  *
  *//*
-app.factory('listeAcquisitions', function() {
-var listeAcquisitions = [];
-var itemsService = {};
-
-itemsService.add = function(item) {
-listeAcquisitions.push(item);
-console.log(listeAcquisitions);
-};
-itemsService.list = function() {
-return listeAcquisitions;
-};
-
-return itemsService;
-});*/
+  app.factory('listeAcquisitions', function() {
+  var listeAcquisitions = [];
+  var itemsService = {};
+  
+  itemsService.add = function(item) {
+  listeAcquisitions.push(item);
+  console.log(listeAcquisitions);
+  };
+  itemsService.list = function() {
+  return listeAcquisitions;
+  };
+  
+  return itemsService;
+  });*/
 
 /**
  *	 Controller principal de l'application.
  *
  */
 app.controller('AppControler', function($scope) {
-	// Création de l'objet session
-	$scope.session = new Session();
 
-	// Gps actif ou non
-	$scope.gps_actif = false;
-        
-        // Pour controler l'acquisition de partout 
-        $scope.boucleID = null;
 
-	/**
-	 * Cette variable permet d'accéder au Gps dans tous nos scripts Js.
-	 * @type Gps
-	 */
-	$scope.gps = new Gps($scope);
-        
-        $scope.map = null;
+    /* ***********************
+     Alertes
+     *********************** */
+
+     // div d'alerte
+     $scope.bouton_alerte = $("#module_alerte");
+    /**
+     * Affiche l'alerte.
+     * @param {type} titre Titre
+     * @param {type} msg Message
+     * @param {type} type Type { danger, info, succes }
+     */
+    $scope.afficherAlerte = function(titre, msg, type) {
+        $scope.bouton_alerte.show();
+
+        $scope.bouton_alerte.find("h3").text(titre);
+        $scope.bouton_alerte.find("p").text(msg);
+
+        $scope.bouton_alerte.removeClass("alert-danger");
+        $scope.bouton_alerte.removeClass("alert-info");
+        $scope.bouton_alerte.removeClass("alert-primary");
+        $scope.bouton_alerte.removeClass("alert-warning");
+        $scope.bouton_alerte.removeClass("alert-success");
+
+        switch (type) {
+            case "danger":
+                $scope.bouton_alerte.addClass("alert-danger");
+                break;
+            case "info":
+                $scope.bouton_alerte.addClass("alert-info");
+                break;
+            case "succes":
+                $scope.bouton_alerte.addClass("alert-success");
+                break;
+        }
+    }
+
+    /**
+     * Cache l'alerte.
+     */
+    $scope.cacherAlerte = function() {
+        $scope.bouton_alerte.fadeOut(1000);
+    }
+
+    // Création de l'objet session
+    $scope.session = new Session();
+
+    // Gps actif ou non
+    $scope.gps_actif = false;
+
+    // Pour controler l'acquisition de partout 
+    $scope.boucleID = null;
+
+
+    /**
+     * Cette variable permet d'accèder à l'icône du Gps
+     */
+    $scope.icones_gps = $("#icone_gps");
+
+    /**
+     * Cette variable permet d'accéder au Gps dans tous nos scripts Js.
+     * @type Gps
+     */
+    $scope.gps = new Gps($scope);
+
+    $scope.map = null;
 }); 
