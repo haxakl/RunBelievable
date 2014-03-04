@@ -1,24 +1,27 @@
 <section class="panel panel-padding" ng-controller="SessionController">
-	<center>
-		<a class="btn btn-primary btn-sm" ng-click="clickAcquisition()" ng-show="true">{{texte_bouton_acquisition}}</a></br></br>
-		<a href="#statistiquesSession" class="btn btn-primary btn-sm" ng-click="menu = 'statistiquesSession'" ng-show="true">Statistiques de la session</a>
-	</center>
-	<br/>
+    <center>
+        <a class="btn btn-primary btn-sm" ng-click="clickAcquisition()">{{texte_bouton_acquisition}}</a>
+        <a class="btn btn-primary btn-sm" ng-click="localiser()">YOU CANT HIDE BITCH</a>
+        <a href="#statistiquesSession" class="btn btn-primary btn-sm" ng-click="menu = 'statistiquesSession'" ng-show="true">Statistiques de la session</a>
+    </center>
+    <br/>
 
-	<table id="geolocalisation" class="table table-striped">
-		<thead>
-			<tr>
-				<th>Latitude</th>
-				<th>Longitude</th>
-			</tr>
-		</thead>
-		<tbody >
-			<!-- Parcourt de la liste des coordonées GPS -->
-			<tr ng-repeat="item in session.listeAcquisitions">
-				<td> {{item.latitude}} </td>
-				<td> {{item.longitude}} </td>
-			<tr>
-		</tbody>
-	</table>
+    <div id="map" ng-model="map"></div>
+
+    <table id="geolocalisation" class="table table-striped" ng-show="false">
+        <thead>
+            <tr>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+        </thead>
+        <tbody >
+            <!-- Parcourt de la liste des coordonées GPS -->
+            <tr ng-repeat="item in session.listeAcquisitions">
+                <td> {{item.latitude}} </td>
+                <td> {{item.longitude}} </td>
+            <tr>
+        </tbody>
+    </table>
 </section>
 <script></script>

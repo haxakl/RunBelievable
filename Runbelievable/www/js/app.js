@@ -66,4 +66,6 @@ app.controller('AppControler', function($scope) {
 	 * @type Gps
 	 */
 	$scope.gps = new Gps($scope);
+        
+        $scope.map = null;
 }); 

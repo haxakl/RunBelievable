@@ -79,3 +79,15 @@
     border-radius: 0px;
     width: 100%;
 }
+
+/*----------------------------------*\
+    Module Google Map
+\*----------------------------------*/
+html, body, #map
+    {
+        height: 80%;
+    }
+    #map
+    {
+        width: 100%;
+    }
