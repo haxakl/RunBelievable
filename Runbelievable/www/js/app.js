@@ -50,8 +50,8 @@ return itemsService;
  *
  */
 app.controller('AppControler', function($scope) {
-	// Création de la liste des acquisitions GPS
-	$scope.listeAcquisitions = [];
+	// Création de l'objet session
+	$scope.session = new Session();
 
 	// Gps actif ou non
 	$scope.gps_actif = false;

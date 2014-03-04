@@ -15,7 +15,7 @@ function SessionController($scope) {
 	};
 
 	// Texte par défaut
-	if($scope.listeAcquisitions.length == 0)
+	if($scope.session.listeAcquisitions.length == 0)
 		$scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
 	else if($scope.gps.gps_acquisition_actif)
 		$scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
@@ -51,7 +51,7 @@ function SessionController($scope) {
 		if (item === null)
 			return;
 
-		$scope.listeAcquisitions.push(item);
+		$scope.session.listeAcquisitions.push(item);
 
 		// Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
 		if (!$scope.$$phase) {
