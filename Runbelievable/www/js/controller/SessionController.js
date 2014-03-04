@@ -33,7 +33,7 @@ function SessionController($scope) {
 			lancerAcquisition();
 		}
 	};
-
+	
 	/**
 	 *   Permet de verifier si le GPS fonctionne correctement sur le mobile.
 	 */
