@@ -1,3 +1,18 @@
 <section class="panel panel-padding" ng-controller="StatistiquesSessionController">
 	<center>COUCOU</center>
+	<a class="btn btn-primary btn-sm" ng-click="lissageSession()">Calculer</a>
+	
+	<table id="distances" class="table table-striped" ng-show="true">
+        <thead>
+            <tr>
+                <th>Distances</th>
+            </tr>
+        </thead>
+        <tbody >
+            <!-- Parcourt de la liste des distances effectuées -->
+            <tr ng-repeat="item in session.listeDistances">
+                <td> {{item}} </td>
+            <tr>
+        </tbody>
+    </table>
 </section>
