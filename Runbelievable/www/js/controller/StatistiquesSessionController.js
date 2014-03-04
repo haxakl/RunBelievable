@@ -17,7 +17,14 @@ function StatistiquesSessionController($scope) {
 	
 	
 	$scope.lissageSession =  function () {
+		calculerDistancesParcouru();
 		
+	};
+	
+	/**
+	 * Fonction permettant de calculer la distance parcouru pendant la session 
+	 */
+	function calculerDistancesParcouru() {
 		// Rayon de la terre en km
         r = 6366;
 		
