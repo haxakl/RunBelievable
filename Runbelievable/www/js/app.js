@@ -55,6 +55,9 @@ app.controller('AppControler', function($scope) {
 
 	// Gps actif ou non
 	$scope.gps_actif = false;
+        
+        // Pour controler l'acquisition de partout 
+        $scope.boucleID = null;
 
 	/**
 	 * Cette variable permet d'accéder au Gps dans tous nos scripts Js.
