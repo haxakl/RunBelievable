@@ -20,6 +20,8 @@ app.config(function($routeProvider) {
 		templateUrl : 'partials/home.html'
 	}).when('/about', {
 		templateUrl : 'partials/about.html'
+	}).when('/statistiquesSession', {
+		templateUrl : 'partials/statistiquesSession.html'
 	}).otherwise({
 		redirectTo : '/home'
 	});
