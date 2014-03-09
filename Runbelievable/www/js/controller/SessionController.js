@@ -2,14 +2,12 @@
  * Controler d'une session.
  * @param {type} $scope Données du controler
  */
-function SessionController($scope) {
+function SessionController($scope, Global) {
 
     var interval_acquisition = 1000;
 
-    $scope.location = null;
 
-
-    // Enum pour les textes dispo pour le bouton (à déplacer dans un endroit approprié dans le futur)
+    // TODO Enum pour les textes dispo pour le bouton (à déplacer dans un endroit approprié dans le futur) 
     var dico_bouton_acquisition = {
         STOP: "Arrêter l'acquisition",
         START: "Démarrer l'acquisition",
@@ -29,11 +27,6 @@ function SessionController($scope) {
      * Permet de modifier l'état du bouton (texte pour l'instant)
      */
     $scope.clickAcquisition = function() {
-        // TODO remplacer ce if par un ng-show sur le bouton acquisition (j'ai essayé mais il veut pas - Chris)
-        if (!$scope.gps_actif) {
-            $scope.afficherAlerte("Erreur", "Le Gps n'est pas démarré", "danger");
-        }
-
         if ($scope.gps.gps_acquisition_actif) {
             stopAcquisition();
         } else {
@@ -59,7 +52,7 @@ function SessionController($scope) {
         // maj la position
         var marker = new google.maps.Marker({
             position: $scope.location,
-            map: $scope.map,
+            map: Global.map,
             title: 'FOUND YO SORRY ASS !!'
         });
 
@@ -143,7 +136,7 @@ function SessionController($scope) {
         $scope.gps.gps_acquisition_actif = false;
 
         // Recentrer sur dernière pos connue
-        $scope.map.panTo($scope.location);
+        Global.map.panTo($scope.location);
 
 
     }
@@ -152,26 +145,28 @@ function SessionController($scope) {
     $scope.initializeMap = function() {
 
         // Si gps ok et carte non initialisée
-        if ($scope.gps_actif && $scope.map === null) {
-            
+        if ($scope.gps_actif && Global.map === null) {
+            // Initialiser la variable utilisée pour stocker la position
+            $scope.location = null;
             // Besoin du hook pour initialiser la map sur pos initiale
             $scope.gps.getAcquisition(finalizeMap)
         }
-
-        
+        alert(Global.map);
+        // redessiner la carte (ne rédéssine pas pour une raison obscure)
+        google.maps.event.trigger(Global.map, 'resize');
 
     }
-    
-    function finalizeMap(item){
-        var mapOptions = {
-                center: new google.maps.LatLng(item.latitude, item.longitude),
-                zoom: 14,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
 
-            $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-            
-            // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
+    function finalizeMap(item) {
+        var mapOptions = {
+            center: new google.maps.LatLng(item.latitude, item.longitude),
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        Global.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
         if (!$scope.$$phase) {
             $scope.$apply();
         }
