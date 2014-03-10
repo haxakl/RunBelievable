@@ -17,16 +17,22 @@ function StatistiquesSessionController($scope) {
 	
 	
 	$scope.lissageSession =  function () {
-		calculerDistancesParcouru();
+		calculerStats();
 		
 	};
 	
 	/**
-	 * Fonction permettant de calculer la distance parcouru pendant la session 
+	 * Fonction permettant de calculer les statistiques de la session : 
+	 * - la distance parcouru totale
+	 * - la durée de la sesion
 	 */
-	function calculerDistancesParcouru() {
+	function calculerStats() {
 		// Rayon de la terre en km
         r = 6366;
+		
+		// On remet les statisiques à 0
+		$scope.session.distanceParcouru = 0;
+		$scope.session.dureeSession = 0;
 		
 		// L'ancien point utilisé dans la boucle
 		var ancienPoint = null;
@@ -58,7 +64,9 @@ function StatistiquesSessionController($scope) {
  			// On l'ajoute à la liste des distances
  			$scope.session.listeDistances.push(distanceEnKm);
 			
-			console.log(distanceEnKm);
+			// Calcul des stats annexes
+			$scope.session.distanceParcouru += distanceEnKm;
+			$scope.session.dureeSession += ((point.timestamp - ancienPoint.timestamp)/1000);
 			
 			ancienPoint = point;
 		}

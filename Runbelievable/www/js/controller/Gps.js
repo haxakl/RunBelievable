@@ -67,7 +67,9 @@ function Gps($scope) {
             // On créer l'objet contenant les informations de l'acquisition de données
             acquisition = {
                 latitude: position.coords.latitude,
-                longitude: position.coords.longitude
+                longitude: position.coords.longitude,
+                altitude : position.coords.altitude,
+                timestamp : position.timestamp
             };
 
             // Si le hook est null on retourne le resultat

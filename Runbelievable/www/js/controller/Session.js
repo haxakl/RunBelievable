@@ -11,7 +11,7 @@ function Session() {
 	this.vitesseMin=0.0;
 	this.vitesseMoyenne=0.0;
 	
-	// Durée de la session en seconde
+	// Durée de la session en secondes
 	this.dureeSession=0; 
 	
 	this.denivele=0.0;
