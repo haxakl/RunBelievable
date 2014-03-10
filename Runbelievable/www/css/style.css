@@ -96,8 +96,8 @@ html, body, #map
     Graphique de statistiques
 \*----------------------------------*/
 .chartWrapper {
-  margin: 15px auto;
-  width: 500px;
-  height: 200px;
-  text-align: center;
+	width:280px;
+	height: 230px;
+  	margin: 15px auto 10px;
+  	text-align: center;
 }

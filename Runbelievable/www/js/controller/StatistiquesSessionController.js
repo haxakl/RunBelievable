@@ -132,25 +132,42 @@ function StatistiquesSessionController($scope) {
 	}
 	
 	function dessinerGraph() {
-		var r = Raphael("simpleExample");
+		// On vide la div en charge du graph
+		$("#VitesseTemps").empty();
+		
+		
+		// Création de la liste pour les absices (temps) et pour les ordonnées (vitesse)
+		absTemps = [];
+		ordVit = [];
+		var temps = 0;
+		for (indice in $scope.tableauStats) {
+			// On ajoute le temps
+			temps += $scope.tableauStats[indice].duree;
+			absTemps.push(temps);
+			
+			// On ajoute la vitesse moyenne à ce point
+			ordVit.push($scope.tableauStats[indice].vitesseMoyenne);
+		}
+	
+		// Création de l'objet raphael rataché à la div d'id "VitesseTemps"
+		var r = Raphael("VitesseTemps");
+		
+		// Création du graphique en ligne
 		var chart = r.linechart(
-		    10, 10,      // top left anchor
-		    490, 180,    // bottom right anchor
+		    10, 10,      // Position du bord haut gauche
+		    250, 200,    // Position du bord bas droit
 		    [
-		      [1, 2, 3, 4, 5, 6, 7],        // red line x-values
-		      [3.5, 4.5, 5.5, 6.5, 7, 8]    // blue line x-values
+		      absTemps       // Absices du temps
 		    ],
 		    [
-		      [12, 32, 23, 15, 17, 27, 22], // red line y-values
-		      [10, 20, 30, 25, 15, 28]      // blue line y-values
+		      ordVit // Ordonnées de la vitesse
 		    ],
 		    {
-		       nostroke: false,   // lines between points are drawn
-		       axis: "0 0 1 1",   // draw axes on the left and bottom
-		       smooth: true,      // curve the lines to smooth turns on the chart
+		       nostroke: false,   // Ligne entre les points
+		       axis: "0 0 1 1",   // On dessine les aces en bas et à gauche
+		       smooth: true,      // Lignes "courbées"
 		       colors: [
-		         "#995555",       // the first line is red 
-		         "#555599"        // the second line is blue
+		         "#995555",       // Couleur rouge
 		       ]
 		     });
 	}
