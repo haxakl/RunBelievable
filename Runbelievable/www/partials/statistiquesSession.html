@@ -2,10 +2,14 @@
 	
 	<center><a class="btn btn-primary btn-sm" ng-click="lissageSession()">Calculer les stats</a></center>
 	
-	</br></br></br></br>
+	</br></br>
 	
-	<center>Distance totale : {{session.distanceParcouru}} km</center></br>
-	<center>Durée de la session : {{session.dureeSession}} secondes</center>
+	<center><b>Distance totale</b> : {{session.distanceParcouru}} km</center></br>
+	<center><b>Durée de la session</b> : {{session.dureeSession}} secondes</center>
+	
+	
+	<!-- Div contenant le graphique -->
+	<div id="simpleExample" class="chartWrapper"></div>
 	
 	
 	<table id="test" class="table table-striped" ng-show="true">
