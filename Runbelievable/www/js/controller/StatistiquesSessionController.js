@@ -19,6 +19,7 @@ function StatistiquesSessionController($scope) {
 	$scope.lissageSession =  function () {
 		calculerStats();
 		
+		genererStatsResume();
 	};
 	
 	/**
@@ -68,9 +69,65 @@ function StatistiquesSessionController($scope) {
 			$scope.session.distanceParcouru += distanceEnKm;
 			$scope.session.dureeSession += ((point.timestamp - ancienPoint.timestamp)/1000);
 			
+			// TODO je rajoute ces infos dans le point de la liste d'acquisition
+ 			$scope.session.listeAcquisitions[indice].distanceEnKm = distanceEnKm;
+			$scope.session.listeAcquisitions[indice].duree = ((point.timestamp - ancienPoint.timestamp)/1000);
+			
 			ancienPoint = point;
 		}
 	};
+	
+	/**
+	 * Méthode permettant de parcourir la session et de resumé en X points de controles les statistiques 
+	 */
+	function genererStatsResume() {
+		// Le nombre de points de controles
+		nombreDePointDeControle = 10;
+		
+		// Le tableau des stats
+		$scope.tableauStats = [];
+		
+		// Le nombre d'acquisition à parcourir à chaque point de controle
+		nbPointParCtrl = $scope.session.listeAcquisitions.length/nombreDePointDeControle;
+		
+		for (i = 0; i < nombreDePointDeControle; i++) {
+			// On recupere un sous tableau contenant les acquisitions relatif à un point de controle
+			tab = $scope.session.listeAcquisitions.slice(i*nbPointParCtrl, (i+1)*nbPointParCtrl);
+			
+			// On parcourt le sous tableau et on fait les stats
+			var distanceParcourue = 0;
+			var dureeTotale = 0;
+			
+			for (indice in tab) {
+				acquisition = tab[indice];
+				
+				// Si la distance est Not A number, on continue
+				if (isNaN(acquisition.distanceEnKm))
+					continue;
+				
+				distanceParcourue += acquisition.distanceEnKm;
+				dureeTotale += acquisition.duree;
+			}
+			
+			// Calcul de la vitesse en km/h
+			vitesse =  3600*distanceParcourue/dureeTotale;
+			
+			// Si la vitesse est NaN, on la met à 0 de base
+			if (isNaN(vitesse))
+				vitesse = 0;
+			
+			// On créer l'objet contenant les informations du point de controle
+            stats = {
+                distance : distanceParcourue,
+                duree : dureeTotale,
+                vitesseMoyenne : vitesse
+            };
+            
+			// On ajoute les informations
+			$scope.tableauStats.push(stats);
+			
+		}		
+	}
 	
 	
 	function distanceDirect2Points(lat1, lon1, lat2, lon2) {		

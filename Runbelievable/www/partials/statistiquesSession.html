@@ -7,18 +7,20 @@
 	<center>Distance totale : {{session.distanceParcouru}} km</center></br>
 	<center>Durée de la session : {{session.dureeSession}} secondes</center>
 	
-	<!--
-	<table id="distances" class="table table-striped" ng-show="true">
+	
+	<table id="test" class="table table-striped" ng-show="true">
         <thead>
             <tr>
-                <th>Distances</th>
+                <th>Stats par tranche</th>
             </tr>
         </thead>
-        <tbody >
-            <tr ng-repeat="item in session.listeDistances">
-                <td> {{item}} </td>
+        <tbody>
+            <tr ng-repeat="item in tableauStats">
+                <td> {{item.distance}} km</td>
+                <td> {{item.duree}} s</td>
+               <td> {{item.vitesseMoyenne}} km/h</td>
             <tr>
         </tbody>
     </table>
-    -->
+    
 </section>
