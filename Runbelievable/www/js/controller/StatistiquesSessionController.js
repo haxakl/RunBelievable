@@ -166,8 +166,9 @@ function StatistiquesSessionController($scope) {
 		       nostroke: false,   // Ligne entre les points
 		       axis: "0 0 1 1",   // On dessine les aces en bas et à gauche
 		       smooth: true,      // Lignes "courbées"
+		       shade : true,
 		       colors: [
-		         "#995555",       // Couleur rouge
+		         "#04B404",       // Couleur verte
 		       ]
 		     });
 	}
