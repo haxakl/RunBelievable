@@ -7,19 +7,20 @@ function StatistiquesSessionController($scope) {
 	$scope.session.listeDistances = [];
 	
 	/**
+	 * Méthode permettant de lisser les données de la session 
+	 */
+	$scope.lissageSession =  function () {
+		calculerStats();
+		
+		genererStatsResume();
+	};
+	
+	/**
 	 * Méthode convertissant un nombre en degrès vers un nombre en radians
  	 * @param {Object} nombre
 	 */
 	function toRad (nombre) {		
 		return nombre * Math.PI / 180; 
-	};
-	
-	
-	
-	$scope.lissageSession =  function () {
-		calculerStats();
-		
-		genererStatsResume();
 	};
 	
 	/**
@@ -75,6 +76,9 @@ function StatistiquesSessionController($scope) {
 			
 			ancienPoint = point;
 		}
+		
+		// Mise à jour de la vitesse moyenne
+		$scope.session.vitesseMoyenne = 3600*$scope.session.distanceParcouru/$scope.session.dureeSession;
 	};
 	
 	/**
@@ -126,15 +130,25 @@ function StatistiquesSessionController($scope) {
 			// On ajoute les informations
 			$scope.tableauStats.push(stats);
 			
+			// Mise à jour de la vitesse Max
+			if (vitesse > $scope.session.vitesseMax)
+				$scope.session.vitesseMax = vitesse;
+			
+			// Mise à jour de la vitesse Min
+			if (vitesse < $scope.session.vitesseMin)
+				$scope.session.vitesseMin = vitesse;
+			
 		}
 		
-		dessinerGraph();
+		dessinerGraphVitesseTemps();
 	}
 	
-	function dessinerGraph() {
+	/*
+	 * Méthode permettant de dessiner le graphique de vitesse/temps
+	 */
+	function dessinerGraphVitesseTemps() {
 		// On vide la div en charge du graph
-		$("#VitesseTemps").empty();
-		
+		$("#VitesseTemps").empty();		
 		
 		// Création de la liste pour les absices (temps) et pour les ordonnées (vitesse)
 		absTemps = [];
@@ -155,7 +169,7 @@ function StatistiquesSessionController($scope) {
 		// Création du graphique en ligne
 		var chart = r.linechart(
 		    10, 10,      // Position du bord haut gauche
-		    250, 200,    // Position du bord bas droit
+		    $("#VitesseTemps").width()-10, 250,    // Position du bord bas droit
 		    [
 		      absTemps       // Absices du temps
 		    ],
@@ -178,5 +192,7 @@ function StatistiquesSessionController($scope) {
 		return 2*Math.asin(Math.sqrt(Math.pow((Math.sin((lat1 - lat2) / 2)),2)
                 + Math.cos(lat1) * Math.cos(lat2) 
                 *(Math.pow(Math.sin(((lon1-lon2)/2)), 2))));
-	};	
+	};
+	
+	$scope.lissageSession();
 }

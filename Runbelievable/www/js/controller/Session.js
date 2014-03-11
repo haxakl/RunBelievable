@@ -8,7 +8,7 @@ function Session() {
 	
 	// Vitesses en km/h
 	this.vitesseMax = 0.0;
-	this.vitesseMin=0.0;
+	this.vitesseMin=1000.0;
 	this.vitesseMoyenne=0.0;
 	
 	// Durée de la session en secondes
