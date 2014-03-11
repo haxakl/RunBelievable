@@ -4,11 +4,11 @@
 	<h3 align="center">Statistiques de votre session</h3>
 	
 	<br>
-	<b>Distance totale</b> : {{session.distanceParcouru}} km<br>
-	<b>Durée de la session</b> : {{session.dureeSession}} secondes<br>
-	<b>Vitesse moyenne</b> : {{session.vitesseMoyenne}} km/h<br>
-	<b>Vitesse minimale</b> : {{session.vitesseMin}} km/h<br>
-	<b>Vitesse maximale</b> : {{session.vitesseMax}} km/h<br><br>
+	<b>Distance totale</b> : {{session.distanceParcouru | number : 2}} km<br>
+	<b>Durée de la session</b> : {{ session.dureeSessionString }}<br>
+	<b>Vitesse moyenne</b> : {{session.vitesseMoyenne | number : 2}} km/h<br>
+	<b>Vitesse minimale</b> : {{session.vitesseMin | number : 2}} km/h<br>
+	<b>Vitesse maximale</b> : {{session.vitesseMax | number : 2}} km/h<br><br>
 	
 	
 	<!-- Div contenant le graphique -->

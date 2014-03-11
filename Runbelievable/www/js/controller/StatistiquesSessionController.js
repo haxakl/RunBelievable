@@ -79,7 +79,23 @@ function StatistiquesSessionController($scope) {
 		
 		// Mise à jour de la vitesse moyenne
 		$scope.session.vitesseMoyenne = 3600*$scope.session.distanceParcouru/$scope.session.dureeSession;
+		
+		calculerTempsString();
 	};
+	
+	
+	/**
+	 * Méthode permettant de former le string de format "hh:mm:ss" pour l'affichage' 
+	 */
+	function calculerTempsString() {
+		
+		var heures = parseInt( $scope.session.dureeSession / 3600 ) % 24;
+		var minutes = parseInt( $scope.session.dureeSession / 60 ) % 60;
+		var secondes = parseInt($scope.session.dureeSession % 60);
+
+		$scope.session.dureeSessionString = (heures < 10 ? "0" + heures : heures) + "h " + (minutes < 10 ? "0" + minutes : minutes) + "m " + (secondes  < 10 ? "0" + secondes : secondes) + "s";
+	}
+	
 	
 	/**
 	 * Méthode permettant de parcourir la session et de resumé en X points de controles les statistiques 

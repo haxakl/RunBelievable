@@ -13,6 +13,7 @@ function Session() {
 	
 	// Durée de la session en secondes
 	this.dureeSession=0; 
+	this.dureeSessionString=0;  // La durée au format "00h 00m 00s"
 	
 	this.denivele=0.0;
 	
