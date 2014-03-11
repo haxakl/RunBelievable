@@ -28,9 +28,9 @@ app.config(function($routeProvider) {
 });
 
 app.factory('Global', function() {
-  return {
-      map : null
-  };
+    return {
+        map: null
+    };
 });
 
 /**
@@ -44,8 +44,8 @@ app.controller('AppControler', function($scope) {
      Alertes
      *********************** */
 
-     // div d'alerte
-     $scope.bouton_alerte = $("#module_alerte");
+    // div d'alerte
+    $scope.bouton_alerte = $("#module_alerte");
     /**
      * Affiche l'alerte.
      * @param {type} titre Titre
@@ -83,25 +83,25 @@ app.controller('AppControler', function($scope) {
     $scope.cacherAlerte = function() {
         $scope.bouton_alerte.fadeOut(1000);
     };
-    
+
     /**
      *Méthode permettant de configurer le bouton retour à l'écran précédent
      */
     $scope.configurerRetour = function(route) {
-    	// On configure le href pour se rendre à l'écran désiré
-    	$("#retour").attr("href","#"+route);
-    	
-    	// On retire toutes les anciennes fonctions liées
-    	$("#retour").unbind();
-    	
-   		// Lors d'un click, on va changer d'écran et cacher le bouton
-    	$("#retour").bind( "click", function() {
-			$scope.menu = route;
-			$("#retour").hide();
-		}); 	
-		
-		// On affiche le bouton
-		$("#retour").show();
+        // On configure le href pour se rendre à l'écran désiré
+        $("#retour").attr("href", "#" + route);
+
+        // On retire toutes les anciennes fonctions liées
+        $("#retour").unbind();
+
+        // Lors d'un click, on va changer d'écran et cacher le bouton
+        $("#retour").bind("click", function() {
+            $scope.menu = route;
+            $("#retour").hide();
+        });
+
+        // On affiche le bouton
+        $("#retour").show();
     };
 
     // Création de l'objet session
@@ -118,12 +118,12 @@ app.controller('AppControler', function($scope) {
      * Cette variable permet d'accèder à l'icône du Gps
      */
     $scope.icones_gps = $("#icone_gps");
-    
-    
+
+
     /**
      * Cette variable permet d'accéder au Gps dans tous nos scripts Js.
      * @type Gps
      */
     $scope.gps = new Gps($scope);
-    
+
 }); 
