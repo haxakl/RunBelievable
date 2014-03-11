@@ -80,20 +80,37 @@ function StatistiquesSessionController($scope) {
 		// Mise à jour de la vitesse moyenne
 		$scope.session.vitesseMoyenne = 3600*$scope.session.distanceParcouru/$scope.session.dureeSession;
 		
-		calculerTempsString();
+		$scope.session.dureeSessionString = calculerTempsString($scope.session.dureeSession);
 	};
 	
 	
 	/**
-	 * Méthode permettant de former le string de format "hh:mm:ss" pour l'affichage' 
+	 * Méthode permettant de former le string de format "XXh YYm ZZs" pour l'affichage' 
 	 */
-	function calculerTempsString() {
+	function calculerTempsString($duree) {
 		
-		var heures = parseInt( $scope.session.dureeSession / 3600 ) % 24;
-		var minutes = parseInt( $scope.session.dureeSession / 60 ) % 60;
-		var secondes = parseInt($scope.session.dureeSession % 60);
+		var heures = parseInt( $duree / 3600 ) % 24;
+		var minutes = parseInt( $duree / 60 ) % 60;
+		var secondes = parseInt($duree % 60);
+		
+		var retour = "";
+		
+		if (heures > 0)
+			retour += heures + "h";
+			
+		if (minutes > 0 && heures > 0)
+			retour += (minutes < 10 ? "0" + minutes : minutes) + "m";
+		else if (minutes > 0)
+			retour += minutes + "m";
 
-		$scope.session.dureeSessionString = (heures < 10 ? "0" + heures : heures) + "h " + (minutes < 10 ? "0" + minutes : minutes) + "m " + (secondes  < 10 ? "0" + secondes : secondes) + "s";
+		if (secondes > 0 && (heures > 0 || minutes > 0))
+			retour += (secondes  < 10 ? "0" + secondes : secondes) + "s";
+		else if (secondes > 0)
+		retour += secondes + "s";
+			
+
+		//return (heures < 10 ? "0" + heures : heures) + "h" + (minutes < 10 ? "0" + minutes : minutes) + "m" + (secondes  < 10 ? "0" + secondes : secondes) + "s";
+		return retour;
 	}
 	
 	
@@ -166,7 +183,7 @@ function StatistiquesSessionController($scope) {
 		// On vide la div en charge du graph
 		$("#VitesseTemps").empty();		
 		
-		// Création de la liste pour les absices (temps) et pour les ordonnées (vitesse)
+		// Création de la liste pour les abscisse (temps) et pour les ordonnées (vitesse)
 		absTemps = [];
 		ordVit = [];
 		var temps = 0;
@@ -201,6 +218,23 @@ function StatistiquesSessionController($scope) {
 		         "#04B404",       // Couleur verte
 		       ]
 		     });
+		     
+		     
+		     // On recupere la liste des labels sur la ligne des abscisse
+			var abscisse = chart.axis[0].text.items;
+			
+			var compteur = 0;
+			
+			// On parcourt la liste des labels des abscisse
+			for(var i in abscisse){
+				// On change le label
+				if (compteur%3==2)					
+					abscisse[i].attr({'text': calculerTempsString(abscisse[i].attr('text'))});
+				else
+					abscisse[i].attr({'text': ""});
+				
+				compteur++;
+			};
 	}
 	
 	
