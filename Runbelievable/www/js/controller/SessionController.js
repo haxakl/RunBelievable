@@ -149,13 +149,13 @@ function SessionController($scope, Global) {
             // Initialiser la variable utilisée pour stocker la position
             $scope.location = null;
             // Besoin du hook pour initialiser la map sur pos initiale
-            $scope.gps.getAcquisition(finalizeMap)
+            $scope.gps.getAcquisition(finalizeMap);
         }
         alert(Global.map);
         // redessiner la carte (ne rédéssine pas pour une raison obscure)
         google.maps.event.trigger(Global.map, 'resize');
 
-    }
+    };
 
     function finalizeMap(item) {
         var mapOptions = {

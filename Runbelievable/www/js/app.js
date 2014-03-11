@@ -34,26 +34,6 @@ app.factory('Global', function() {
 });
 
 /**
- * La factory, chargée de stocker des données
- * A réutiliser ? Pour l'instant on stock dans le controller principale les informations partagées
- *
- *//*
-  app.factory('listeAcquisitions', function() {
-  var listeAcquisitions = [];
-  var itemsService = {};
-  
-  itemsService.add = function(item) {
-  listeAcquisitions.push(item);
-  console.log(listeAcquisitions);
-  };
-  itemsService.list = function() {
-  return listeAcquisitions;
-  };
-  
-  return itemsService;
-  });*/
-
-/**
  *	 Controller principal de l'application.
  *
  */
@@ -95,14 +75,34 @@ app.controller('AppControler', function($scope) {
                 $scope.bouton_alerte.addClass("alert-success");
                 break;
         }
-    }
+    };
 
     /**
      * Cache l'alerte.
      */
     $scope.cacherAlerte = function() {
         $scope.bouton_alerte.fadeOut(1000);
-    }
+    };
+    
+    /**
+     *Méthode permettant de configurer le bouton retour à l'écran précédent
+     */
+    $scope.configurerRetour = function(route) {
+    	// On configure le href pour se rendre à l'écran désiré
+    	$("#retour").attr("href","#"+route);
+    	
+    	// On retire toutes les anciennes fonctions liées
+    	$("#retour").unbind();
+    	
+   		// Lors d'un click, on va changer d'écran et cacher le bouton
+    	$("#retour").bind( "click", function() {
+			$scope.menu = route;
+			$("#retour").hide();
+		}); 	
+		
+		// On affiche le bouton
+		$("#retour").show();
+    };
 
     // Création de l'objet session
     $scope.session = new Session();

@@ -245,4 +245,7 @@ function StatistiquesSessionController($scope) {
 	};
 	
 	$scope.lissageSession();
+	
+	// On affiche le bouton de retour
+	$scope.configurerRetour('home');
 }
