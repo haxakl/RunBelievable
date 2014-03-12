@@ -16,15 +16,6 @@ function StatistiquesSessionController($scope) {
     };
 
     /**
-     * Méthode convertissant un nombre en degrès vers un nombre en radians
-     * @param {Object} nombre
-     */
-    function toRad(nombre) {
-        return nombre * Math.PI / 180;
-    }
-    ;
-
-    /**
      * Fonction permettant de calculer les statistiques de la session : 
      * - la distance parcouru totale
      * - la durée de la sesion
@@ -52,17 +43,9 @@ function StatistiquesSessionController($scope) {
                 continue;
             }
 
-            //Conversion des latitudes/longitudes en degrés vers du radian
-            lat1 = toRad(ancienPoint.latitude);
-            lon1 = toRad(ancienPoint.longitude);
-            lat2 = toRad(point.latitude);
-            lon2 = toRad(point.longitude);
-
-            // On recupere la distance direct entre les deux coordonées GPS
-            distance = distanceDirect2Points(lat1, lon1, lat2, lon2);
-
             // On calcule cette distance en km
-            distanceEnKm = distance * r;
+            distanceEnKm = $scope.gps.getDistance2Points(ancienPoint.latitude, ancienPoint.longitude,
+            	point.latitude, point.longitude);
 
             // On l'ajoute à la liste des distances
             $scope.session.listeDistances.push(distanceEnKm);
@@ -239,14 +222,6 @@ function StatistiquesSessionController($scope) {
         }
         ;
     }
-
-
-    function distanceDirect2Points(lat1, lon1, lat2, lon2) {
-        return 2 * Math.asin(Math.sqrt(Math.pow((Math.sin((lat1 - lat2) / 2)), 2)
-                + Math.cos(lat1) * Math.cos(lat2)
-                * (Math.pow(Math.sin(((lon1 - lon2) / 2)), 2))));
-    }
-    ;
 
     $scope.lissageSession();
 

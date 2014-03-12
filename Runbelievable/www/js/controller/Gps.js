@@ -88,5 +88,34 @@ function Gps($scope) {
         });
 
     };
+    
+    /**
+     * Métode permettant de calculer la distance en km entre 2 points à
+     * partir de leurs coordonnées GPS. 
+     */
+    this.getDistance2Points = function(lat1, lon1, lat2, lon2) {
+    	
+    	//Conversion des latitudes/longitudes en degrés vers du radian
+        lat1Rad = toRad(lat1);
+        lon1Rad = toRad(lon1);
+        lat2Rad = toRad(lat2);
+        lon2Rad = toRad(lon2);
+        
+        // On calcul la distance en radian entre les 2 points GPS
+        distanceRad = 2 * Math.asin(Math.sqrt(Math.pow((Math.sin((lat1Rad - lat2Rad) / 2)), 2)
+                + Math.cos(lat1Rad) * Math.cos(lat2Rad)
+                * (Math.pow(Math.sin(((lon1Rad - lon2Rad) / 2)), 2))));
+        
+        // On calcule cette distance en km grace au rayon de la terre
+        return distanceRad * 6366;
+    };
+    
+    /**
+     * Méthode convertissant un nombre en degrès vers un nombre en radians
+     * @param {Object} nombre
+     */
+    function toRad(nombre) {
+        return nombre * Math.PI / 180;
+    };
 
 }
