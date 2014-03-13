@@ -47,11 +47,11 @@ function SessionController($scope, Global) {
         }
 
         // maj la location
-        $scope.location = new google.maps.LatLng(item.latitude, item.longitude);
+        Global.location = new google.maps.LatLng(item.latitude, item.longitude);
 
         // maj la position
         var marker = new google.maps.Marker({
-            position: $scope.location,
+            position: Global.location,
             map: Global.map,
             title: 'FOUND YO SORRY ASS !!'
         });
@@ -88,6 +88,7 @@ function SessionController($scope, Global) {
         }
 
         $scope.session.listeAcquisitions.push(item);
+        $Global.location = item;
 
         // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
         if (!$scope.$$phase) {
@@ -136,9 +137,58 @@ function SessionController($scope, Global) {
         $scope.gps.gps_acquisition_actif = false;
 
         // Recentrer sur dernière pos connue
-        Global.map.panTo($scope.location);
+        Global.map.panTo(Global.location);
 
 
+    }
+
+
+
+
+    function finalizeMap(item, hook) {
+        var mapOptions = {
+            center: new google.maps.LatLng(item.latitude, item.longitude),
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        // maj les var globales
+        Global.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        Global.location = item;
+
+        // appeler hook si il y en a un
+        if (typeof hook !== "undefined")
+            hook();
+        else {
+            // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+        }
+
+    }
+
+    /**
+     * Fonction barbarique pour la résolution de la carte qui disparait
+     * @returns {undefined}
+     */
+    $scope.majCarte = function() {
+
+        var marker = null;
+        // On parcourt les acquisitions effectuées
+        for (indice in $scope.session.listeAcquisitions) {
+            // maj la position
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(indice.latitude, indice.longitude),
+                map: Global.map,
+                title: 'FOUND YO SORRY ASS !!'
+            });
+        }
+
+        // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
+        if (!$scope.$$phase) {
+            $scope.$apply();
+        }
     }
 
     // Affiche la carte
@@ -146,30 +196,14 @@ function SessionController($scope, Global) {
 
         // Si gps ok et carte non initialisée
         if ($scope.gps_actif && Global.map === null) {
-            // Initialiser la variable utilisée pour stocker la position
-            $scope.location = null;
+
             // Besoin du hook pour initialiser la map sur pos initiale
             $scope.gps.getAcquisition(finalizeMap);
         }
-        // redessiner la carte (ne rédéssine pas pour une raison obscure)
-        google.maps.event.trigger(Global.map, 'resize');
-
-    };
-
-    function finalizeMap(item) {
-        var mapOptions = {
-            center: new google.maps.LatLng(item.latitude, item.longitude),
-            zoom: 14,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-
-        Global.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-        // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-        if (!$scope.$$phase) {
-            $scope.$apply();
+        else {
+            finalizeMap(Global.location, $scope.majCarte);
         }
-    }
+    };
 
 
     // Test si le Gps est allumé

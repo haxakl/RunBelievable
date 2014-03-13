@@ -29,7 +29,9 @@ app.config(function($routeProvider) {
 
 app.factory('Global', function() {
     return {
-        map: null
+        map: null,
+        location: null
+        
     };
 });
 

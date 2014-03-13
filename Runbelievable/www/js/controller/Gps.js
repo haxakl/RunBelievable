@@ -73,7 +73,7 @@ function Gps($scope) {
             };
 
             // Si le hook est null on retourne le resultat
-            if (hook === null)
+            if (typeof hook === "undefined")
                 return acquisition;
 
             hook(acquisition);
