@@ -5,7 +5,7 @@
 function SessionController($scope, Global) {
 
     var interval_acquisition = 1000;
-    
+
     // TODO Enum pour les textes dispo pour le bouton (à déplacer dans un endroit approprié dans le futur) 
     var dico_bouton_acquisition = {
         STOP: "Arrêter l'acquisition",
@@ -48,6 +48,8 @@ function SessionController($scope, Global) {
             map: Global.map,
             title: 'FOUND YO SORRY ASS !!'
         });
+        
+        Global.map.setCenter(Global.location);
 
         // push dans liste acquisitions
         $scope.session.listeAcquisitions.push(item);
@@ -142,6 +144,12 @@ function SessionController($scope, Global) {
         // maj les var globales
         Global.map = new google.maps.Map(document.getElementById("map"), mapOptions);
         Global.location = item;
+        
+        // Map chargé
+        google.maps.event.addListenerOnce(Global.map, 'idle', function() {
+            // Met à jour la carte avec les markers précédents
+            $scope.resetMap();
+        });
 
         // appeler hook si il y en a un
         if (typeof hook !== "undefined")
@@ -155,39 +163,40 @@ function SessionController($scope, Global) {
 
     }
 
-    /**
-     * Fonction barbarique pour la résolution de la carte qui disparait
-     * @returns {undefined}
-     */
-    $scope.majCarte = function() {
+    // Reset de la map
+    $scope.resetMap = function() {
 
-        var marker = null;
+        var markers = $scope.session.listeAcquisitions;
+
         // On parcourt les acquisitions effectuées
-        for (indice in $scope.session.listeAcquisitions) {
+        for (var i = 0; i < markers.length; i++) {
+
             // maj la position
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(indice.latitude, indice.longitude),
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(markers[i].latitude, markers[i].longitude),
                 map: Global.map,
                 title: 'FOUND YO SORRY ASS !!'
             });
+
         }
 
         // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
         if (!$scope.$$phase) {
             $scope.$apply();
         }
-    }
+
+    };
 
     // Affiche la carte
     $scope.initializeMap = function() {
 
-//        // Si gps ok
-        if ($scope.gps_actif) {
-
-            // Besoin du hook pour initialiser la map sur pos initiale
-            $scope.gps.getAcquisition(finalizeMap);
-            
+        // Si gps ok
+        if (!$scope.gps_actif) {
+            return false;
         }
+
+        $scope.gps.getAcquisition(finalizeMap); // Besoin du hook pour initialiser la map sur pos initiale
+
     };
 
     // Test si le Gps est allumé
