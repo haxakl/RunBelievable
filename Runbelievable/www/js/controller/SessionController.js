@@ -5,8 +5,7 @@
 function SessionController($scope, Global) {
 
     var interval_acquisition = 1000;
-
-
+    
     // TODO Enum pour les textes dispo pour le bouton (à déplacer dans un endroit approprié dans le futur) 
     var dico_bouton_acquisition = {
         STOP: "Arrêter l'acquisition",
@@ -22,10 +21,6 @@ function SessionController($scope, Global) {
     else
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.RESTART;
 
-
-    /**
-     * Permet de modifier l'état du bouton (texte pour l'instant)
-     */
     $scope.clickAcquisition = function() {
         if ($scope.gps.gps_acquisition_actif) {
             stopAcquisition();
@@ -33,8 +28,6 @@ function SessionController($scope, Global) {
             lancerAcquisition();
         }
     };
-
-
 
     /**
      * Méthode permettant de localiser l'utilisateur
@@ -64,8 +57,6 @@ function SessionController($scope, Global) {
             $scope.$apply();
         }
     }
-
-
 
     /**
      *   Permet de verifier si le GPS fonctionne correctement sur le mobile.
@@ -121,7 +112,6 @@ function SessionController($scope, Global) {
         }, interval_acquisition);
     }
 
-
     /**
      * Arrête l'acquisition
      */
@@ -141,9 +131,6 @@ function SessionController($scope, Global) {
 
 
     }
-
-
-
 
     function finalizeMap(item, hook) {
         var mapOptions = {
@@ -194,20 +181,16 @@ function SessionController($scope, Global) {
     // Affiche la carte
     $scope.initializeMap = function() {
 
-        // Si gps ok et carte non initialisée
-        if ($scope.gps_actif && Global.map === null) {
+//        // Si gps ok
+        if ($scope.gps_actif) {
 
             // Besoin du hook pour initialiser la map sur pos initiale
             $scope.gps.getAcquisition(finalizeMap);
-        }
-        else {
-            finalizeMap(Global.location, $scope.majCarte);
+            
         }
     };
 
-
     // Test si le Gps est allumé
     verifierGPS($scope.initializeMap);
-
 
 }

@@ -3,8 +3,6 @@
  */
 function Gps($scope) {
 
-
-
     // Acquisitions en cours
     this.gps_acquisition_actif = false;
 
