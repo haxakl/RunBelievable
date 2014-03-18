@@ -77,6 +77,8 @@ app.controller('AppControler', function($scope) {
                 $scope.bouton_alerte.addClass("alert-success");
                 break;
         }
+        
+    
     };
 
     /**
@@ -121,6 +123,13 @@ app.controller('AppControler', function($scope) {
      */
     $scope.icones_gps = $("#icone_gps");
 
+	// Si aucune liste de session n'existe, on en créer une dans le WebStorage
+    if (sessionStorage.getItem("listeSessions") == null) {
+    	var listeSessions = [];
+    	sessionStorage.setItem("listeSessions", listeSessions);
+    }
+    // On récupere la liste des sessions dans le WebStorage
+    $scope.listeSession = sessionStorage.getItem("listeSessions");
 
     /**
      * Cette variable permet d'accéder au Gps dans tous nos scripts Js.

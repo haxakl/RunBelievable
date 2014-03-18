@@ -23,6 +23,7 @@ function Session() {
     this.caloriesDepensees = 0;
 
     this.nombreDePause = 0;
+    
+    this.nom = "";
 
-}
-;
+};

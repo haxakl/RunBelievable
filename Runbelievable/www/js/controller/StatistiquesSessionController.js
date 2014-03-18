@@ -221,7 +221,15 @@ function StatistiquesSessionController($scope) {
             compteur++;
         }
         ;
-    }
+    };
+    
+    /**
+     *Méthode permettant de stocker la session dans la liste des sessions
+     */
+    $scope.sauvegarderSession = function() {
+    	// TODO à finir
+    	console.log($scope.session);
+    };
 
     $scope.lissageSession();
 
