@@ -1,7 +1,9 @@
 <section class="panel panel-padding" ng-controller="SessionController">
     <center>
         <a class="btn btn-primary btn-sm" ng-click="clickAcquisition()" ng-show="gps_actif">{{texte_bouton_acquisition}}</a>
-        <a href="#statistiquesSession" class="btn btn-primary btn-sm" ng-click="menu = 'statistiquesSession'" ng-show="true">Statistiques de la session</a>
+        <a href="#statistiquesSession" class="btn btn-primary btn-sm" ng-click="menu = 'statistiquesSession'" ng-show="true">Statistiques</a>
+        <br>
+        Vitesse actuelle : {{vitesseActuelle | number : 0}} km
     </center>
     <br/>
 

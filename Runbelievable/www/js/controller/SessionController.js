@@ -5,6 +5,8 @@
 function SessionController($scope, Global) {
 
     var interval_acquisition = 1000;
+    
+    $scope.vitesseActuelle = 0;
 
     // TODO Enum pour les textes dispo pour le bouton (à déplacer dans un endroit approprié dans le futur) 
     var dico_bouton_acquisition = {
@@ -111,7 +113,22 @@ function SessionController($scope, Global) {
                 clearInterval($scope.boucleID);
             }
             $scope.gps.getAcquisition(placerPoint);
+            
+            calculerVitesseActuelle();
         }, interval_acquisition);
+    }
+    
+    function calculerVitesseActuelle() {
+    	if ($scope.session.listeAcquisitions.length > 1) {
+    		var acquisitonActuelle = $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length-1];
+    		var acquisitonPrecedente = $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length-2];
+    	
+    		var distance = $scope.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
+    		
+    		var tempsEntre2Points = (acquisitonActuelle.timestamp - acquisitonPrecedente.timestamp)/1000;
+    		
+    		$scope.vitesseActuelle = 3600 * distance / tempsEntre2Points;
+    	}    	
     }
 
     /**
