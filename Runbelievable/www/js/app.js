@@ -11,7 +11,7 @@ document.addEventListener('deviceready', function() {
 // Création du module angular correspondant à notre application
 var app = angular.module('runbelievable', ['ngRoute']);
 
-/**
+/** 
  *	Configuration des routes de notre application
  *
  */
