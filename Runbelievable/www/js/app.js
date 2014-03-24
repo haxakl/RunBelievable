@@ -44,6 +44,17 @@ app.controller('AppControler', function($scope) {
     // Test si un profil existe
     if(typeof $scope.user !== undefined) {
         $("#connexion_profil").fadeIn(500);
+        
+        $("#connexion_profil #log_in").click(function() {
+            console.log("Requete ajax");
+            $.post("http://runbelievable.netai.net/modules/utilisateurs/ajax.php", {
+                fonction: "login",
+                login: $("#connexion_profil input[name='nom']").val(),
+                password: $("#connexion_profil input[name='password']").val()
+            }).done(function(msg) {
+                console.log(msg);
+            });
+        });
     }
 
     /* ***********************
