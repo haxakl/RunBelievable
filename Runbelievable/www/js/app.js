@@ -41,6 +41,10 @@ app.factory('Global', function() {
  */
 app.controller('AppControler', function($scope) {
 
+    // Test si un profil existe
+    if(typeof $scope.user !== undefined) {
+        $("#connexion_profil").fadeIn(500);
+    }
 
     /* ***********************
      Alertes

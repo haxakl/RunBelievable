@@ -39,6 +39,26 @@
     <body >
         <section id="App"  ng-controller="AppControler">
 
+            <!-- Connexion au profil -->
+            <div id="connexion_profil">
+                <a class="close" onclick="$(this).parent().fadeOut(500)"><i class="fa fa-times"></i></a>
+                <h3>Connexion</h3>
+                <p>
+                    Vous n'êtes pas connecté à un profil. Connectez-vous à votre profil en ligne
+                </p><br/>
+                <p>
+                    <b>Login</b>
+                    <input type="text" class="form-control" name="login" placeholder="Login"/>
+                </p><br/>
+                <p>
+                    <b>Password</b>
+                    <input type="text" class="form-control" name="password" placeholder="Password"/>
+                </p><br/>
+                <p>
+                    <a class="btn btn-primary btn-sm">Se connecter</a>
+                </p>
+            </div>
+            
             <!-- Titre -->
             <header class="header">
                 <!-- Bouton de retour à l'écran précedent -->
