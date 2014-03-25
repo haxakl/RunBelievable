@@ -30,8 +30,8 @@ app.config(function($routeProvider) {
 app.factory('Global', function() {
     return {
         map: null,
-        location: null
-        
+        location: null,
+        lastLocation : null        
     };
 });
 
