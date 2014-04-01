@@ -20,6 +20,8 @@ body {
     text-align: center;
     color: white;
     border-bottom: 1px solid black;
+    -webkit-transition: left 300ms linear 0s; /* For Safari 3.1 to 6.0 */
+    transition: left 300ms linear 0s;
     .sidebar {
         float: left;
         height: 49px;
@@ -59,6 +61,7 @@ body {
     }
     .alert {
         display: none;
+        border-radius: 0px;
     }
     .close {
         margin: 5px;
@@ -71,10 +74,43 @@ body {
 }
 
 .view {
+    position: absolute;
+    top: 60px;
+    left: 0px;
+    width: 100%;
     padding: 15px;
-    padding-top: 60px;
+    -webkit-transition: left 300ms linear 0s; /* For Safari 3.1 to 6.0 */
+    transition: left 300ms linear 0s;
     #map {
         width: 100%;
         height: 500px;
+    }
+}
+
+#menuG {
+    background-image: url(../img/menu-bg.png);
+    background-repeat: repeat;
+    background-size: 75px 75px;
+    width: 270px;
+    display: block;
+    position: absolute;
+    z-index: 50;
+    top: 0px;
+    left: -270px;
+    bottom: 0px;
+    overflow: hidden;
+    position: fixed;
+    -webkit-transition: left 300ms linear 0s; /* For Safari 3.1 to 6.0 */
+    transition: left 300ms linear 0s;
+    a {
+        text-align: center;
+        height: 49px;
+        color: #ccc;
+        font-size: 18px;
+        width: 49px;
+        line-height: 49px;
+    }
+    a:hover {
+        background: rgba(255, 255, 255, 0.1);
     }
 }

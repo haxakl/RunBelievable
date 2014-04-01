@@ -24,10 +24,11 @@
         <!-- Entités -->
         <script src="js/entites/Session.js" type="text/javascript"></script>
         <script src="js/entites/Utilisateur.js" type="text/javascript"></script>
-        
+
         <!-- Gestionnaires -->
+        <script src="js/gestionnaires/Menu.js" type="text/javascript"></script>
         <script src="js/gestionnaires/Utilisateurs.js" type="text/javascript"></script>
-        
+
         <!-- JS de Raphaeljs pour les graphiques -->
         <script src="lib/raphael/raphael.1.5.2.min.js" type="text/javascript"></script>
         <script src="lib/raphael/g.raphael-min.js" type="text/javascript"></script>
@@ -45,40 +46,46 @@
 
     <body >
         <section id="App"  ng-controller="AppControler">
-            <div id="all">
 
-                <!-- Header mobile -->
-                <div id="header">
-                    <a class="sidebar"><i class="fa fa-bars"></i></a>
-                    RunBelievable
-                    <a class="etat"><i class="fa fa-cog"></i></a>
+            <!-- Menu de Gauche -->
+            <div id="menuG">
+                <div class="header">
+                    <a class="pull-left"><i class="fa fa-cog"></i></a>
+                    <a onclick="menu.toggleMenu();" class="pull-right"><i class="fa fa-times"></i></a>
                 </div>
-
-                <!-- Section principale de l'application -->
-                <section class="view" ng-view></section>
-
-                <!-- Connexion au profil -->
-                <div id="connexion_profil">
-                    <a class="close" onclick="$(this).parent().fadeOut(500)"><i class="fa fa-times"></i></a>
-                    <h3>Connexion</h3>
-                    <div class="alert-danger alert"></div>
-                    <p>
-                        Vous n'êtes pas connecté à un profil. Connectez-vous à votre profil en ligne
-                    </p><br/>
-                    <p>
-                        <b>Login</b>
-                        <input type="text" class="form-control" name="login" placeholder="Login"/>
-                    </p><br/>
-                    <p>
-                        <b>Password</b>
-                        <input type="password" class="form-control" name="password" placeholder="Password"/>
-                    </p><br/>
-                    <p>
-                        <a id="log_in" class="btn btn-primary btn-sm">Se connecter</a>
-                    </p>
-                </div>
-
             </div>
+
+            <!-- Header mobile -->
+            <div id="header">
+                <a class="sidebar"><i class="fa fa-bars"></i></a>
+                RunBelievable
+                <a class="etat"><i class="fa fa-cog"></i></a>
+            </div>
+
+            <!-- Section principale de l'application -->
+            <section class="view" ng-view></section>
+
+            <!-- Connexion au profil -->
+            <div id="connexion_profil">
+                <a class="close" onclick="$(this).parent().fadeOut(500)"><i class="fa fa-times"></i></a>
+                <h3>Connexion</h3>
+                <div class="alert-danger alert"></div>
+                <p>
+                    Vous n'êtes pas connecté à un profil. Connectez-vous à votre profil en ligne
+                </p><br/>
+                <p>
+                    <b>Login</b>
+                    <input type="text" class="form-control" name="login" placeholder="Login"/>
+                </p><br/>
+                <p>
+                    <b>Password</b>
+                    <input type="password" class="form-control" name="password" placeholder="Password"/>
+                </p><br/>
+                <p>
+                    <a id="log_in" class="btn btn-primary btn-sm">Se connecter</a>
+                </p>
+            </div>
+
         </section>
     </body>
 </html>

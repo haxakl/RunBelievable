@@ -14,9 +14,13 @@ function Utilisateurs() {
             login: login,
             password: password
         }).done(function(msg) {
+            $("#connexion_profil .alert").fadeIn(500);
             if(msg.indexOf("Erreur: ") !== -1) {
-                $("#connexion_profil .alert").fadeIn(500);
-                $("#connexion_profil .alert").text(msg);
+                $("#connexion_profil .alert").html("<i class='fa fa-times'></i> " + msg.replace("Erreur: ", ""));
+            } else {
+                $("#connexion_profil .alert").removeClass(".alert-danger");
+                $("#connexion_profil .alert").addClass(".alert-success");
+                $("#connexion_profil .alert").html("<i class='fa fa-check'></i> " + msg);
             }
         });
         

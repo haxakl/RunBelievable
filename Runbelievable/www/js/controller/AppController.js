@@ -3,7 +3,10 @@ function AppController($scope) {
 
     // Déclaration des gestionnaires
     $scope.gestionnaires = new Array();
+    $scope.gestionnaires.menu = new Menu();
     $scope.gestionnaires.utilisateurs = new Utilisateurs();
+
+    window.menu = $scope.gestionnaires.menu;
 
     // Test si un profil existe
     if (typeof $scope.user === "undefined") {
@@ -109,5 +112,10 @@ function AppController($scope) {
      * @type Gps
      */
     $scope.gps = new Gps($scope);
+
+    // Menu
+    $(".sidebar").click(function() {
+        menu.toggleMenu();
+    });
 
 }
