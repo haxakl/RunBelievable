@@ -1,59 +1,17 @@
-/**
- * Fichier contenant les données de l'application mère d'angular.
- *
- */
 
-// Code au lancement de l'appli
-document.addEventListener('deviceready', function() {
+function AppController($scope) {
 
-}, false);
-
-// Création du module angular correspondant à notre application
-var app = angular.module('runbelievable', ['ngRoute']);
-
-/** 
- *	Configuration des routes de notre application
- *
- */
-app.config(function($routeProvider) {
-    $routeProvider.when('/home', {
-        templateUrl: 'partials/home.html'
-    }).when('/about', {
-        templateUrl: 'partials/about.html'
-    }).when('/statistiquesSession', {
-        templateUrl: 'partials/statistiquesSession.html'
-    }).otherwise({
-        redirectTo: '/home'
-    });
-});
-
-app.factory('Global', function() {
-    return {
-        map: null,
-        location: null,
-        lastLocation : null        
-    };
-});
-
-/**
- *	 Controller principal de l'application.
- *
- */
-app.controller('AppControler', function($scope) {
+    // Déclaration des gestionnaires
+    $scope.gestionnaires = new Array();
+    $scope.gestionnaires.utilisateurs = new Utilisateurs();
 
     // Test si un profil existe
-    if(typeof $scope.user !== undefined) {
+    if (typeof $scope.user === undefined) {
         $("#connexion_profil").fadeIn(500);
-        
         $("#connexion_profil #log_in").click(function() {
-            console.log("Requete ajax");
-            $.post("http://runbelievable.netai.net/modules/utilisateurs/ajax.php", {
-                fonction: "login",
-                login: $("#connexion_profil input[name='nom']").val(),
-                password: $("#connexion_profil input[name='password']").val()
-            }).done(function(msg) {
-                console.log(msg);
-            });
+            $scope.gestionnaires.utilisateurs.connexion(
+                    $("#connexion_profil input[name='nom']").val(),
+                    $("#connexion_profil input[name='password']").val());
         });
     }
 
@@ -63,6 +21,7 @@ app.controller('AppControler', function($scope) {
 
     // div d'alerte
     $scope.bouton_alerte = $("#module_alerte");
+
     /**
      * Affiche l'alerte.
      * @param {type} titre Titre
@@ -92,8 +51,8 @@ app.controller('AppControler', function($scope) {
                 $scope.bouton_alerte.addClass("alert-success");
                 break;
         }
-        
-    
+
+
     };
 
     /**
@@ -132,16 +91,15 @@ app.controller('AppControler', function($scope) {
     // Pour controler l'acquisition de partout 
     $scope.boucleID = null;
 
-
     /**
      * Cette variable permet d'accèder à l'icône du Gps
      */
     $scope.icones_gps = $("#icone_gps");
 
-	// Si aucune liste de session n'existe, on en créer une dans le WebStorage
+    // Si aucune liste de session n'existe, on en créer une dans le WebStorage
     if (sessionStorage.getItem("listeSessions") == null) {
-    	var listeSessions = [];
-    	sessionStorage.setItem("listeSessions", listeSessions);
+        var listeSessions = [];
+        sessionStorage.setItem("listeSessions", listeSessions);
     }
     // On récupere la liste des sessions dans le WebStorage
     $scope.listeSession = sessionStorage.getItem("listeSessions");
@@ -152,4 +110,4 @@ app.controller('AppControler', function($scope) {
      */
     $scope.gps = new Gps($scope);
 
-}); 
+}
