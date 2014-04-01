@@ -5,6 +5,9 @@ body {
     a {
         cursor: pointer;
     }
+    a:hover {
+        text-decoration: none;
+    }
 }
 
 #header {
@@ -98,11 +101,12 @@ body {
     top: 0px;
     left: -270px;
     bottom: 0px;
+    color: #ccc;
     overflow: hidden;
     position: fixed;
     -webkit-transition: left 300ms linear 0s; /* For Safari 3.1 to 6.0 */
     transition: left 300ms linear 0s;
-    a {
+    .button {
         text-align: center;
         height: 49px;
         color: #ccc;
@@ -110,7 +114,64 @@ body {
         width: 49px;
         line-height: 49px;
     }
-    a:hover {
+    .button:hover {
         background: rgba(255, 255, 255, 0.1);
+    }
+    .logo {
+        margin-top: 60px;
+        padding: 30px;
+        padding-left: 110px;
+        color: #ccc;
+        font-size: 18px;
+        position: relative;
+        height: 120px;
+        .photo {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            top: 20px;
+            left: 10px;
+            background: #666;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 80px;
+            font-size: 30px;
+        }
+        .nom:first-letter {
+            text-transform: uppercase;
+        }
+        .categorie {
+            font-size: 13px;
+            color: #888;
+        }
+    }
+    .title {
+        text-transform: uppercase;
+        background: #1a1a1a;
+        border-top: 1px black solid;
+        border-bottom: 1px black solid;
+        font-size: 15px;
+        padding: 10px;
+        padding-left: 20px;
+    }
+    .liens {
+        a {
+            padding: 15px;
+            font-size: 13px;
+            padding-left: 70px;
+            color: #ccc;
+            width: 100%;
+            display: block;
+            position: relative;
+            i {
+                position: absolute;
+                left: 20px;
+                font-size: 20px;
+                top: 15px;
+            }
+        }
+        a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
     }
 }

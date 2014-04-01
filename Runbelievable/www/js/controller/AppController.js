@@ -117,5 +117,8 @@ function AppController($scope) {
     $(".sidebar").click(function() {
         menu.toggleMenu();
     });
+    $("#menuG .liens a").click(function() {
+        menu.toggleMenu();
+    });
 
 }
