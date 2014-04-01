@@ -166,7 +166,7 @@ function SessionController($scope, Global) {
     function finalizeMap(item, hook) {
         var mapOptions = {
             center: new google.maps.LatLng(item.latitude, item.longitude),
-            zoom: 20,
+            zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 

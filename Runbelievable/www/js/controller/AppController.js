@@ -6,11 +6,11 @@ function AppController($scope) {
     $scope.gestionnaires.utilisateurs = new Utilisateurs();
 
     // Test si un profil existe
-    if (typeof $scope.user === undefined) {
+    if (typeof $scope.user === "undefined") {
         $("#connexion_profil").fadeIn(500);
         $("#connexion_profil #log_in").click(function() {
             $scope.gestionnaires.utilisateurs.connexion(
-                    $("#connexion_profil input[name='nom']").val(),
+                    $("#connexion_profil input[name='login']").val(),
                     $("#connexion_profil input[name='password']").val());
         });
     }

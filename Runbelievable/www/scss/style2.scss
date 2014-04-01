@@ -1,5 +1,7 @@
 
 body {
+    font-family: 'Open Sans', sans-serif !important;
+    color: #666;
     a {
         cursor: pointer;
     }
@@ -41,7 +43,7 @@ body {
 }
 
 #connexion_profil {
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
     background: rgba(22, 22, 22, .95);
@@ -54,6 +56,9 @@ body {
     input {
         width: 90%;
         margin: 10px auto;
+    }
+    .alert {
+        display: none;
     }
     .close {
         margin: 5px;
