@@ -1,7 +1,7 @@
 <?php
 
 // Chaîne sécurisé
-function securedString($var) {
+function secuStr($var) {
     if (isset($var) && is_string($var)) {
         return htmlspecialchars($var);
     }
@@ -10,7 +10,7 @@ function securedString($var) {
 }
 
 // Entier sécurisé
-function securedInt($var) {
+function secuInt($var) {
     if (isset($var) && is_int($var)) {
         return $var;
     }
