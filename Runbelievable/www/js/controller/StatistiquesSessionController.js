@@ -227,8 +227,7 @@ function StatistiquesSessionController($scope) {
      *Méthode permettant de stocker la session dans la liste des sessions
      */
     $scope.sauvegarderSession = function() {
-    	// TODO à finir
-    	console.log($scope.session);
+        $scope.gestionnaires.sessions.sauvegarderSession($("#nomSession").val(), $scope.session, $scope.user);
     };
 
     $scope.lissageSession();

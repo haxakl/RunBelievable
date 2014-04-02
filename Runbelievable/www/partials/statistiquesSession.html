@@ -1,4 +1,4 @@
-<section class="panel panel-padding" ng-controller="StatistiquesSessionController">
+<section ng-controller="StatistiquesSessionController">
 
     <!--<center><a class="btn btn-primary btn-sm" ng-click="lissageSession()">Calculer les stats</a></center>-->
     <h3 align="center">Statistiques de votre session</h3>
@@ -13,23 +13,8 @@
     <!-- Div contenant le graphique -->
     <center><b>Vitesse au cours du temps : </b></center>
     <div align="center" id="VitesseTemps" class="chartWrapper"></div>
-    
-	<input type="text" class="form-control" id="nomSession" placeholder="Nom de la session ..." ng-model="session.nom"></br>
-	<a class="btn btn-primary btn-sm" ng-click="sauvegarderSession()" ng-show="true">Sauvegarder la session</a>
-	
-    <!--
-    <table id="test" class="table table-striped" ng-show="true">
-    <thead>
-        <tr>
-            <th>Stats par tranche</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="item in tableauStats">
-            <td> {{item.distance}} km</td>
-            <td> {{item.duree}} s</td>
-           <td> {{item.vitesseMoyenne}} km/h</td>
-        <tr>
-    </tbody>
-</table>-->
+    <input type="text" class="form-control" id="nomSession" placeholder="Nom de la session ..." ng-model="session.nom">
+    <br/>
+    <a class="btn btn-primary btn-sm" ng-click="sauvegarderSession()" ng-show="true">Sauvegarder la session</a>
+
 </section>

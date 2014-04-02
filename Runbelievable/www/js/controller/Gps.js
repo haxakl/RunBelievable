@@ -13,9 +13,8 @@ function Gps($scope) {
      * Modifie l'icône du Gps.
      * @param {type} type Type icône
      */
-    this.modifIcone = function(type) {
-        $scope.icones_gps.removeClass("text-danger text-info text-success");
-        $scope.icones_gps.addClass("text-" + type);
+    this.modifIcone = function(type, texte) {
+        $scope.icones_gps.html('<i class="fa fa-map-marker"></i><label class="label label-' + type + '">' + texte + '</label>');
     };
 
     /**
@@ -29,11 +28,11 @@ function Gps($scope) {
             return false;
 
         navigator.geolocation.getCurrentPosition(function() {
-            $scope.gps.modifIcone("success");
+            $scope.gps.modifIcone("success", "Gps activé");
             $scope.gps_actif = true;
             hook();
         }, function() {
-            $scope.gps.modifIcone("danger");
+            $scope.gps.modifIcone("danger", "Gps désactivé");
             $scope.gps_actif = false;
             $scope.afficherAlerte("Erreur", "Le Gps n'est pas fonctionnel sur ce téléphone", "danger");
             // On fait disparaitre l'alerte après 3 secondes

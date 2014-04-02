@@ -13,6 +13,7 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 
         <script type="text/javascript" src="lib/jquery/jquery.js"></script>
+        <script type="text/javascript" src="lib/jquery/jquery.transit.js"></script>
         <script type="text/javascript" src="lib/angular/angular.min.js"></script>
         <script type="text/javascript" src="lib/angular/angular-route.min.js"></script>
         <script type="text/javascript"
@@ -49,26 +50,53 @@
 
             <!-- Menu de Gauche -->
             <div id="menuG">
-                <div class="header">
-                    <a class="button pull-left"><i class="fa fa-cog"></i></a>
-                    <a onclick="menu.toggleMenu();" class="button pull-right"><i class="fa fa-times"></i></a>
-                </div>
-                <div class="logo">
-                    <div class="photo"><i class="fa fa-user"></i></div>
-                    <span class="nom">Vous n'êtes pas connecté !</span><br/>
-                    <span class="categorie"></span>
-                </div>
-                <div class="title">Navigation</div>
-                <div class="liens">
-                    <a href="#"><i class="fa fa-home"></i> Accueil</a>
-                </div>
-                <section ng-controller="SessionController">
-                    <div class="title">Sessions</div>
-                    <div class="liens">
-                        <a ng-click="clickAcquisition()" ng-show="gps_actif"><i class="fa fa-exchange"></i> {{texte_bouton_acquisition}}</a>
-                        <a href="#statistiquesSession" ng-show="true"><i class="fa fa-bar-chart-o"></i> Statistiques</a>
+                <div class="scroll">
+                    <div class="header">
+                        <a onclick="menu.toggleMenuGauche();" class="button pull-right"><i class="fa fa-times"></i></a>
                     </div>
-                </section>
+                    <div class="logo">
+                        <div class="photo"><i class="fa fa-user"></i></div>
+                        <span class="nom">Vous n'êtes pas connecté !</span><br/>
+                        <span class="categorie"></span>
+                    </div>
+                    <div class="title">Navigation</div>
+                    <div class="liens">
+                        <a href="#"><i class="fa fa-home"></i> Accueil</a>
+                    </div>
+                    <section ng-controller="SessionController">
+                        <div class="title">Sessions</div>
+                        <div class="liens">
+                            <a ng-click="clickAcquisition()" ng-show="gps_actif"><i class="fa fa-exchange"></i> {{texte_bouton_acquisition}}</a>
+                            <a href="#statistiquesSession" ng-show="true"><i class="fa fa-bar-chart-o"></i> Statistiques de la session</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Menu de Droite -->
+            <div id="menuD">
+                <div class="scroll">
+                    <div class="header">
+                        <a onclick="menu.toggleMenuGauche();" class="button pull-right"><i class="fa fa-times"></i></a>
+                    </div>
+                    <div class="logo">
+                        <div class="photo"><i class="fa fa-cogs"></i></div>
+                        <span class="nom">Système</span><br/>
+                        <span class="categorie">Etat des modules</span>
+                    </div>
+                    <div class="title">Gps</div>
+                    <div class="liens">
+                        <div id="icone_gps" class="infos"><i class="fa fa-map-marker"></i></div>
+                    </div>
+                    <div class="title">Internet</div>
+                    <div class="liens">
+                        <div id="icone_internet" class="infos"><i class="fa fa-cloud"></i><label class="label label-success">Internet activé</label></div>
+                    </div>
+                    <div class="title">Options</div>
+                    <div class="liens">
+                        <a><i class="fa fa-anchor"></i>Options</a>
+                    </div>
+                </div>
             </div>
 
             <!-- Header mobile -->

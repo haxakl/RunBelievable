@@ -65,26 +65,6 @@ function AppController($scope) {
         $scope.bouton_alerte.fadeOut(1000);
     };
 
-    /**
-     *Méthode permettant de configurer le bouton retour à l'écran précédent
-     */
-    $scope.configurerRetour = function(route) {
-        // On configure le href pour se rendre à l'écran désiré
-        $("#retour").attr("href", "#" + route);
-
-        // On retire toutes les anciennes fonctions liées
-        $("#retour").unbind();
-
-        // Lors d'un click, on va changer d'écran et cacher le bouton
-        $("#retour").bind("click", function() {
-            $scope.menu = route;
-            $("#retour").hide();
-        });
-
-        // On affiche le bouton
-        $("#retour").show();
-    };
-
     // Création de l'objet session
     $scope.session = new Session();
 
@@ -115,10 +95,13 @@ function AppController($scope) {
 
     // Menu
     $(".sidebar").click(function() {
-        menu.toggleMenu();
+        menu.toggleMenuGauche();
+    });
+    $(".etat").click(function() {
+        menu.toggleMenuDroite();
     });
     $("#menuG .liens a").click(function() {
-        menu.toggleMenu();
+        menu.toggleMenuGauche();
     });
 
 }
