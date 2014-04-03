@@ -57,8 +57,8 @@
                     </div>
                     <div class="logo">
                         <div class="photo"><i class="fa fa-user"></i></div>
-                        <span class="nom">Vous n'êtes pas connecté !</span><br/>
-                        <span class="categorie"></span>
+                        <span class="nom">{{user.nom}}</span><br/>
+                        <span class="categorie">{{user.categorie}}</span>
                     </div>
                     <div class="title">Navigation</div>
                     <div class="liens">
@@ -112,25 +112,34 @@
             <section class="view" ng-view></section>
 
             <!-- Connexion au profil -->
-            <div id="connexion_profil">
+            <div id="new_profil">
                 <div class="scroll">
-                    <a class="close" onclick="$(this).closest('#connexion_profil').fadeOut(500)"><i class="fa fa-times"></i></a>
                     <img alt="logo" src="img/logo.png" id="logo_connexion"/>
                     <h3>Connexion</h3>
                     <div class="alert-danger alert"></div>
                     <p>
-                        Bienvenue dans l'application mobile de sports RunBelievable. Vous n'êtes actuellement pas connecté à votre profil. Si vous n'êtes pas connecté, vous ne profiterez pas de tous les avantages de nos services. Vous ne possédez pas de compte : <a href="http://runbelievable.netai.net/inscription">s'inscrire</a>.
+                        Bienvenue dans l'application mobile de sports RunBelievable. Vous n'avez pas de profil local actuellement. Pour pouvoir utiliser notre application vous devez créer un profil. Celui-ci pourra être stocké en ligne si vous le souhaitez. Nos services en ligne sont disponible qu'au profil stocké en ligne.
                     </p><br/>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">Nom de profil</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Nom du profil">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="profil" class="col-sm-2 control-label">Votre profil</label>
+                            <div class="col-sm-10">
+                                <select style="width: 90%;margin: auto;" class='form-control' name="profil" id="profil">
+                                    <option value="amateur">Amateur</option>
+                                    <option value="sportif">Sportif</option>
+                                    <option value="professionnel">Professionnel</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form><br/>
                     <p>
-                        <b>Login</b>
-                        <input type="text" class="form-control" name="login" placeholder="Login"/>
-                    </p><br/>
-                    <p>
-                        <b>Password</b>
-                        <input type="password" class="form-control" name="password" placeholder="Password"/>
-                    </p><br/>
-                    <p>
-                        <a id="log_in" class="btn btn-primary btn-sm">Se connecter</a>
+                        <a id="new_profil_btn" class="btn btn-primary btn-sm">Créer le profil</a>
                     </p>
                 </div>
             </div>

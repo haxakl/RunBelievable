@@ -27,9 +27,8 @@ function Utilisateur(json) {
     
     // Test si un json est défini
     if(json) {
-        var infos = JSON.parse(json);
-        
-        this.nom = infos.login;
+        this.nom = json.nom;
+        this.categorie = json.profil;
     }
     
 }

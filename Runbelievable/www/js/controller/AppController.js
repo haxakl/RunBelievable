@@ -9,12 +9,17 @@ function AppController($scope) {
     window.menu = $scope.gestionnaires.menu;
 
     // Test si un profil existe
-    if (typeof $scope.user === "undefined") {
+    $scope.user = $.parseJSON(sessionStorage.getItem("profil"));
+    if (typeof $scope.user === "undefined" || $scope.user === null) {
         $("#new_profil").fadeIn(500);
-        $("#new_profil #log_in").click(function() {
-            $scope.gestionnaires.utilisateurs.connexion(
-                    $("#new_profil input[name='nom']").val()
-                    )
+        $("#new_profil #new_profil_btn").click(function() {
+            var user = $scope.gestionnaires.utilisateurs.creerProfil({
+                nom: $("#new_profil #name").val(),
+                profil: $("#new_profil #profil").val()
+            });
+            if (user !== false) {
+                $scope.user = sessionStorage.setItem("profil", JSON.stringify($scope.user));
+            }
         });
     }
 
