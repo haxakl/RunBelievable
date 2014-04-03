@@ -104,4 +104,8 @@ function AppController($scope) {
         menu.toggleMenuGauche();
     });
 
+    document.addEventListener("offline", function() {
+        console.log("Internet down");
+    }, false);
+
 }
