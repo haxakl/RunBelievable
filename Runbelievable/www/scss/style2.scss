@@ -50,6 +50,17 @@ body {
 }
 
 #connexion_profil {
+    .scroll {
+        padding: 4%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 104%;
+        height: 100%;
+        position: absolute;
+    }
+    img {
+        margin: 10px;
+    }
     position: fixed;
     top: 0px;
     left: 0px;

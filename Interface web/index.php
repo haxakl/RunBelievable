@@ -6,10 +6,13 @@
         
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
         
-        <script src="styles/bootstrap.css"></script>
-        <script src="styles/style.css"></script>
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="styles/style.css" />
     </head>
     <body>
+        <form>
+            
+        </form>
         <a class="btn btn-primary">Inscription</a>
     </body>
 </html>
