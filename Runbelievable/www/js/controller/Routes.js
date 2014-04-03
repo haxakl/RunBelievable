@@ -22,6 +22,8 @@ app.config(function($routeProvider) {
         templateUrl: 'partials/about.html'
     }).when('/statistiquesSession', {
         templateUrl: 'partials/statistiquesSession.html'
+    }).when('/listeSessions', {
+        templateUrl: 'partials/listeSessions.html'
     }).otherwise({
         redirectTo: '/home'
     });
