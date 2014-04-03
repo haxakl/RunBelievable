@@ -116,6 +116,9 @@ body {
     color: #ccc;
     overflow: hidden;
     position: fixed;
+    .categorie:first-letter {
+        text-transform: uppercase;
+    }
     .scroll {
         overflow-x: hidden;
         overflow-y: auto;

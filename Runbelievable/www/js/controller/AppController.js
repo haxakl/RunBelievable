@@ -18,7 +18,11 @@ function AppController($scope) {
                 profil: $("#new_profil #profil").val()
             });
             if (user !== false) {
-                $scope.user = sessionStorage.setItem("profil", JSON.stringify($scope.user));
+                $scope.user = user;
+                sessionStorage.setItem("profil", JSON.stringify($scope.user));
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
             }
         });
     }
