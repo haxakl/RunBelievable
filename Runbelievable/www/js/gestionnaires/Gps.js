@@ -154,6 +154,6 @@ function Gps($scope) {
     // Test si le gps est actif
     setInterval(function() {
         $scope.gps.testActivation();
-    }, 1000);
+    }, 10000);
 
 }

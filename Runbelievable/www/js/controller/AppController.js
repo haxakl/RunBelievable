@@ -10,11 +10,11 @@ function AppController($scope) {
 
     // Test si un profil existe
     if (typeof $scope.user === "undefined") {
-        $("#connexion_profil").fadeIn(500);
-        $("#connexion_profil #log_in").click(function() {
+        $("#new_profil").fadeIn(500);
+        $("#new_profil #log_in").click(function() {
             $scope.gestionnaires.utilisateurs.connexion(
-                    $("#connexion_profil input[name='login']").val(),
-                    $("#connexion_profil input[name='password']").val());
+                    $("#new_profil input[name='nom']").val()
+                    )
         });
     }
 
@@ -108,4 +108,20 @@ function AppController($scope) {
         console.log("Internet down");
     }, false);
 
+    // Test de la connexion internet
+    setInterval(function() {
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: "http://runbelievable.eu.pn/",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            }
+        }).done(function(data) {
+            $("#icone_internet").html('<i class="fa fa-cloud"></i><label class="label label-success">Internet activé</label>');
+        }).fail(function(xhr, textStatus, errorThrown) {
+            $("#icone_internet").html('<i class="fa fa-cloud"></i><label class="label label-danger">Internet désactivé</label>');
+        });
+    }, 60000);
 }
