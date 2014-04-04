@@ -9,7 +9,7 @@ document.addEventListener('deviceready', function() {
 }, false);
 
 // Création du module angular correspondant à notre application
-var app = angular.module('runbelievable', ['ngRoute']);
+var app = angular.module('runbelievable', ['ngRoute', 'google-maps']);
 
 /** 
  *	Configuration des routes de notre application
