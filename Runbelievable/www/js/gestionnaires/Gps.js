@@ -9,25 +9,24 @@ function Gps($scope) {
     // L'interval de temps entre 2 acquisitions
     this.interval_acquisition = 1000;
 
-    // Variable avec activation du gps
-    this.gps_actif = false;
+    // Variable avec l'activation du gps
+    this.actif = false;
 
     // Test si le gps est activé
     this.testActivation = function() {
 
         // Test si le Gps existe sur le téléphone
         if (!navigator.geolocation)
-            $scope.gps.gps_actif = false;
+            $scope.gestionnaires.gps.gps_actif = false;
 
         navigator.geolocation.getCurrentPosition(function() {
-            $scope.gps.modifIcone("success", "Gps activé");
-            $scope.gps_actif = true;
-            $scope.gps.gps_actif = true;
+            $scope.gestionnaires.gps.modifIcone("success", "Gps activé");
+            this.actif = true;
         }, function() {
-            $scope.gps.modifIcone("danger", "Gps désactivé");
-            $scope.gps_actif = false;
-            $scope.gps.gps_actif = false;
+            $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
+            this.actif = false;
             $scope.afficherAlerte("Erreur", "Le Gps n'est pas fonctionnel sur ce téléphone", "danger");
+            
             // On fait disparaitre l'alerte après 3 secondes
             setTimeout(function() {
                 $scope.cacherAlerte();
@@ -39,9 +38,7 @@ function Gps($scope) {
         });
 
         // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-        if (!$scope.$$phase) {
-            $scope.$apply();
-        }
+        $scope.refresh();
 
     };
 
@@ -64,12 +61,12 @@ function Gps($scope) {
             return false;
 
         navigator.geolocation.getCurrentPosition(function() {
-            $scope.gps.modifIcone("success", "Gps activé");
-            $scope.gps_actif = true;
+            $scope.gestionnaires.gps.modifIcone("success", "Gps activé");
+            this.actif = true;
             hook();
         }, function() {
-            $scope.gps.modifIcone("danger", "Gps désactivé");
-            $scope.gps_actif = false;
+            $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
+            this.actif = false;
             $scope.afficherAlerte("Erreur", "Le Gps n'est pas fonctionnel sur ce téléphone", "danger");
             // On fait disparaitre l'alerte après 3 secondes
             setTimeout(function() {
@@ -93,7 +90,6 @@ function Gps($scope) {
      */
     this.getAcquisition = function(hook) {
 
-
         var acquisition = null;
 
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -110,7 +106,6 @@ function Gps($scope) {
                 return acquisition;
 
             hook(acquisition);
-
 
         }, function() {
 
@@ -150,10 +145,5 @@ function Gps($scope) {
     function toRad(nombre) {
         return nombre * Math.PI / 180;
     };
-
-    // Test si le gps est actif
-    setInterval(function() {
-        $scope.gps.testActivation();
-    }, 10000);
 
 }

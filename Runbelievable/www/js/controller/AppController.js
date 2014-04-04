@@ -6,135 +6,37 @@
  */
 function AppController($scope) {
 
-    // Déclaration des gestionnaires
+    // ==========================================================
+    //  Déclaration des gestionnaires
+    // ==========================================================
+
+    // Déclaration du tableau des gestionnaires
     $scope.gestionnaires = new Array();
+
+    // Déclaration des gestionnaires
     $scope.gestionnaires.menu = new Menu();
     $scope.gestionnaires.utilisateurs = new Utilisateurs();
-
-    window.menu = $scope.gestionnaires.menu;
-
-    // Test si un profil existe
-    $scope.user = $.parseJSON(sessionStorage.getItem("profil"));
-    if (typeof $scope.user === "undefined" || $scope.user === null) {
-        $("#new_profil").fadeIn(500);
-        $("#new_profil #new_profil_btn").click(function() {
-            var user = $scope.gestionnaires.utilisateurs.creerProfil({
-                nom: $("#new_profil #name").val(),
-                profil: $("#new_profil #profil").val()
-            });
-            if (user !== false) {
-                $scope.user = user;
-                sessionStorage.setItem("profil", JSON.stringify($scope.user));
-                if (!$scope.$$phase) {
-                    $scope.$apply();
-                }
-            }
-        });
-    }
-
-    /* ***********************
-     Alertes
-     *********************** */
-
-    // div d'alerte
-    $scope.bouton_alerte = $("#module_alerte");
-
-    /**
-     * Affiche l'alerte.
-     * @param {type} titre Titre
-     * @param {type} msg Message
-     * @param {type} type Type { danger, info, succes }
-     */
-    $scope.afficherAlerte = function(titre, msg, type) {
-        $scope.bouton_alerte.show();
-
-        $scope.bouton_alerte.find("h3").text(titre);
-        $scope.bouton_alerte.find("p").text(msg);
-
-        $scope.bouton_alerte.removeClass("alert-danger");
-        $scope.bouton_alerte.removeClass("alert-info");
-        $scope.bouton_alerte.removeClass("alert-primary");
-        $scope.bouton_alerte.removeClass("alert-warning");
-        $scope.bouton_alerte.removeClass("alert-success");
-
-        switch (type) {
-            case "danger":
-                $scope.bouton_alerte.addClass("alert-danger");
-                break;
-            case "info":
-                $scope.bouton_alerte.addClass("alert-info");
-                break;
-            case "succes":
-                $scope.bouton_alerte.addClass("alert-success");
-                break;
-        }
-
-
-    };
-
-    /**
-     * Cache l'alerte.
-     */
-    $scope.cacherAlerte = function() {
-        $scope.bouton_alerte.fadeOut(1000);
-    };
+    $scope.gestionnaires.gps = new Gps($scope);
     
-    // Création de l'objet session en cours
-    $scope.session = new Session();
-    
-    // La session courrante est celle qui sera affichée dans les statistiques
-    $scope.sessionAfficheeStatistiques = new Session();
-
-    // Gps actif ou non
-    $scope.gps_actif = false;
-
-    // Pour controler l'acquisition de partout 
-    $scope.boucleID = null;
-
-    /**
-     * Cette variable permet d'accèder à l'icône du Gps
-     */
+    // Configuration de l'application
     $scope.icones_gps = $("#icone_gps");
 
-    // Si aucune liste de session n'existe, on en créer une dans le WebStorage
-    // TODO remettre le if après la fin des tests
-    //if (sessionStorage.getItem("listeSessions") == null) {
-    var listeSessions = new Array();
-    sessionStorage.setItem("listeSessions", listeSessions);
-    //}
-    // On récupere la liste des sessions déjà présentes dans le WebStorage
-    $scope.listeSession = (Array)(sessionStorage.getItem("listeSessions"));
+    // ==========================================================
+    //  Fonctions stockées dans le scope
+    // ==========================================================
 
-    /* Petite verification car lors de l'initialisation de la liste, celle-ci lorsqu'elle
-     est castée dans le scope est considérée comme possédant un string "" en premier item
-     alors qu'elle est effectivement vide */
-    if ($scope.listeSession.length == 1) {
-        if ($scope.listeSession[0] == "") {
-            $scope.listeSession.pop();
+    // Permet de refresh l'application
+    $scope.refresh = function() {
+
+        // Si le scope n'est pas entrain de rafraichir on force le 
+        // rafraichissement.
+        if (!$scope.$$phase) {
+            $scope.$apply();
         }
-    }
 
-    /**
-     * Cette variable permet d'accéder au Gps dans tous nos scripts Js.
-     * @type Gps
-     */
-    $scope.gps = new Gps($scope);
+    };
 
-    // Menu
-    $(".sidebar").click(function() {
-        menu.toggleMenuGauche();
-    });
-    $(".etat").click(function() {
-        menu.toggleMenuDroite();
-    });
-    $("#menuG .liens a").click(function() {
-        menu.toggleMenuGauche();
-    });
-
-    document.addEventListener("offline", function() {
-        console.log("Internet down");
-    }, false);
-
+    // Permet de tester l'internet
     $scope.testerInternet = function() {
         $.ajax({
             type: "POST",
@@ -151,14 +53,133 @@ function AppController($scope) {
         });
     };
 
-    // Test de la connexion internet
-    setInterval(function() {
-        testerInternet();
+    // Permet de tester le Gps
+    $scope.testerGps = function() {
+        $scope.gestionnaires.gps.testActivation();
+    };
+
+    // ==========================================================
+    //  Intervals et Timeouts stockées dans le scope
+    //  @description Les timeouts et les intervals sont mieux ici car les fuites
+    //  de mémoires dans cordova viennent principalement de ces deux éléments. 
+    //  On doit pouvoir récupérer très rapidement ces deux éléments.
+    // ==========================================================
+
+    // Intervals
+    $scope.interval = new Array();
+
+    // Timeouts
+    $scope.timeout = new Array();
+
+    // ==========================================================
+    //  Test du chargement en début
+    // ==========================================================
+
+    // Récupération du profil de la session storage
+    $scope.user = $.parseJSON(sessionStorage.getItem("profil"));
+
+    // On regarde si on a récupéré un utilisateur du session storage.
+    // Si ce n'est pas le cas alors on considère qu'il n'y a pas de profil 
+    // stocké sur le téléphone.
+    // La récupération de profil (s'il a été perdu) ne se fera que si le profil 
+    // a été enregistré sur le serveur en ligne.
+    if (typeof $scope.user === "undefined" || $scope.user === null) {
+
+        // Affiche la création de profil
+        $("#new_profil").fadeIn(500);
+
+        // On lie le bouton à la création d'un nouvel utilisateur
+        $("#new_profil #new_profil_btn").click(function() {
+            var user = $scope.gestionnaires.utilisateurs.creerProfil({
+                nom: $("#new_profil #name").val(),
+                profil: $("#new_profil #profil").val()
+            });
+
+            // Si l'utilisateur a bien été crée on le stocke dans l'application
+            // et dans le session storage.
+            if (user !== false) {
+                $scope.user = user;
+                sessionStorage.setItem("profil", JSON.stringify($scope.user));
+                $scope.refresh();
+            }
+        });
+
+    }
+
+    // =========================================================
+    //  Début de la création d'une session
+    // ==========================================================
+
+    // Création de l'objet session en cours
+    $scope.session = new Session();
+
+    // La session courrante est celle qui sera affichée dans les statistiques
+    $scope.sessionAfficheeStatistiques = new Session();
+
+    // Pour controler l'acquisition de partout 
+    $scope.boucleID = null;
+
+    // Si aucune liste de session n'existe, on en crée une dans le WebStorage
+    // TODO remettre le if après la fin des tests
+    //if (sessionStorage.getItem("listeSessions") == null) {
+    var listeSessions = new Array();
+    sessionStorage.setItem("listeSessions", listeSessions);
+    //}
+
+    // On récupere la liste des sessions déjà présentes dans le WebStorage
+    $scope.listeSession = (Array)(sessionStorage.getItem("listeSessions"));
+
+    /* Petite verification car lors de l'initialisation de la liste, celle-ci lorsqu'elle
+     est castée dans le scope est considérée comme possédant un string "" en premier item
+     alors qu'elle est effectivement vide */
+    if ($scope.listeSession.length === 1) {
+        if ($scope.listeSession[0] === "") {
+            $scope.listeSession.pop();
+        }
+    }
+
+    // ==========================================================
+    //  Gestion des deux menus
+    // ==========================================================
+
+    // Click d'affichage et de fermeture du menu de gauche
+    $(".sidebar").click(function() {
+        $scope.gestionnaires.menu.toggleMenuGauche();
+    });
+
+    // Click d'affichage et de fermeture du menu de droite
+    $(".etat").click(function() {
+        $scope.gestionnaires.menu.toggleMenuDroite();
+    });
+
+    // Lorsqu'on clique sur un lien du menu le menu se ferme
+    $("#menuG .liens a").click(function() {
+        $scope.gestionnaires.menu.toggleMenuGauche();
+    });
+
+    // Lorsqu'on clique sur un lien du menu le menu se ferme
+    $("#menuD .liens a").click(function() {
+        $scope.gestionnaires.menu.toggleMenuDroite();
+    });
+
+    // ==========================================================
+    //  Tester les deux modules important de notre application : l'accès à 
+    //  Internet et l'accès au Gps
+    // ==========================================================
+
+    // Nouvel interval de 30 secondes
+    var interval_etat = setInterval(function() {
+        $scope.testerInternet();
+        $scope.testerGps();
     }, 60000);
 
-    /* ***********************
-     Mocks de l'application
-     *********************** */
+    // On l'ajoute dans les intervals stockées
+    $scope.interval.push(interval_etat);
+
+    // ==========================================================
+    //  Tests des sessions
+    //  @ASupprimer quand le module sera codé
+    // ==========================================================
 
     // Ajout de sessions dans la liste des sessions
     var s1 = new Session();
@@ -173,5 +194,5 @@ function AppController($scope) {
     $scope.listeSession.push(s1);
     $scope.listeSession.push(s2);
     $scope.listeSession.push(s3);
-    
+
 }

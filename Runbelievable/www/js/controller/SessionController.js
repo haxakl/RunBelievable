@@ -20,13 +20,13 @@ function SessionController($scope, Global) {
     // Texte par défaut
     if ($scope.sessionAfficheeStatistiques.listeAcquisitions.length === 0)
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
-    else if ($scope.gps.gps_acquisition_actif)
+    else if ($scope.gestionnaires.gps.gps_acquisition_actif)
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
     else
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.RESTART;
 
     $scope.clickAcquisition = function() {
-        if ($scope.gps.gps_acquisition_actif) {
+        if ($scope.gestionnaires.gps.gps_acquisition_actif) {
             stopAcquisition();
         } else {
             lancerAcquisition();
@@ -39,7 +39,7 @@ function SessionController($scope, Global) {
      */
     function placerPoint(item) {
 
-        if (!$scope.gps_actif || item === null) {
+        if (!$scope.gestionnaires.gps.actif || item === null) {
             return;
         }
 
@@ -82,22 +82,22 @@ function SessionController($scope, Global) {
     function lancerAcquisition() {
 
         // Test si le Gps n'est pas actif on ne fait rien, et si il n'est pas deja démarré
-        if (!$scope.gps_actif || $scope.gps.gps_acquisition_actif) {
+        if (!$scope.gestionnaires.gps.actif || $scope.gestionnaires.gps.gps_acquisition_actif) {
             return false;
         }
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
 
         // Acquisition démarée
-        $scope.gps.gps_acquisition_actif = true;
+        $scope.gestionnaires.gps.gps_acquisition_actif = true;
 
         // Boucle de récuperation des données
         $scope.boucleID = setInterval(function() {
 
-            if (!$scope.gps_actif || !$scope.gps.gps_acquisition_actif) {
+            if (!$scope.gestionnaires.gps.actif || !$scope.gestionnaires.gps.gps_acquisition_actif) {
                 // On arrete l'acquisition
                 clearInterval($scope.boucleID);
             }
-            $scope.gps.getAcquisition(placerPoint);
+            $scope.gestionnaires.gps.getAcquisition(placerPoint);
 
             calculerVitesseActuelle();
         }, interval_acquisition);
@@ -109,7 +109,7 @@ function SessionController($scope, Global) {
             var acquisitonActuelle = $scope.sessionAfficheeStatistiques.listeAcquisitions[$scope.sessionAfficheeStatistiques.listeAcquisitions.length - 1];
             var acquisitonPrecedente = $scope.sessionAfficheeStatistiques.listeAcquisitions[$scope.sessionAfficheeStatistiques.listeAcquisitions.length - 2];
 
-            var distance = $scope.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
+            var distance = $scope.gestionnaires.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
 
             var tempsEntre2Points = (acquisitonActuelle.timestamp - acquisitonPrecedente.timestamp) / 1000;
 
@@ -123,14 +123,14 @@ function SessionController($scope, Global) {
      */
     function stopAcquisition() {
         // Test si le Gps n'est pas actif on ne fait rien, et si l'acquisition n'est pas deja arêtée
-        if (!$scope.gps_actif || !$scope.gps.gps_acquisition_actif) {
+        if (!$scope.gestionnaires.gps.actif || !$scope.gestionnaires.gps.gps_acquisition_actif) {
             return false;
         }
 
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.RESTART;
 
         // Acquisition arêtée
-        $scope.gps.gps_acquisition_actif = false;
+        $scope.gestionnaires.gps.gps_acquisition_actif = false;
 
         // Recentrer sur dernière pos connue
         Global.map.panTo(Global.location);
@@ -195,15 +195,15 @@ function SessionController($scope, Global) {
     $scope.initializeMap = function() {
 
         // Si gps ok
-        if (!$scope.gps_actif) {
+        if (!$scope.gestionnaires.gps.actif) {
             return false;
         }
 
-        $scope.gps.getAcquisition(finalizeMap); // Besoin du hook pour initialiser la map sur pos initiale
+        $scope.gestionnaires.gps.getAcquisition(finalizeMap); // Besoin du hook pour initialiser la map sur pos initiale
 
     };
 
     // Test si le Gps est allumé    
-    $scope.gps.isEnabled($scope.initializeMap);
+    $scope.gestionnaires.gps.isEnabled($scope.initializeMap);
 
 }
