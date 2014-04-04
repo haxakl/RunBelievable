@@ -25,11 +25,6 @@ function Gps($scope) {
         }, function() {
             $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
             this.actif = false;
-            
-            // On fait disparaitre l'alerte après 3 secondes
-            setTimeout(function() {
-                $scope.cacherAlerte();
-            }, 1000);
         }, {
             maximumAge: 3000,
             timeout: 20000,
@@ -66,11 +61,6 @@ function Gps($scope) {
         }, function() {
             $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
             this.actif = false;
-
-            // On fait disparaitre l'alerte après 3 secondes
-            setTimeout(function() {
-                $scope.cacherAlerte();
-            }, 3000);
         }, {
             maximumAge: 3000,
             timeout: 20000,

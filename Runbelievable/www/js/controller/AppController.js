@@ -38,9 +38,18 @@ function AppController($scope) {
 
     // Permet de tester l'internet
     $scope.testerInternet = function() {
-        
+
+        // Récupération du type de connection
+        if(navigator.connection) {
+            var type = navigator.connection.type;
+        } else if(navigator.network) {
+            var type = navigator.network.connection.type;
+        } else {
+            return true;
+        }
+
         // Test s'il y a une connection
-        if (navigator.network.connection.type === Connection.NONE) {
+        if (type === Connection.NONE) {
             $scope.isInternet = false;
             $("#icone_internet").html('<i class="fa fa-cloud"></i><label class="label label-danger">Internet désactivé</label>');
             return false;
@@ -49,7 +58,7 @@ function AppController($scope) {
             $("#icone_internet").html('<i class="fa fa-cloud"></i><label class="label label-success">Internet activé</label>');
             return true;
         }
-        
+
     };
 
     // Permet de tester le Gps
