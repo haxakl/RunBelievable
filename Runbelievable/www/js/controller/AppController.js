@@ -73,13 +73,10 @@ function AppController($scope) {
     $scope.cacherAlerte = function() {
         $scope.bouton_alerte.fadeOut(1000);
     };
-
-    // Création de l'objet session
-    $scope.session = new Session();
     
     // La session courrante est celle qui sera affichée dans les statistiques
-    $scope.sessionAfficheeStatistiques = $scope.session;
-
+    $scope.sessionAfficheeStatistiques =  new Session();
+    
     // Gps actif ou non
     $scope.gps_actif = false;
 

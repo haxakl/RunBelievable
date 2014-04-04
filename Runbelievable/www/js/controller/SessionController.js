@@ -18,7 +18,7 @@ function SessionController($scope, Global) {
     };
 
     // Texte par défaut
-    if ($scope.session.listeAcquisitions.length === 0)
+    if ($scope.sessionAfficheeStatistiques.listeAcquisitions.length === 0)
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
     else if ($scope.gps.gps_acquisition_actif)
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
@@ -52,7 +52,7 @@ function SessionController($scope, Global) {
                 Global.lastLocation,
                 Global.location
             ];
-            
+
             var segment = new google.maps.Polyline({
                 path: tabSegment,
                 geodesic: true,
@@ -68,36 +68,7 @@ function SessionController($scope, Global) {
         Global.lastLocation = Global.location;
 
         // push dans liste acquisitions
-        $scope.session.listeAcquisitions.push(item);
-
-        // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-        if (!$scope.$$phase) {
-            $scope.$apply();
-        }
-    }
-
-    /**
-     *   Permet de verifier si le GPS fonctionne correctement sur le mobile.
-     */
-    function verifierGPS(hook) {
-        $scope.gps.modifIcone("info");
-
-        // Le hook permet d'éxécuter une action après vérification du gps
-        $scope.gps.isEnabled(hook);
-    }
-
-    /**
-     * Méthode permettant d'ajouter une acquisition de position GPS.
-     * @param {type} item Nouvelles données
-     */
-    function ajouterAcquisitionGPS(item) {
-        // on push seulement si gps en route et item != null
-        if (!$scope.gps_actif || !$scope.gps.gps_acquisition_actif || item === null) {
-            return;
-        }
-
-        $scope.session.listeAcquisitions.push(item);
-        $Global.location = item;
+        $scope.sessionAfficheeStatistiques.listeAcquisitions.push(item);
 
         // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
         if (!$scope.$$phase) {
@@ -133,15 +104,17 @@ function SessionController($scope, Global) {
     }
 
     function calculerVitesseActuelle() {
-        if ($scope.session.listeAcquisitions.length > 1) {
-            var acquisitonActuelle = $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 1];
-            var acquisitonPrecedente = $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 2];
+
+        if ($scope.sessionAfficheeStatistiques.listeAcquisitions.length > 1) {
+            var acquisitonActuelle = $scope.sessionAfficheeStatistiques.listeAcquisitions[$scope.sessionAfficheeStatistiques.listeAcquisitions.length - 1];
+            var acquisitonPrecedente = $scope.sessionAfficheeStatistiques.listeAcquisitions[$scope.sessionAfficheeStatistiques.listeAcquisitions.length - 2];
 
             var distance = $scope.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
 
             var tempsEntre2Points = (acquisitonActuelle.timestamp - acquisitonPrecedente.timestamp) / 1000;
 
             $scope.vitesseActuelle = 3600 * distance / tempsEntre2Points;
+            $("#vitesseActuelle").text(Math.round($scope.vitesseActuelle, 0));
         }
     }
 
@@ -197,7 +170,7 @@ function SessionController($scope, Global) {
     // Reset de la map
     $scope.resetMap = function() {
 
-        var markers = $scope.session.listeAcquisitions;
+        var markers = $scope.sessionAfficheeStatistiques.listeAcquisitions;
 
         // On parcourt les acquisitions effectuées
         for (var i = 0; i < markers.length; i++) {
@@ -230,7 +203,7 @@ function SessionController($scope, Global) {
 
     };
 
-    // Test si le Gps est allumé
-    verifierGPS($scope.initializeMap);
+    // Test si le Gps est allumé    
+    $scope.gps.isEnabled($scope.initializeMap);
 
 }
