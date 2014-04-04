@@ -1,4 +1,9 @@
 
+/**
+ * Controller principal du début de l'application
+ * @param {type} $scope
+ * @returns {undefined}
+ */
 function AppController($scope) {
 
     // Déclaration des gestionnaires
@@ -73,10 +78,10 @@ function AppController($scope) {
     $scope.cacherAlerte = function() {
         $scope.bouton_alerte.fadeOut(1000);
     };
-    
+
     // La session courrante est celle qui sera affichée dans les statistiques
-    $scope.sessionAfficheeStatistiques =  new Session();
-    
+    $scope.sessionAfficheeStatistiques = new Session();
+
     // Gps actif ou non
     $scope.gps_actif = false;
 
@@ -127,8 +132,7 @@ function AppController($scope) {
         console.log("Internet down");
     }, false);
 
-    // Test de la connexion internet
-    setInterval(function() {
+    $scope.testerInternet = function() {
         $.ajax({
             type: "POST",
             dataType: 'text',
@@ -142,6 +146,11 @@ function AppController($scope) {
         }).fail(function(xhr, textStatus, errorThrown) {
             $("#icone_internet").html('<i class="fa fa-cloud"></i><label class="label label-danger">Internet désactivé</label>');
         });
+    };
+
+    // Test de la connexion internet
+    setInterval(function() {
+        testerInternet();
     }, 60000);
 
     /* ***********************
@@ -161,4 +170,5 @@ function AppController($scope) {
     $scope.listeSession.push(s1);
     $scope.listeSession.push(s2);
     $scope.listeSession.push(s3);
+    
 }
