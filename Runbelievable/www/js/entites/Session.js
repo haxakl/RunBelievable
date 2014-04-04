@@ -25,5 +25,6 @@ function Session() {
     this.nombreDePause = 0;
     
     this.nom = "";
-
+   
+    this.calorie =0;
 };

@@ -1,25 +1,12 @@
 <section ng-controller="SessionController">
     <center>
-        Vitesse actuelle : {{vitesseActuelle | number : 0}} km
+          <img alt="logo" src="img/logo.png" id="logo_connexion"/>
+          </br>
+          </br>
+          </br>
+
+           Bienvenue : {{user.nom}}
+           <a href ="#sessionEnCours"> <button type="button" class="btn btn-success btn-lg"  >Démarrer une session</button> </a>
     </center>
-    <br/>
-
-    <div id="map" ng-model="map"></div>
-
-    <table id="geolocalisation" class="table table-striped" ng-show="false">
-        <thead>
-            <tr>
-                <th>Latitude</th>
-                <th>Longitude</th>
-            </tr>
-        </thead>
-        <tbody >
-            <!-- Parcourt de la liste des coordonées GPS -->
-            <tr ng-repeat="item in session.listeAcquisitions">
-                <td> {{item.latitude}} </td>
-                <td> {{item.longitude}} </td>
-            <tr>
-        </tbody>
-    </table>
 </section>
 <script></script>
