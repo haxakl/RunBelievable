@@ -4,7 +4,7 @@
  */
 function StatistiquesSessionController($scope) {
 
-    $scope.session.listeDistances = [];
+    $scope.sessionAfficheeStatistiques.listeDistances = [];
 
     /**
      * Méthode permettant de lisser les données de la session 
@@ -25,17 +25,17 @@ function StatistiquesSessionController($scope) {
         r = 6366;
 
         // On remet les statisiques à 0
-        $scope.session.distanceParcouru = 0;
-        $scope.session.dureeSession = 0;
+        $scope.sessionAfficheeStatistiques.distanceParcouru = 0;
+        $scope.sessionAfficheeStatistiques.dureeSession = 0;
 
         // L'ancien point utilisé dans la boucle
         var ancienPoint = null;
 
         // On parcourt les acquisitions effectuées
-        for (indice in $scope.session.listeAcquisitions) {
+        for (indice in $scope.sessionAfficheeStatistiques.listeAcquisitions) {
 
             // On recupere le point à parcourir à partir de la liste des acquisitions
-            point = $scope.session.listeAcquisitions[indice];
+            point = $scope.sessionAfficheeStatistiques.listeAcquisitions[indice];
 
             // Si l'ancien point est null (cas de la prmeiere itération de la boucle), on ne fait pas de calcul
             if (ancienPoint == null) {
@@ -48,23 +48,23 @@ function StatistiquesSessionController($scope) {
             	point.latitude, point.longitude);
 
             // On l'ajoute à la liste des distances
-            $scope.session.listeDistances.push(distanceEnKm);
+            $scope.sessionAfficheeStatistiques.listeDistances.push(distanceEnKm);
 
             // Calcul des stats annexes
-            $scope.session.distanceParcouru += distanceEnKm;
-            $scope.session.dureeSession += ((point.timestamp - ancienPoint.timestamp) / 1000);
+            $scope.sessionAfficheeStatistiques.distanceParcouru += distanceEnKm;
+            $scope.sessionAfficheeStatistiques.dureeSession += ((point.timestamp - ancienPoint.timestamp) / 1000);
 
             // TODO je rajoute ces infos dans le point de la liste d'acquisition
-            $scope.session.listeAcquisitions[indice].distanceEnKm = distanceEnKm;
-            $scope.session.listeAcquisitions[indice].duree = ((point.timestamp - ancienPoint.timestamp) / 1000);
+            $scope.sessionAfficheeStatistiques.listeAcquisitions[indice].distanceEnKm = distanceEnKm;
+            $scope.sessionAfficheeStatistiques.listeAcquisitions[indice].duree = ((point.timestamp - ancienPoint.timestamp) / 1000);
 
             ancienPoint = point;
         }
 
         // Mise à jour de la vitesse moyenne
-        $scope.session.vitesseMoyenne = 3600 * $scope.session.distanceParcouru / $scope.session.dureeSession;
+        $scope.sessionAfficheeStatistiques.vitesseMoyenne = 3600 * $scope.sessionAfficheeStatistiques.distanceParcouru / $scope.sessionAfficheeStatistiques.dureeSession;
 
-        $scope.session.dureeSessionString = calculerTempsString($scope.session.dureeSession);
+        $scope.sessionAfficheeStatistiques.dureeSessionString = calculerTempsString($scope.sessionAfficheeStatistiques.dureeSession);
     }
     ;
 
@@ -110,11 +110,11 @@ function StatistiquesSessionController($scope) {
         $scope.tableauStats = [];
 
         // Le nombre d'acquisition à parcourir à chaque point de controle
-        nbPointParCtrl = $scope.session.listeAcquisitions.length / nombreDePointDeControle;
+        nbPointParCtrl = $scope.sessionAfficheeStatistiques.listeAcquisitions.length / nombreDePointDeControle;
 
         for (i = 0; i < nombreDePointDeControle; i++) {
             // On recupere un sous tableau contenant les acquisitions relatif à un point de controle
-            tab = $scope.session.listeAcquisitions.slice(i * nbPointParCtrl, (i + 1) * nbPointParCtrl);
+            tab = $scope.sessionAfficheeStatistiques.listeAcquisitions.slice(i * nbPointParCtrl, (i + 1) * nbPointParCtrl);
 
             // On parcourt le sous tableau et on fait les stats
             var distanceParcourue = 0;
@@ -151,12 +151,12 @@ function StatistiquesSessionController($scope) {
             $scope.tableauStats.push(stats);
 
             // Mise à jour de la vitesse Max
-            if (vitesse > $scope.session.vitesseMax)
-                $scope.session.vitesseMax = vitesse;
+            if (vitesse > $scope.sessionAfficheeStatistiques.vitesseMax)
+                $scope.sessionAfficheeStatistiques.vitesseMax = vitesse;
 
             // Mise à jour de la vitesse Min
-            if (vitesse < $scope.session.vitesseMin)
-                $scope.session.vitesseMin = vitesse;
+            if (vitesse < $scope.sessionAfficheeStatistiques.vitesseMin)
+                $scope.sessionAfficheeStatistiques.vitesseMin = vitesse;
 
         }
 
@@ -229,7 +229,7 @@ function StatistiquesSessionController($scope) {
      *Méthode permettant de stocker la session dans la liste des sessions
      */
     $scope.sauvegarderSession = function() {
-        $scope.gestionnaires.sessions.sauvegarderSession($("#nomSession").val(), $scope.session, $scope.user);
+        $scope.gestionnaires.sessions.sauvegarderSession($("#nomSession").val(), $scope.sessionAfficheeStatistiques, $scope.user);
     };
 
     $scope.lissageSession();

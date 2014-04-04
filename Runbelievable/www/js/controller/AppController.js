@@ -76,6 +76,9 @@ function AppController($scope) {
 
     // Création de l'objet session
     $scope.session = new Session();
+    
+    // La session courrante est celle qui sera affichée dans les statistiques
+    $scope.sessionAfficheeStatistiques = $scope.session;
 
     // Gps actif ou non
     $scope.gps_actif = false;
