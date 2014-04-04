@@ -131,6 +131,7 @@ function SessionController($scope, Global) {
     }
 
     function calculerVitesseActuelle() {
+    	
         if ($scope.session.listeAcquisitions.length > 1) {
             var acquisitonActuelle = $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 1];
             var acquisitonPrecedente = $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 2];
@@ -140,6 +141,7 @@ function SessionController($scope, Global) {
             var tempsEntre2Points = (acquisitonActuelle.timestamp - acquisitonPrecedente.timestamp) / 1000;
 
             $scope.vitesseActuelle = 3600 * distance / tempsEntre2Points;
+            $("#vitesseActuelle").text(Math.round($scope.vitesseActuelle,0));
         }
     }
 

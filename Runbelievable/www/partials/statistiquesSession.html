@@ -1,7 +1,7 @@
 <section ng-controller="StatistiquesSessionController">
 
     <!--<center><a class="btn btn-primary btn-sm" ng-click="lissageSession()">Calculer les stats</a></center>-->
-    <h3 align="center">Statistiques de votre session</h3>
+    <h3 align="center">Statistiques de ma session : {{sessionAfficheeStatistiques.nom}}</h3>
 
     <b>Distance totale</b> : {{sessionAfficheeStatistiques.distanceParcouru| number : 2}} km<br>
     <b>Durée de la session</b> : {{ sessionAfficheeStatistiques.dureeSessionString}}<br>

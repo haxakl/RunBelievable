@@ -1,25 +1,9 @@
 <section ng-controller="SessionController">
     <center>
-        Vitesse actuelle : {{vitesseActuelle | number : 0}} km
+        Vitesse actuelle : <div id="vitesseActuelle"></div> km/h
     </center>
     <br/>
 
     <div id="map" ng-model="map"></div>
-
-    <table id="geolocalisation" class="table table-striped" ng-show="false">
-        <thead>
-            <tr>
-                <th>Latitude</th>
-                <th>Longitude</th>
-            </tr>
-        </thead>
-        <tbody >
-            <!-- Parcourt de la liste des coordonées GPS -->
-            <tr ng-repeat="item in session.listeAcquisitions">
-                <td> {{item.latitude}} </td>
-                <td> {{item.longitude}} </td>
-            <tr>
-        </tbody>
-    </table>
 </section>
 <script></script>
