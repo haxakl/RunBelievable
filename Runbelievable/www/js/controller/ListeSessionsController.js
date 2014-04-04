@@ -10,7 +10,7 @@ function ListeSessionsController($scope) {
 	 */
 	$scope.afficherSession = function($index) {
 		$scope.sessionAfficheeStatistiques = $scope.listeSession[$index];
-		
-		
+		console.log($index);
+		location = "#statistiquesSession";
 	};
 }

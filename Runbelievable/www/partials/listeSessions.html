@@ -1,12 +1,10 @@
-<section>
+<section ng-controller="ListeSessionsController">
     <h3 align="center">Mes session</h3>
 
-<ul>
-	<!-- Affichage de la liste des sessions de l'utilisateur -->
-	<li ng-repeat="session in listeSession">
-		{{session.nom}}
-	</li>
-</ul>
-
-
+	<ul>
+		<!-- Affichage de la liste des sessions de l'utilisateur -->
+		<li ng-repeat="session in listeSession">
+			<a ng-click="afficherSession($index);">{{session.nom}}</a>
+		</li>
+	</ul>
 </section>
