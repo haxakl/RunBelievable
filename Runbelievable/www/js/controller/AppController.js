@@ -17,7 +17,7 @@ function AppController($scope) {
     $scope.gestionnaires.menu = new Menu();
     $scope.gestionnaires.utilisateurs = new Utilisateurs();
     $scope.gestionnaires.gps = new Gps($scope);
-    
+
     // Configuration de l'application
     $scope.icones_gps = $("#icone_gps");
 
@@ -38,19 +38,18 @@ function AppController($scope) {
 
     // Permet de tester l'internet
     $scope.testerInternet = function() {
-        $.ajax({
-            type: "POST",
-            dataType: 'text',
-            url: "http://runbelievable.eu.pn/",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            }
-        }).done(function(data) {
-            $("#icone_internet").html('<i class="fa fa-cloud"></i><label class="label label-success">Internet activé</label>');
-        }).fail(function(xhr, textStatus, errorThrown) {
+        
+        // Test s'il y a une connection
+        if (navigator.network.connection.type === Connection.NONE) {
+            $scope.isInternet = false;
             $("#icone_internet").html('<i class="fa fa-cloud"></i><label class="label label-danger">Internet désactivé</label>');
-        });
+            return false;
+        } else {
+            $scope.isInternet = true;
+            $("#icone_internet").html('<i class="fa fa-cloud"></i><label class="label label-success">Internet activé</label>');
+            return true;
+        }
+        
     };
 
     // Permet de tester le Gps
@@ -171,7 +170,7 @@ function AppController($scope) {
     var interval_etat = setInterval(function() {
         $scope.testerInternet();
         $scope.testerGps();
-    }, 60000);
+    }, 10000);
 
     // On l'ajoute dans les intervals stockées
     $scope.interval.push(interval_etat);
@@ -194,5 +193,14 @@ function AppController($scope) {
     $scope.listeSession.push(s1);
     $scope.listeSession.push(s2);
     $scope.listeSession.push(s3);
+
+    // ==========================================================
+    //  Tests des états au début de l'application
+    //  @description On test directement si on a le gps et internet. Si ce n'est
+    //  pas le cas on demande à l'utilisateur de les allumer.
+    // ==========================================================
+
+    $scope.testerInternet();
+    $scope.testerGps();
 
 }

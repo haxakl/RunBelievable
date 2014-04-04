@@ -25,7 +25,6 @@ function Gps($scope) {
         }, function() {
             $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
             this.actif = false;
-            $scope.afficherAlerte("Erreur", "Le Gps n'est pas fonctionnel sur ce téléphone", "danger");
             
             // On fait disparaitre l'alerte après 3 secondes
             setTimeout(function() {
@@ -67,7 +66,7 @@ function Gps($scope) {
         }, function() {
             $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
             this.actif = false;
-            $scope.afficherAlerte("Erreur", "Le Gps n'est pas fonctionnel sur ce téléphone", "danger");
+
             // On fait disparaitre l'alerte après 3 secondes
             setTimeout(function() {
                 $scope.cacherAlerte();
