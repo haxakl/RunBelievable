@@ -66,7 +66,6 @@
                     <section ng-controller="SessionController">
                         <div class="title">Sessions</div>
                         <div class="liens">
-                            <a ng-click="clickAcquisition()" ng-show="gps_actif"><i class="fa fa-exchange"></i> {{texte_bouton_acquisition}}</a>
                             <a href="#statistiquesSession" ng-show="true"><i class="fa fa-bar-chart-o"></i> Statistiques de la session</a>
                             <a href="#listeSessions" ng-show="true"><i class="fa fa-align-justify "></i> Mes session</a>
                             <a href="#planifierSession" ng-show="true"><i class="fa fa-ticket "></i> Planifier une session</a>
@@ -88,6 +87,10 @@
                         <div class="photo"><i class="fa fa-cogs"></i></div>
                         <span class="nom">Système</span><br/>
                         <span class="categorie">Etat des modules</span>
+                    </div>
+                    <div class="title">État</div>
+                    <div class="liens">
+                        <div id="icone_Etat" class="infos"><i class="fa fa-user"></i><label class="label label-info">En pause</label></div>
                     </div>
                     <div class="title">Gps</div>
                     <div class="liens">

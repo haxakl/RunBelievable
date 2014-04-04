@@ -99,7 +99,7 @@ body {
     transition: left 300ms linear 0s;
     #map {
         width: 100%;
-        height: 500px;
+        height: 250px;
     }
 }
 
@@ -213,4 +213,23 @@ body {
     right: -$largeurMenu;
     -webkit-transition: right 300ms linear 0s; /* For Safari 3.1 to 6.0 */
     transition: right 300ms linear 0s;
+}
+
+.table-session table{
+    border:2px solid #000000;
+    border-collapse:collapse;
+    width:100%;
+    margin:auto;
+}
+.table-session td {
+    font-family:sans-serif;
+    font-size:80%;
+    border:1px solid #000000;
+    padding:5px;
+    text-align:left;
+}
+
+body {
+	background-image: url("../img/fond.png");
+	background-repeat: repeat;
 }

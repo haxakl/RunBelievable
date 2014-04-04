@@ -24,6 +24,8 @@ app.config(function($routeProvider) {
         templateUrl: 'partials/statistiquesSession.html'
     }).when('/listeSessions', {
         templateUrl: 'partials/listeSessions.html'
+    }).when('/sessionEnCours', {
+        templateUrl: 'partials/sessionEnCours.html'
     }).when('/planifierSession', {
         templateUrl: 'partials/planificateurSession.html'
     }).otherwise({

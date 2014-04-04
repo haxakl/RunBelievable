@@ -78,7 +78,10 @@ function AppController($scope) {
     $scope.cacherAlerte = function() {
         $scope.bouton_alerte.fadeOut(1000);
     };
-
+    
+    // Création de l'objet session en cours
+    $scope.session = new Session();
+    
     // La session courrante est celle qui sera affichée dans les statistiques
     $scope.sessionAfficheeStatistiques = new Session();
 

@@ -1,9 +1,16 @@
 <section ng-controller="SessionController">
     <center>
-        Vitesse actuelle : <div id="vitesseActuelle"></div> km/h
+          <img alt="logo" src="img/logo.png" id="logo_connexion"/>
+
+          </br>
+
+          </br>
+           Bienvenue : {{user.nom}}
+          </br>
+          </br>
+          
+           <a href ="#sessionEnCours"> <button type="button" class="btn btn-success btn-lg"  >Démarrer une session</button> </a>
     </center>
     <br/>
-
-    <div id="map" ng-model="map"></div>
 </section>
 <script></script>

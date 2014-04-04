@@ -7,6 +7,8 @@ function SessionController($scope, Global) {
     var interval_acquisition = 1000;
 
     $scope.vitesseActuelle = 0;
+    $scope.session.dureeSession = 0;
+    $scope.session.calorie = 0;
 
     // TODO Enum pour les textes dispo pour le bouton (à déplacer dans un endroit approprié dans le futur) 
     var dico_bouton_acquisition = {
