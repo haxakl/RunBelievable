@@ -1,13 +1,13 @@
 <section ng-controller="StatistiquesSessionController">
 
     <!--<center><a class="btn btn-primary btn-sm" ng-click="lissageSession()">Calculer les stats</a></center>-->
-    <h3 align="center">Statistiques de ma session : {{sessionAfficheeStatistiques.nom}}</h3>
+    <h3 align="center">Statistiques de ma session : {{infoApplication.sessionAfficheeStatistiques.nom}}</h3>
 
-    <b>Distance totale</b> : {{sessionAfficheeStatistiques.distanceParcouru| number : 2}} km<br>
-    <b>Durée de la session</b> : {{ sessionAfficheeStatistiques.dureeSessionString}}<br>
-    <b>Vitesse moyenne</b> : {{sessionAfficheeStatistiques.vitesseMoyenne| number : 2}} km/h<br>
-    <b>Vitesse minimale</b> : {{sessionAfficheeStatistiques.vitesseMin| number : 2}} km/h<br>
-    <b>Vitesse maximale</b> : {{sessionAfficheeStatistiques.vitesseMax| number : 2}} km/h<br><br>
+    <b>Distance totale</b> : {{infoApplication.sessionAfficheeStatistiques.distanceParcouru| number : 2}} km<br>
+    <b>Durée de la session</b> : {{ infoApplication.sessionAfficheeStatistiques.dureeSessionString}}<br>
+    <b>Vitesse moyenne</b> : {{infoApplication.sessionAfficheeStatistiques.vitesseMoyenne| number : 2}} km/h<br>
+    <b>Vitesse minimale</b> : {{infoApplication.sessionAfficheeStatistiques.vitesseMin| number : 2}} km/h<br>
+    <b>Vitesse maximale</b> : {{infoApplication.sessionAfficheeStatistiques.vitesseMax| number : 2}} km/h<br><br>
 
 
     <!-- Div contenant le graphique -->

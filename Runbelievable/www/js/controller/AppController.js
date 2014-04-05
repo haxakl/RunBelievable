@@ -78,6 +78,12 @@ function AppController($scope) {
 
     // Timeouts
     $scope.timeout = new Array();
+    
+    // ==========================================================
+    //  Déclaration de l'entité contenant les informations de fonctionnement
+    // de l'applciation
+    // ==========================================================
+    $scope.infoApplication = new InfoApplication();
 
     // ==========================================================
     //  Test du chargement en début
@@ -120,9 +126,6 @@ function AppController($scope) {
 
     // Création de l'objet session en cours
     $scope.session = new Session();
-
-    // La session courrante est celle qui sera affichée dans les statistiques
-    $scope.sessionAfficheeStatistiques = new Session();
 
     // Pour controler l'acquisition de partout 
     $scope.boucleID = null;

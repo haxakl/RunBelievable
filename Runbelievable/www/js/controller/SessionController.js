@@ -18,7 +18,7 @@ function SessionController($scope, Global) {
     };
 
     // Texte par défaut
-    if ($scope.sessionAfficheeStatistiques.listeAcquisitions.length === 0)
+    if ($scope.session.listeAcquisitions.length === 0)
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
     else if ($scope.gestionnaires.gps.gps_acquisition_actif)
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
@@ -68,7 +68,7 @@ function SessionController($scope, Global) {
         Global.lastLocation = Global.location;
 
         // push dans liste acquisitions
-        $scope.sessionAfficheeStatistiques.listeAcquisitions.push(item);
+        $scope.session.listeAcquisitions.push(item);
 
         // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
         if (!$scope.$$phase) {
@@ -105,9 +105,9 @@ function SessionController($scope, Global) {
 
     function calculerVitesseActuelle() {
 
-        if ($scope.sessionAfficheeStatistiques.listeAcquisitions.length > 1) {
-            var acquisitonActuelle = $scope.sessionAfficheeStatistiques.listeAcquisitions[$scope.sessionAfficheeStatistiques.listeAcquisitions.length - 1];
-            var acquisitonPrecedente = $scope.sessionAfficheeStatistiques.listeAcquisitions[$scope.sessionAfficheeStatistiques.listeAcquisitions.length - 2];
+        if ($scope.session.listeAcquisitions.length > 1) {
+            var acquisitonActuelle = $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 1];
+            var acquisitonPrecedente = $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 2];
 
             var distance = $scope.gestionnaires.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
 
@@ -170,7 +170,7 @@ function SessionController($scope, Global) {
     // Reset de la map
     $scope.resetMap = function() {
 
-        var markers = $scope.sessionAfficheeStatistiques.listeAcquisitions;
+        var markers = $scope.session.listeAcquisitions;
 
         // On parcourt les acquisitions effectuées
         for (var i = 0; i < markers.length; i++) {
