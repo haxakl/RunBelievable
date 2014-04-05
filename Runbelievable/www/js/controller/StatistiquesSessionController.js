@@ -88,13 +88,11 @@ function StatistiquesSessionController($scope) {
         else if (minutes > 0)
             retour += minutes + "m";
 
-        if (secondes > 0 && (heures > 0 || minutes > 0))
+        if (heures > 0 || minutes > 0)
             retour += (secondes < 10 ? "0" + secondes : secondes) + "s";
-        else if (secondes > 0)
+        else
             retour += secondes + "s";
 
-
-        //return (heures < 10 ? "0" + heures : heures) + "h" + (minutes < 10 ? "0" + minutes : minutes) + "m" + (secondes  < 10 ? "0" + secondes : secondes) + "s";
         return retour;
     }
 
