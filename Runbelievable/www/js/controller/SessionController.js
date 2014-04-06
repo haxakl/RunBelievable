@@ -151,7 +151,7 @@ function SessionController($scope, Global) {
        // Map chargé
        google.maps.event.addListenerOnce(Global.map, 'idle', function(){
            $scope.resetMap();
-       })
+       });
 
         // appeler hook si il y en a un
         if (typeof hook !== "undefined")
@@ -197,6 +197,18 @@ function SessionController($scope, Global) {
 
         $scope.gestionnaires.gps.getAcquisition(finalizeMap); // Besoin du hook pour initialiser la map sur pos initiale
 
+    };
+    
+    /**
+     * Méthode permettant de sauvegarder la session dans la liste des sessions  et de le rediriger sur les stats de la session
+     */
+    $scope.sauvegarderSession = function (){
+    	$scope.listeSession.push($scope.session);
+    	
+    	$scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
+    	
+    	location = "#statistiquesSession";
+    	
     };
 
     // Test si le Gps est allumé    
