@@ -12,7 +12,7 @@ function SessionController($scope, Global) {
 
     // TODO Enum pour les textes dispo pour le bouton (à déplacer dans un endroit approprié dans le futur) 
     var dico_bouton_acquisition = {
-        STOP: "Arrêter l'acquisition",
+        STOP: "Intérrompre l'acquisition",
         START: "Démarrer l'acquisition",
         RESTART: "Redémarrer l'acquisition"
     };
@@ -71,9 +71,8 @@ function SessionController($scope, Global) {
         $scope.session.listeAcquisitions.push(item);
 
         // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-        if (!$scope.$$phase) {
-            $scope.$apply();
-        }
+        $scope.refresh();
+
     }
 
     /**
@@ -138,36 +137,33 @@ function SessionController($scope, Global) {
 
     }
 
+    // TODO maj pour maps angular
     function finalizeMap(item, hook) {
         var mapOptions = {
-            center: new google.maps.LatLng(item.latitude, item.longitude),
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+          center: new google.maps.LatLng(item.latitude, item.longitude),
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-
-        // maj les var globales
+        // maj la carte
         Global.map = new google.maps.Map(document.getElementById("map"), mapOptions);
         Global.location = item;
-
-        // Map chargé
-        google.maps.event.addListenerOnce(Global.map, 'idle', function() {
-            // Met à jour la carte avec les markers précédents
-            $scope.resetMap();
-        });
+       
+       // Map chargé
+       google.maps.event.addListenerOnce(Global.map, 'idle', function(){
+           $scope.resetMap();
+       })
 
         // appeler hook si il y en a un
         if (typeof hook !== "undefined")
             hook();
         else {
             // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
+            $scope.refresh();
         }
 
     }
 
-    // Reset de la map
+    // Reset de la map TODO
     $scope.resetMap = function() {
 
         var markers = $scope.session.listeAcquisitions;

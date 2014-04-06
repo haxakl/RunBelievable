@@ -3,24 +3,24 @@
     <!--<center><a class="btn btn-primary btn-sm" ng-click="lissageSession()">Calculer les stats</a></center>-->
     <h3 align="center">Session en cours</h3>
 
-    
-  <div class="table-session">
-    <table>
-           <tbody> <!-- Corps du tableau -->
-         <tr>
-             <td rowspan="2"> Temps : {{session.dureeSession | number : 0}}</td>
-             <td>Calorie : {{session.calorie | number : 0}} cal</td>
-         </tr>
-         <tr>
-             <td> Vitesse actuelle : <div id="vitesseActuelle"></div> km/h</td>
-         </tr>
-     </tbody>
-    </table>
-  </div>
+
+    <div class="table-session">
+        <table>
+            <tbody> <!-- Corps du tableau -->
+                <tr>
+                    <td rowspan="2"> Temps : {{session.dureeSession| number : 0}}</td>
+                    <td>Calorie : {{session.calorie| number : 0}} cal</td>
+                </tr>
+                <tr>
+                    <td> Vitesse actuelle : <div id="vitesseActuelle"></div> km/h</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="map"></div>
 
 
-        <div id="map" ng-model="map"></div>
-        
-<a ng-click="clickAcquisition()" ng-show="gps_actif"><button type="button" class="btn btn-default">{{texte_bouton_acquisition}}</button> </a>
+    <a ng-click="clickAcquisition()" ng-show="gestionnaires.gps.actif"><button type="button" class="btn btn-default">{{texte_bouton_acquisition}}</button> </a>
     <button type="button" class="btn btn-default">Arreter</button>
 </section>

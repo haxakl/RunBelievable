@@ -17,14 +17,14 @@ function Gps($scope) {
 
         // Test si le Gps existe sur le téléphone
         if (!navigator.geolocation)
-            $scope.gestionnaires.gps.gps_actif = false;
+            $scope.gestionnaires.gps.actif = false;
 
         navigator.geolocation.getCurrentPosition(function() {
             $scope.gestionnaires.gps.modifIcone("success", "Gps activé");
-            this.actif = true;
+            $scope.gestionnaires.gps.actif = true;
         }, function() {
             $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
-            this.actif = false;
+            $scope.gestionnaires.gps.actif = false;
         }, {
             maximumAge: 3000,
             timeout: 20000,
@@ -51,16 +51,18 @@ function Gps($scope) {
     this.isEnabled = function(hook) {
 
         // Test si le Gps existe sur le téléphone
-        if (!navigator.geolocation)
+        if (!navigator.geolocation) {
+            $scope.gestionnaires.gps.actif = false;
             return false;
+        }
 
         navigator.geolocation.getCurrentPosition(function() {
             $scope.gestionnaires.gps.modifIcone("success", "Gps activé");
-            this.actif = true;
+            $scope.gestionnaires.gps.actif = true;
             hook();
         }, function() {
             $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
-            this.actif = false;
+            $scope.gestionnaires.gps.actif = false;
         }, {
             maximumAge: 3000,
             timeout: 20000,
@@ -68,9 +70,7 @@ function Gps($scope) {
         });
 
         // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-        if (!$scope.$$phase) {
-            $scope.$apply();
-        }
+        $scope.refresh();
     };
 
     /**
@@ -133,6 +133,7 @@ function Gps($scope) {
      */
     function toRad(nombre) {
         return nombre * Math.PI / 180;
-    };
+    }
+    ;
 
 }

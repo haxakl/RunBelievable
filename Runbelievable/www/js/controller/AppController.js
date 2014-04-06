@@ -18,6 +18,20 @@ function AppController($scope) {
     $scope.gestionnaires.utilisateurs = new Utilisateurs();
     $scope.gestionnaires.gps = new Gps($scope);
 
+    // Map TODO encore inutilisé
+    $scope.map = {
+        center: {
+            latitude: null,
+            longitude: null
+        },
+        zoom: 15,
+        marqueurs: [],
+        segments: [],
+        location: null,
+        lastLocation: null
+    };
+    /////// Map
+
     // Configuration de l'application
     $scope.icones_gps = $("#icone_gps");
 
@@ -40,9 +54,9 @@ function AppController($scope) {
     $scope.testerInternet = function() {
 
         // Récupération du type de connection
-        if(navigator.connection) {
+        if (navigator.connection) {
             var type = navigator.connection.type;
-        } else if(navigator.network) {
+        } else if (navigator.network) {
             var type = navigator.network.connection.type;
         } else {
             return true;
@@ -78,7 +92,7 @@ function AppController($scope) {
 
     // Timeouts
     $scope.timeout = new Array();
-    
+
     // ==========================================================
     //  Déclaration de l'entité contenant les informations de fonctionnement
     // de l'applciation
@@ -182,6 +196,7 @@ function AppController($scope) {
     var interval_etat = setInterval(function() {
         $scope.testerInternet();
         $scope.testerGps();
+        $scope.refresh();
     }, 10000);
 
     // On l'ajoute dans les intervals stockées
@@ -217,5 +232,6 @@ function AppController($scope) {
 
     $scope.testerInternet();
     $scope.testerGps();
+    $scope.refresh();
 
 }
