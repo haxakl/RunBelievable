@@ -195,12 +195,15 @@ function AppController($scope) {
     // Ajout de sessions dans la liste des sessions
     var s1 = new Session();
     s1.nom = "Session A";
+    s1.dureeSessionString = "57m 25s";
 
     var s2 = new Session();
     s2.nom = "Session B";
+    s2.dureeSessionString = "3h 03m 42s";
 
     var s3 = new Session();
     s3.nom = "Session C";
+    s3.dureeSessionString = "1h 23m 52s";
 
     $scope.listeSession.push(s1);
     $scope.listeSession.push(s2);

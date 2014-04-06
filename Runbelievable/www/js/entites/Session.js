@@ -27,4 +27,7 @@ function Session() {
     this.nom = "";
    
     this.calorie =0;
+    
+    // La date de la course
+    this.date = new Date();
 };
