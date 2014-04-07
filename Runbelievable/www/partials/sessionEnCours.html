@@ -1,3 +1,5 @@
+
+
 <section ng-controller="SessionController">
 
     <!--<center><a class="btn btn-primary btn-sm" ng-click="lissageSession()">Calculer les stats</a></center>-->
@@ -7,10 +9,14 @@
     <table class="table">
         <tbody> <!-- Corps du tableau -->
             <tr>
-                <td rowspan="2"> Temps : {{session.dureeSession| number : 0}}</td>
+                <div class="chrono">
+                    <td> Temps 
+                    </td>
+                </div>
                 <td>Calorie : {{session.calorie| number : 0}} cal</td>
             </tr>
             <tr>
+                <td> <span id="chronotime" style="font-size: 30px;"> <p>0:00:00</p></span> </td>
                 <td> Vitesse actuelle : <div id="vitesseActuelle"></div> km/h</td>
             </tr>
         </tbody>
