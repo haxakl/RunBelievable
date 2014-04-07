@@ -3,28 +3,35 @@
     <!--<center><a class="btn btn-primary btn-sm" ng-click="lissageSession()">Calculer les stats</a></center>-->
     <h3 align="center">Session en cours</h3>
 
+<div class="table-responsive">
+    <table class="table">
+        <tbody> <!-- Corps du tableau -->
+            <tr>
+                <td rowspan="2"> Temps : {{session.dureeSession| number : 0}}</td>
+                <td>Calorie : {{session.calorie| number : 0}} cal</td>
+            </tr>
+            <tr>
+                <td> Vitesse actuelle : <div id="vitesseActuelle"></div> km/h</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-    <div class="table-session">
-        <table>
-            <tbody> <!-- Corps du tableau -->
-                <tr>
-                    <td rowspan="2"> Temps : {{session.dureeSession| number : 0}}</td>
-                    <td>Calorie : {{session.calorie| number : 0}} cal</td>
-                </tr>
-                <tr>
-                    <td> Vitesse actuelle : <div id="vitesseActuelle"></div> km/h</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 
     <div id="map"></div>
-
-
-    <a ng-click="clickAcquisition()" ng-show="gestionnaires.gps.actif"><button type="button" class="btn btn-default">{{texte_bouton_acquisition}}</button> </a>
-    <button type="button" class="btn btn-default">Arreter</button>
+    
     <br><br>
-    <!-- Placer l'input et le sauvegarder dans une modale quand on arrete la session ? -->
-    <input type="text" class="form-control" placeholder="Nom de la session ..." ng-model="session.nom">
-    <a ng-click="sauvegarderSession()"><button type="button" class="btn btn-default">Sauvegarder</button></a>
+    <center>
+        <a ng-click="clickAcquisition()" ng-show="gestionnaires.gps.actif && (gestionnaires.gps.gps_acquisition_actif == false) "><button type="button" class="btn btn-success">{{texte_bouton_acquisition}}</button> </a>
+        <a ng-click="clickAcquisition()" ng-show="gestionnaires.gps.actif && gestionnaires.gps.gps_acquisition_actif "><button type="button" class="btn btn-danger">{{texte_bouton_acquisition}}</button> </a>
+    </center>
+
+
+    <br><br>
+    <center>
+        <input type="text"  class="form-control" placeholder="Nom de la session ..." ng-model="session.nom" ng-show="(gestionnaires.gps.gps_acquisition_actif === false) && (session.listeAcquisitions.length > 0)">
+       
+        <br>
+        <a ng-click="sauvegarderSession()"><button type="button" class="btn btn-info" ng-show="(gestionnaires.gps.gps_acquisition_actif === false) && (session.listeAcquisitions.length > 0)">Sauvegarder</button></a>
+    </center>
 </section>

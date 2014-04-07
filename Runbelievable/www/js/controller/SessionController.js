@@ -13,7 +13,7 @@ function SessionController($scope, Global) {
     // TODO Enum pour les textes dispo pour le bouton (à déplacer dans un endroit approprié dans le futur) 
     var dico_bouton_acquisition = {
         STOP: "Intérrompre l'acquisition",
-        START: "Démarrer l'acquisition",
+        START: "Démarrer",
         RESTART: "Redémarrer l'acquisition"
     };
 
