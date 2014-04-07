@@ -12,30 +12,6 @@ function Gps($scope) {
     // Variable avec l'activation du gps
     this.actif = false;
 
-    // Test si le gps est activé
-    this.testActivation = function() {
-
-        // Test si le Gps existe sur le téléphone
-        if (!navigator.geolocation)
-            $scope.gestionnaires.gps.actif = false;
-
-        navigator.geolocation.getCurrentPosition(function() {
-            $scope.gestionnaires.gps.modifIcone("success", "Gps activé");
-            $scope.gestionnaires.gps.actif = true;
-        }, function() {
-            $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
-            $scope.gestionnaires.gps.actif = false;
-        }, {
-            maximumAge: 3000,
-            timeout: 20000,
-            enableHighAccuracy: true
-        });
-
-        // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-        $scope.refresh();
-
-    };
-
     /**
      * Modifie l'icône du Gps.
      * @param {type} type Type icône
@@ -59,10 +35,16 @@ function Gps($scope) {
         navigator.geolocation.getCurrentPosition(function() {
             $scope.gestionnaires.gps.modifIcone("success", "Gps activé");
             $scope.gestionnaires.gps.actif = true;
-            hook();
+            if ($scope.mapError) {
+                $scope.gestionnaires.map.initializeMap();
+            }
+            $scope.mapError = false;
+            if(hook !== null)
+                hook();
         }, function() {
             $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
             $scope.gestionnaires.gps.actif = false;
+            $scope.mapError = true;
         }, {
             maximumAge: 3000,
             timeout: 20000,

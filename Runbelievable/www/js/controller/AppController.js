@@ -12,25 +12,19 @@ function AppController($scope) {
 
     // Déclaration du tableau des gestionnaires
     $scope.gestionnaires = new Array();
+    
+    
 
     // Déclaration des gestionnaires
     $scope.gestionnaires.menu = new Menu();
     $scope.gestionnaires.utilisateurs = new Utilisateurs();
+    $scope.gestionnaires.map = new Map($scope);
     $scope.gestionnaires.gps = new Gps($scope);
 
-    // Map TODO encore inutilisé
-    $scope.map = {
-        center: {
-            latitude: null,
-            longitude: null
-        },
-        zoom: 15,
-        marqueurs: [],
-        segments: [],
-        location: null,
-        lastLocation: null
-    };
-    /////// Map
+
+    // Méthodes pour la carte
+
+
 
     // Configuration de l'application
     $scope.icones_gps = $("#icone_gps");
@@ -77,7 +71,7 @@ function AppController($scope) {
 
     // Permet de tester le Gps
     $scope.testerGps = function() {
-        $scope.gestionnaires.gps.testActivation();
+        $scope.gestionnaires.gps.isEnabled(null);
     };
 
     // ==========================================================

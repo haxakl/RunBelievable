@@ -33,13 +33,13 @@ app.config(function($routeProvider) {
     });
 });
 
-app.factory('Global', function() {
+/*app.factory('Global', function() {
     return {
         map: null,
         location: null,
-        lastLocation : null        
+        lastLocation : null
     };
-});
+});*/
 
 /**
  *	 Controller principal de l'application.
