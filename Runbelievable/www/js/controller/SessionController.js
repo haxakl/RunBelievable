@@ -5,7 +5,7 @@
 function SessionController($scope) {
 
     var interval_acquisition = 1000;
-
+    
     $scope.vitesseActuelle = 0;
     $scope.session.dureeSession = 0;
     $scope.session.calorie = 0;
@@ -33,7 +33,7 @@ function SessionController($scope) {
         }
     };
 
-    
+
 
     /**
      * Démarre l'acquisition
@@ -44,10 +44,10 @@ function SessionController($scope) {
         if (!$scope.gestionnaires.gps.actif || $scope.gestionnaires.gps.gps_acquisition_actif) {
             return false;
         }
-        
+
         // Lancement du chrono
         chronoContinue();
-        
+
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
 
         // Acquisition démarée
@@ -63,7 +63,16 @@ function SessionController($scope) {
             $scope.gestionnaires.gps.getAcquisition($scope.gestionnaires.map.placerPoint);
 
             calculerVitesseActuelle();
+            detecterPause();
         }, interval_acquisition);
+    }
+
+    function detecterPause() {
+        if ($scope.infoApplication.Global.location !== null && $scope.infoApplication.Global.lastLocation !== null && $scope.session.listeAcquisitions.length >= 10) {
+            if ($scope.vitesseActuelle <= $scope.infoApplication.Global.vitesseLimite || $scope.gestionnaires.gps.getDistance2Points($scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 1].latitude, $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 1].longitude, $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 2].latitude, $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 2].longitude) <= $scope.infoApplication.Global.distanceLimite) {
+                alert("DONT STOP NIGGA");
+            }
+        }
     }
 
     function calculerVitesseActuelle() {
@@ -99,7 +108,7 @@ function SessionController($scope) {
         $scope.gestionnaires.map.centrer($scope.infoApplication.Global.location);
 
 
-    }   
+    }
 
     /**
      * Méthode permettant de sauvegarder la session dans la liste des sessions  et de le rediriger sur les stats de la session
@@ -125,43 +134,44 @@ var start = 0
 var end = 0
 var diff = 0
 var timerID = 0
-function chrono(){
-	end = new Date()
-	diff = end - start
-	diff = new Date(diff)
-	var msec = diff.getMilliseconds()
-	var sec = diff.getSeconds()
-	var min = diff.getMinutes()
-	var hr = diff.getHours()-1
-	if (min < 10){
-		min = "0" + min
-	}
-	if (sec < 10){
-		sec = "0" + sec
-	}
-	if(msec < 10){
-		msec = "00" +msec
-	}
-	document.getElementById("chronotime").innerHTML = hr + ":" + min + ":" + sec 
-	timerID = setTimeout("chrono()", 10)
+function chrono() {
+    end = new Date()
+    diff = end - start
+    diff = new Date(diff)
+    var msec = diff.getMilliseconds()
+    var sec = diff.getSeconds()
+    var min = diff.getMinutes()
+    var hr = diff.getHours() - 1
+    
+    if (min < 10) {
+        min = "0" + min
+    }
+    if (sec < 10) {
+        sec = "0" + sec
+    }
+    if (msec < 10) {
+        msec = "00" + msec
+    }
+    document.getElementById("chronotime").innerHTML = hr + ":" + min + ":" + sec
+    timerID = setTimeout("chrono()", 10)
 }
-function chronoStart(){
-	start = new Date()
-	chrono()
+function chronoStart() {
+    start = new Date()
+    chrono()
 }
-function chronoContinue(){
-	start = new Date()-diff
-	start = new Date(start)
-	chrono()
+function chronoContinue() {
+    start = new Date() - diff
+    start = new Date(start)
+    chrono()
 }
-function chronoReset(){
-	document.getElementById("chronotime").innerHTML = "0:00:00"
-	start = new Date()
+function chronoReset() {
+    document.getElementById("chronotime").innerHTML = "0:00:00"
+    start = new Date()
 }
-function chronoStopReset(){
-	document.getElementById("chronotime").innerHTML = "0:00:00"
-	document.chronoForm.startstop.onclick = chronoStart
+function chronoStopReset() {
+    document.getElementById("chronotime").innerHTML = "0:00:00"
+    document.chronoForm.startstop.onclick = chronoStart
 }
-function chronoStop(){
-	clearTimeout(timerID)
+function chronoStop() {
+    clearTimeout(timerID)
 }

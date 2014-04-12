@@ -30,4 +30,7 @@ function Session() {
     
     // La date de la course
     this.date = new Date();
+    
+    // Le tableau des pauses, contient des objets Pause
+    this.pauses = []
 };

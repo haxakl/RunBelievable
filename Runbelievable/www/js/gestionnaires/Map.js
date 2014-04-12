@@ -24,7 +24,7 @@ function Map($scope) {
         };
         // maj la carte
         $scope.infoApplication.Global.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-        $scope.infoApplication.Global.location = item;
+        $scope.infoApplication.Global.location = new google.maps.LatLng(item.latitude, item.longitude);
 
         // Map chargé
         google.maps.event.addListenerOnce($scope.infoApplication.Global.map, 'idle', function() {
