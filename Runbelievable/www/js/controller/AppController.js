@@ -134,6 +134,9 @@ function AppController($scope) {
 
     // Création de l'objet session en cours
     $scope.session = new Session();
+    
+    // Boolean de surveillance de la pause
+    $scope.enPause = false;
 
     // Pour controler l'acquisition de partout 
     $scope.boucleID = null;

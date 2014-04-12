@@ -23,7 +23,7 @@ function InfoApplication() {
         pauseCounter: 0,
         pauseTrigger: 5,
         vitesseLimite : 3,
-        distanceLimite : 0.001
+        distanceLimite : 0.001,
     };
 
 }

@@ -28,3 +28,8 @@
 #listeSessions li a button{
 	width : 100%;
 }
+
+#pauseTime {
+    color: #d9534f;
+    font-size: 10px;
+}

@@ -5,7 +5,7 @@
 function SessionController($scope) {
 
     var interval_acquisition = 1000;
-    
+
     $scope.vitesseActuelle = 0;
     $scope.session.dureeSession = 0;
     $scope.session.calorie = 0;
@@ -48,6 +48,8 @@ function SessionController($scope) {
         // Lancement du chrono
         chronoContinue();
 
+        $scope.enPause = false;
+
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
 
         // Acquisition démarée
@@ -68,10 +70,19 @@ function SessionController($scope) {
     }
 
     function detecterPause() {
-        if ($scope.infoApplication.Global.location !== null && $scope.infoApplication.Global.lastLocation !== null && $scope.session.listeAcquisitions.length >= 10) {
-            if ($scope.vitesseActuelle <= $scope.infoApplication.Global.vitesseLimite || $scope.gestionnaires.gps.getDistance2Points($scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 1].latitude, $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 1].longitude, $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 2].latitude, $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 2].longitude) <= $scope.infoApplication.Global.distanceLimite) {
-                alert("DONT STOP NIGGA");
+        if (!$scope.infoApplication.Global.enPause && $scope.infoApplication.Global.location !== null && $scope.infoApplication.Global.lastLocation !== null && $scope.session.listeAcquisitions.length >= 10) {
+            if ($scope.vitesseActuelle <= $scope.infoApplication.Global.vitesseLimite) {
+                $scope.infoApplication.Global.pauseCounter++;
             }
+        }
+
+        if ($scope.infoApplication.Global.pauseCounter === $scope.infoApplication.Global.pauseTrigger) {
+            $scope.enPause = true;
+            stopAcquisition();
+            $scope.infoApplication.Global.pauseCounter = 0;
+
+            $scope.refresh();
+
         }
     }
 
@@ -142,7 +153,7 @@ function chrono() {
     var sec = diff.getSeconds()
     var min = diff.getMinutes()
     var hr = diff.getHours() - 1
-    
+
     if (min < 10) {
         min = "0" + min
     }
