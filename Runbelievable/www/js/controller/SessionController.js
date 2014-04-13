@@ -45,10 +45,17 @@ function SessionController($scope) {
             return false;
         }
 
+        if ($scope.enPause) {
+            $scope.enPause = false;
+            var pause = new Pause();
+            pause.position = $scope.infoApplication.Global.location;
+            pause.duree = ""; // TODO mettre le temps
+
+            $scope.session.pauses.push(pause);
+        }
+
         // Lancement du chrono
         chronoContinue();
-
-        $scope.enPause = false;
 
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
 
@@ -77,7 +84,6 @@ function SessionController($scope) {
         }
 
         if ($scope.infoApplication.Global.pauseCounter === $scope.infoApplication.Global.pauseTrigger) {
-            $scope.enPause = true;
             stopAcquisition();
             $scope.infoApplication.Global.pauseCounter = 0;
 
@@ -109,7 +115,11 @@ function SessionController($scope) {
         if (!$scope.gestionnaires.gps.actif || !$scope.gestionnaires.gps.gps_acquisition_actif) {
             return false;
         }
+
         chronoStop();
+
+        $scope.enPause = true;
+
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.RESTART;
 
         // Acquisition arêtée
@@ -123,6 +133,7 @@ function SessionController($scope) {
 
     /**
      * Méthode permettant de sauvegarder la session dans la liste des sessions  et de le rediriger sur les stats de la session
+     * TODO vider la session actuelle une fois sauvegardé ?
      */
     $scope.sauvegarderSession = function() {
         $scope.listeSession.push($scope.session);

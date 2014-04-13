@@ -1,6 +1,6 @@
 function Pause() {
     
     this.position = null;
-    this.duree = 0;
+    this.duree = "";
     
 }

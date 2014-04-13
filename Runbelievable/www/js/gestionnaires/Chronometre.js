@@ -57,6 +57,10 @@ function Chronometre($scope) {
     this.chronoStop = function(id) {
         clearTimeout(this.timerID[id]);
     };
+    
+    this.getTime = function(id){
+        return new Date(this.diff[id]);
+    }
 }
 
 
