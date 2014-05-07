@@ -82,4 +82,17 @@
             </tr>
         </tbody>
     </table>
+    <hr>
+    <h3>Navigator</h3>
+    <table class="table table-striped">
+        <tr>
+            <td>Accéléromètre</td>
+            <td class="text-right" ng-if="typeof navigator.accelerometer === 'undefined'">Désactivé</td>
+            <td class="text-right" ng-if="typeof navigator.accelerometer !== 'undefined'">Activé</td>
+        </tr>
+        <tr>
+            <td>Geolocation</td>
+            <td class="text-right">{{navigator.geolocation}}</td>
+        </tr>
+    </table>
 </section>

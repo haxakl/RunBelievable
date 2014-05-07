@@ -18,6 +18,7 @@ function AppController($scope) {
     $scope.gestionnaires.map = new Map($scope);
     $scope.gestionnaires.gps = new Gps($scope);
     $scope.gestionnaires.accelerometre = new Accelerometre($scope);
+    $scope.gestionnaires.navigator = navigator;
 
     // Configuration de l'application
     $scope.icones_gps = $("#icone_gps");

@@ -23,6 +23,8 @@ function Accelerometre($scope) {
      */
     this.getAcquisition = function(hook) {
 
+        console.log(navigator);
+
         if (typeof navigator.accelerometer === "undefined") {
             $scope.gestionnaires.accelerometre.modifIcone("danger", "Accéléromètre désactivé");
             $scope.gestionnaires.accelerometre.actif = false;
