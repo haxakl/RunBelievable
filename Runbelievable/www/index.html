@@ -6,49 +6,50 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width,  target-densitydpi=device-dpi" />
 
         <!-- Fichier de styles -->
-        <link rel="stylesheet" type="text/css" href="css/style2.css?time=59" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
-        <link href='http://fonts.googleapis.com/css?family=Englebert' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="ressources/css/style2.css?time=59" />
+        <link rel="stylesheet" type="text/css" href="ressources/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="ressources/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="ressources/css/font-awesome.css" />
+        
+        <!-- Police de caractère -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:100,300,400' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Lato:900' rel='stylesheet' type='text/css'>
 
-        <script type="text/javascript" src="lib/jquery/jquery.js"></script>
-        <script type="text/javascript" src="lib/jquery/jquery.transit.js"></script>
-        <script type="text/javascript" src="lib/angular/angular.min.js"></script>
-        <script type="text/javascript" src="lib/angular/angular-route.min.js"></script>
-        <script type="text/javascript"
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4rVRKNBxwsQgz6bo8S8CfTwHh7tTx2Xo&sensor=true">
+        <!-- Librairies -->
+        <script type="text/javascript" src="library/jquery/jquery.js"></script>
+        <script type="text/javascript" src="library/jquery/jquery.transit.js"></script>
+        <script type="text/javascript" src="library/angular/angular.min.js"></script>
+        <script type="text/javascript" src="library/angular/angular-route.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4rVRKNBxwsQgz6bo8S8CfTwHh7tTx2Xo&sensor=true">
         </script>
-        <script src='lib/gmaps/underscore-min.js'></script>
-        <script src='lib/gmaps/angular-google-maps.min.js'></script>
 
-        <script type="text/javascript" src="js/controller/Routes.js"></script>
+        <!-- Routes -->
+        <script type="text/javascript" src="controller/Routes.js"></script>
 
         <!-- Entités -->
-        <script src="js/entites/Session.js" type="text/javascript"></script>
-        <script src="js/entites/Utilisateur.js" type="text/javascript"></script>
-        <script src="js/entites/InfoApplication.js" type="text/javascript"></script>
-        <script src="js/entites/Pause.js" type="text/javascript"></script>
+        <script src="library/runbelievable/entites/Session.js" type="text/javascript"></script>
+        <script src="library/runbelievable/entites/Utilisateur.js" type="text/javascript"></script>
+        <script src="library/runbelievable/entites/InfoApplication.js" type="text/javascript"></script>
+        <script src="library/runbelievable/entites/Pause.js" type="text/javascript"></script>
 
         <!-- Gestionnaires -->
-        <script src="js/gestionnaires/Menu.js" type="text/javascript"></script>
-        <script src="js/gestionnaires/Utilisateurs.js" type="text/javascript"></script>
-        <script src="js/gestionnaires/Gps.js" type="text/javascript"></script>
-        <script src="js/gestionnaires/Map.js" type="text/javascript"></script>
-
-
+        <script src="library/runbelievable/gestionnaires/Menu.js" type="text/javascript"></script>
+        <script src="library/runbelievable/gestionnaires/Utilisateurs.js" type="text/javascript"></script>
+        <script src="library/runbelievable/gestionnaires/Gps.js" type="text/javascript"></script>
+        <script src="library/runbelievable/gestionnaires/Accelerometre.js" type="text/javascript"></script>
+        <script src="library/runbelievable/gestionnaires/Map.js" type="text/javascript"></script>
 
         <!-- JS de Raphaeljs pour les graphiques -->
-        <script src="lib/raphael/raphael.1.5.2.min.js" type="text/javascript"></script>
-        <script src="lib/raphael/g.raphael-min.js" type="text/javascript"></script>
-        <script src="lib/raphael/g.line-min.js" type="text/javascript"></script> 
+        <script src="library/raphael/raphael.1.5.2.min.js" type="text/javascript"></script>
+        <script src="library/raphael/g.raphael-min.js" type="text/javascript"></script>
+        <script src="library/raphael/g.line-min.js" type="text/javascript"></script> 
 
         <!-- Controllers de l'application -->
-        <script type="text/javascript" src="js/controller/AppController.js"></script>
-        <script type="text/javascript" src="js/controller/SessionController.js"></script>
-        <script type="text/javascript" src="js/controller/StatistiquesSessionController.js"></script>
-        <script type="text/javascript" src="js/controller/ListeSessionsController.js"></script>
+        <script type="text/javascript" src="controller/AppController.js"></script>
+        <script type="text/javascript" src="controller/SessionController.js"></script>
+        <script type="text/javascript" src="controller/StatistiquesSessionController.js"></script>
+        <script type="text/javascript" src="controller/ListeSessionsController.js"></script>
 
         <title>Runbelievable</title>
     </head>
@@ -99,7 +100,15 @@
                     </div>
                     <div class="title">Gps</div>
                     <div class="liens">
-                        <div id="icone_gps" class="infos"><i class="fa fa-map-marker"></i></div>
+                        <div id="icone_gps" class="infos">
+                            <i class="fa fa-map-marker"></i><label class="label label-warning">En test ...</label>
+                        </div>
+                    </div>
+                    <div class="title">Accéléromètre</div>
+                    <div class="liens">
+                        <div id="icone_accelerometre" class="infos">
+                            <i class="fa fa-mobile"></i><label class="label label-warning">En test ...</label>
+                        </div>
                     </div>
                     <div class="title">Internet</div>
                     <div class="liens">
@@ -108,6 +117,7 @@
                     <div class="title">Options</div>
                     <div class="liens">
                         <a><i class="fa fa-anchor"></i>Options</a>
+                        <a href="#core"><i class="fa fa-wrench"></i>Core</a>
                     </div>
                 </div>
             </div>
@@ -125,11 +135,11 @@
             <!-- Connexion au profil -->
             <div id="new_profil">
                 <div class="scroll">
-                    <img alt="logo" src="img/logo.png" id="logo_connexion"/>
-                    <h3>Connexion</h3>
+                    <img alt="logo" src="ressources/img/logo.png" id="logo_connexion"/>
+                    <h3>Création d'un profil</h3>
                     <div class="alert-danger alert"></div>
                     <p>
-                        Bienvenue dans l'application mobile de sports RunBelievable. Vous n'avez pas de profil local actuellement. Pour pouvoir utiliser notre application vous devez créer un profil. Celui-ci pourra être stocké en ligne si vous le souhaitez. Nos services en ligne sont disponible qu'au profil stocké en ligne.
+                        Vous n'avez pas de profil stocké sur ce téléphone.
                     </p><br/>
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
@@ -138,23 +148,12 @@
                                 <input type="text" name="name" class="form-control" id="name" placeholder="Nom du profil">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="profil" class="col-sm-2 control-label">Votre profil</label>
-                            <div class="col-sm-10">
-                                <select style="width: 90%;margin: auto;" class='form-control' name="profil" id="profil">
-                                    <option value="amateur">Amateur</option>
-                                    <option value="sportif">Sportif</option>
-                                    <option value="professionnel">Professionnel</option>
-                                </select>
-                            </div>
-                        </div>
                     </form><br/>
                     <p>
                         <a id="new_profil_btn" class="btn btn-primary btn-sm">Créer le profil</a>
                     </p>
                 </div>
             </div>
-
         </section>
     </body>
 </html>

@@ -22,21 +22,24 @@ function Map($scope) {
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        // maj la carte
-        $scope.infoApplication.Global.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-        $scope.infoApplication.Global.location = new google.maps.LatLng(item.latitude, item.longitude);
+        
+        if ($("#map").length !== 0) {
+            // maj la carte
+            $scope.infoApplication.Global.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            $scope.infoApplication.Global.location = new google.maps.LatLng(item.latitude, item.longitude);
 
-        // Map chargé
-        google.maps.event.addListenerOnce($scope.infoApplication.Global.map, 'idle', function() {
-            $scope.gestionnaires.map.resetMap();
-        });
+            // Map chargé
+            google.maps.event.addListenerOnce($scope.infoApplication.Global.map, 'idle', function() {
+                $scope.gestionnaires.map.resetMap();
+            });
 
-        // appeler hook si il y en a un
-        if (typeof hook !== "undefined")
-            hook();
-        else {
-            // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-            $scope.refresh();
+            // appeler hook si il y en a un
+            if (typeof hook !== "undefined")
+                hook();
+            else {
+                // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
+                $scope.refresh();
+            }
         }
 
     }

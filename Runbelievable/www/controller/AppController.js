@@ -2,7 +2,6 @@
 /**
  * Controller principal du début de l'application
  * @param {type} $scope
- * @returns {undefined}
  */
 function AppController($scope) {
 
@@ -12,22 +11,17 @@ function AppController($scope) {
 
     // Déclaration du tableau des gestionnaires
     $scope.gestionnaires = new Array();
-    
-    
 
     // Déclaration des gestionnaires
     $scope.gestionnaires.menu = new Menu();
     $scope.gestionnaires.utilisateurs = new Utilisateurs();
     $scope.gestionnaires.map = new Map($scope);
     $scope.gestionnaires.gps = new Gps($scope);
-
-
-    // Méthodes pour la carte
-
-
+    $scope.gestionnaires.accelerometre = new Accelerometre($scope);
 
     // Configuration de l'application
     $scope.icones_gps = $("#icone_gps");
+    $scope.icone_accelerometre = $("#icone_accelerometre");
 
     // ==========================================================
     //  Fonctions stockées dans le scope
@@ -74,6 +68,16 @@ function AppController($scope) {
         $scope.gestionnaires.gps.isEnabled(null);
     };
 
+    // Le gps récupère les données
+    $scope.boucleGps = function() {
+        $scope.gestionnaires.gps.getAcquisition();
+    };
+
+    // L'accéléromètre récupère les données
+    $scope.boucleAccelerometre = function() {
+        $scope.gestionnaires.accelerometre.getAcquisition();
+    };
+
     // ==========================================================
     //  Intervals et Timeouts stockées dans le scope
     //  @description Les timeouts et les intervals sont mieux ici car les fuites
@@ -98,7 +102,7 @@ function AppController($scope) {
     // ==========================================================
 
     // Récupération du profil de la session storage
-    $scope.user = $.parseJSON(sessionStorage.getItem("profil"));
+    $scope.user = $.parseJSON(localStorage.getItem("profil"));
 
     // On regarde si on a récupéré un utilisateur du session storage.
     // Si ce n'est pas le cas alors on considère qu'il n'y a pas de profil 
@@ -121,7 +125,7 @@ function AppController($scope) {
             // et dans le session storage.
             if (user !== false) {
                 $scope.user = user;
-                sessionStorage.setItem("profil", JSON.stringify($scope.user));
+                localStorage.setItem("profil", JSON.stringify($scope.user));
                 $scope.refresh();
             }
         });
@@ -191,10 +195,10 @@ function AppController($scope) {
 
     // Nouvel interval de 30 secondes
     var interval_etat = setInterval(function() {
-        $scope.testerInternet();
-        $scope.testerGps();
+        $scope.boucleGps();
+        $scope.boucleAccelerometre();
         $scope.refresh();
-    }, 10000);
+    }, 5000);
 
     // On l'ajoute dans les intervals stockées
     $scope.interval.push(interval_etat);

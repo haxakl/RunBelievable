@@ -1,0 +1,85 @@
+<section ng-controller="AppController">
+    <h3>Gps</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Variable</th>
+                <th>Valeur</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Latitude</td>
+                <td class="text-right">{{gestionnaires.gps.lastPosition.coords.latitude}}</td>
+            </tr>
+            <tr>
+                <td>Longitude</td>
+                <td class="text-right">{{gestionnaires.gps.lastPosition.coords.longitude}}</td>
+            </tr>
+            <tr>
+                <td>Altitude</td>
+                <td class="text-right">{{gestionnaires.gps.lastPosition.coords.altitude}}</td>
+            </tr>
+            <tr>
+                <td>Accuracy</td>
+                <td class="text-right">{{gestionnaires.gps.lastPosition.coords.accuracy}}</td>
+            </tr>
+            <tr>
+                <td>Altitude Accuracy</td>
+                <td class="text-right">{{gestionnaires.gps.lastPosition.coords.altitudeAccuracy}}</td>
+            </tr>
+            <tr>
+                <td>Heading</td>
+                <td class="text-right">{{gestionnaires.gps.lastPosition.coords.heading}}</td>
+            </tr>
+            <tr>
+                <td>Speed</td>
+                <td class="text-right">{{gestionnaires.gps.lastPosition.coords.speed}}</td>
+            </tr>
+            <tr>
+                <td>Timestamp</td>
+                <td class="text-right">{{gestionnaires.gps.lastPosition.timestamp}}</td>
+            </tr>
+            <tr>
+                <td>Erreur code</td>
+                <td class="text-right">{{gestionnaires.gps.lastPosition.code}}</td>
+            </tr>
+            <tr>
+                <td>Erreur message</td>
+                <td class="text-right">{{gestionnaires.gps.lastPosition.message}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <h3>Accéléromètre</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Variable</th>
+                <th>Valeur</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Accéleration X</td>
+                <td class="text-right">{{gestionnaires.accelerometre.lastMesure.x}}</td>
+            </tr>
+            <tr>
+                <td>Accéleration Y</td>
+                <td class="text-right">{{gestionnaires.accelerometre.lastMesure.y}}</td>
+            </tr>
+            <tr>
+                <td>Accéleration Z</td>
+                <td class="text-right">{{gestionnaires.accelerometre.lastMesure.z}}</td>
+            </tr>
+            <tr>
+                <td>Timestamp</td>
+                <td class="text-right">{{gestionnaires.accelerometre.lastMesure.timestamp}}</td>
+            </tr>
+            <tr>
+                <td>Erreur</td>
+                <td class="text-right">{{gestionnaires.accelerometre.lastMesure.erreur}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>

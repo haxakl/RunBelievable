@@ -9,6 +9,8 @@ function Gps($scope) {
     // L'interval de temps entre 2 acquisitions
     this.interval_acquisition = 1000;
 
+    this.positions = new Array();
+
     // Variable avec l'activation du gps
     this.actif = false;
 
@@ -26,33 +28,12 @@ function Gps($scope) {
      */
     this.isEnabled = function(hook) {
 
-        // Test si le Gps existe sur le téléphone
-        if (!navigator.geolocation) {
-            $scope.gestionnaires.gps.actif = false;
-            return false;
-        }
+        // Si le hook est null on retourne le resultat
+        if (typeof hook === "undefined" || hook === null)
+            return this.gps_acquisition_actif;
 
-        navigator.geolocation.getCurrentPosition(function() {
-            $scope.gestionnaires.gps.modifIcone("success", "Gps activé");
-            $scope.gestionnaires.gps.actif = true;
-            if ($scope.mapError) {
-                $scope.gestionnaires.map.initializeMap();
-            }
-            $scope.mapError = false;
-            if(hook !== null)
-                hook();
-        }, function() {
-            $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
-            $scope.gestionnaires.gps.actif = false;
-            $scope.mapError = true;
-        }, {
-            maximumAge: 3000,
-            timeout: 20000,
-            enableHighAccuracy: true
-        });
+        hook(this.gps_acquisition_actif);
 
-        // Si le scope n'est pas déjà en train de mettre à jour la vue, on indique qu'elle doit être mise à jour
-        $scope.refresh();
     };
 
     /**
@@ -64,6 +45,13 @@ function Gps($scope) {
         var acquisition = null;
 
         navigator.geolocation.getCurrentPosition(function(position) {
+
+            $scope.gestionnaires.gps.modifIcone("success", "Gps activé");
+            $scope.gestionnaires.gps.actif = true;
+
+            $scope.gestionnaires.gps.positions.push(position);
+            $scope.gestionnaires.gps.lastPosition = position;
+
             // On créer l'objet contenant les informations de l'acquisition de données
             acquisition = {
                 latitude: position.coords.latitude,
@@ -78,8 +66,11 @@ function Gps($scope) {
 
             hook(acquisition);
 
-        }, function() {
-
+        }, function(error) {
+            $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
+            $scope.gestionnaires.gps.actif = false;
+            $scope.mapError = true;
+            $scope.gestionnaires.gps.lastPosition = error;
         }, {
             maximumAge: 1000,
             timeout: 1000,
@@ -116,6 +107,5 @@ function Gps($scope) {
     function toRad(nombre) {
         return nombre * Math.PI / 180;
     }
-    ;
 
 }
