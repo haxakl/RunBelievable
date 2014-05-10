@@ -33,6 +33,18 @@
                     ]
                 }
             }
+        },
+        "res/xml/config.xml": {
+            "/*": {
+                "<feature name=\"Accelerometer\"><param name=\"android-package\" value=\"org.apache.cordova.devicemotion.AccelListener\" /></feature>": 0,
+                "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.GeoBroker\" /></feature>": 0
+            }
+        },
+        "AndroidManifest.xml": {
+            "/*": {
+                "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />": 0,
+                "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />": 0
+            }
         }
     },
     "installed_plugins": {

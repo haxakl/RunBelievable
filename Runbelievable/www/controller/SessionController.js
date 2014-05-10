@@ -140,7 +140,7 @@ function SessionController($scope) {
         $scope.listeSession.push($scope.session);
 
         $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
-
+		
         location = "#statistiquesSession";
 
     };

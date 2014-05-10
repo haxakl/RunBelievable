@@ -44,7 +44,7 @@ function StatistiquesSessionController($scope) {
             }
 
             // On calcule cette distance en km
-            distanceEnKm = $scope.gps.getDistance2Points(ancienPoint.latitude, ancienPoint.longitude,
+            distanceEnKm = $scope.gestionnaires.gps.getDistance2Points(ancienPoint.latitude, ancienPoint.longitude,
             	point.latitude, point.longitude);
 
             // On l'ajoute à la liste des distances
