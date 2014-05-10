@@ -10,7 +10,7 @@
         <link rel="stylesheet" type="text/css" href="ressources/css/style.css" />
         <link rel="stylesheet" type="text/css" href="ressources/css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="ressources/css/font-awesome.css" />
-        
+
         <!-- Police de caractère -->
         <link href='http://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:100,300,400' rel='stylesheet' type='text/css'>
@@ -72,9 +72,11 @@
                     <section ng-controller="SessionController">
                         <div class="title">Sessions</div>
                         <div class="liens">
+                            <a href="#sessionEnCours" ng-show="gestionnaires.gps.actif && (session.listeAcquisitions.length > 0)"><i class="fa fa-play"></i> Retour à la session en cours</a>
                             <a href="#statistiquesSession" ng-show="true"><i class="fa fa-bar-chart-o"></i> Statistiques de la session</a>
                             <a href="#listeSessions" ng-show="true"><i class="fa fa-align-justify "></i> Mes session</a>
                             <a href="#planifierSession" ng-show="true"><i class="fa fa-ticket "></i> Planifier une session</a>
+
                         </div>
                     </section>
                     <div class="title">Profile</div>

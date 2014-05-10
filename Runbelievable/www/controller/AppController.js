@@ -64,11 +64,6 @@ function AppController($scope) {
 
     };
 
-    // Permet de tester le Gps
-    $scope.testerGps = function() {
-        $scope.gestionnaires.gps.isEnabled(null);
-    };
-
     // Le gps récupère les données
     $scope.boucleGps = function() {
         $scope.gestionnaires.gps.getAcquisition();
@@ -194,7 +189,7 @@ function AppController($scope) {
     //  Internet et l'accès au Gps
     // ==========================================================
 
-    // Nouvel interval de 30 secondes
+    // Nouvel interval de 5 secondes
     var interval_etat = setInterval(function() {
         $scope.boucleGps();
         $scope.boucleAccelerometre();
@@ -232,8 +227,12 @@ function AppController($scope) {
     //  pas le cas on demande à l'utilisateur de les allumer.
     // ==========================================================
 
+
+    // Tests de fonctionnement initiaux
     $scope.testerInternet();
-    $scope.testerGps();
+    $scope.boucleGps();
+    $scope.boucleAccelerometre();
+    
     $scope.refresh();
 
 }
