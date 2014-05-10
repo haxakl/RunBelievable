@@ -15,6 +15,7 @@ function InfoApplication() {
     // une distance très faible entre 2 acquisitions)
     // vitesseLimite : en dessous de cette valeur (vitesse en km/h) le counter de pause est incrémenté
     // distanceLimite : distance en km en dessous de laquelle le counter de pause est incrémenté
+    // alertTriggered : savoir si une alerte a été déclenché pour la desactivation de Internet/Gps/accelerometre
     this.Global = {
         map: null,
         location: null,
@@ -24,6 +25,9 @@ function InfoApplication() {
         pauseTrigger: 5,
         vitesseLimite : 3,
         distanceLimite : 0.001,
+        alertTriggered : {gps : false,
+                          internet: false,
+                          accelerometre: false}
     };
 
 }

@@ -3,33 +3,37 @@
              Connexion
 \*----------------------------------*/
 #logo_connexion {
-	padding-left: 20px
+    padding-left: 20px
 }
 
 /*----------------------------------*\
             Liste sesions
 \*----------------------------------*/
 #listeSessions {
-	width : 100%;
-	margin-left:0;
-	padding-left:0;
+    width : 100%;
+    margin-left:0;
+    padding-left:0;
 }
 
 
 #listeSessions li {
-	list-style-type: none;
-	padding-bottom: 8px;
+    list-style-type: none;
+    padding-bottom: 8px;
 }
 
 #listeSessions li a {
-	width : 100%;
+    width : 100%;
 }
 
 #listeSessions li a button{
-	width : 100%;
+    width : 100%;
 }
 
 #pauseTime {
     color: #d9534f;
     font-size: 10px;
 }
+
+
+
+

@@ -28,9 +28,11 @@ function Accelerometre($scope) {
         if (typeof navigator.accelerometer === "undefined") {
             $scope.gestionnaires.accelerometre.modifIcone("danger", "Accéléromètre désactivé");
             $scope.gestionnaires.accelerometre.actif = false;
+
         }
         else {
             navigator.accelerometer.getCurrentAcceleration(function(position) {
+                $scope.infoApplication.Global.alertTriggered.accelerometre = false;
 
                 $scope.gestionnaires.accelerometre.modifIcone("success", "Accéléromètre activé");
                 $scope.gestionnaires.accelerometre.actif = true;
@@ -46,6 +48,7 @@ function Accelerometre($scope) {
                 $scope.gestionnaires.accelerometre.modifIcone("danger", "Accéléromètre désactivé");
                 $scope.gestionnaires.accelerometre.actif = false;
                 $scope.gestionnaires.accelerometre.lastMesure = error;
+
             });
         }
 

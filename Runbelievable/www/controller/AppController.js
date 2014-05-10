@@ -39,6 +39,21 @@ function AppController($scope) {
 
     };
 
+
+    // Permet d'afficher une alerte 
+    $scope.alerte = function(texte) {
+        $("#alerte #contenuAlerte").text(texte);
+
+        $("#alerte").fadeIn(500);
+
+        // Fermeture d'alerte
+        $(document).click(function() {
+            $("#alerte").fadeOut(500);
+
+            $(document).unbind('click');
+        });
+    }
+
     // Permet de tester l'internet
     $scope.testerInternet = function() {
 
@@ -48,6 +63,8 @@ function AppController($scope) {
         } else if (navigator.network) {
             var type = navigator.network.connection.type;
         } else {
+            $scope.isInternet = true;
+
             return true;
         }
 
@@ -73,6 +90,24 @@ function AppController($scope) {
     $scope.boucleAccelerometre = function() {
         $scope.gestionnaires.accelerometre.getAcquisition();
     };
+
+    // Permet de déclencher les alertes 
+    $scope.alerterEtat = function() {
+        if (!$scope.infoApplication.Global.alertTriggered.gps && !$scope.gestionnaires.gps.actif) {
+            $scope.alerte("Le gps a été désactivé.");
+            $scope.infoApplication.Global.alertTriggered.gps = true;
+        }
+        if (!$scope.infoApplication.Global.alertTriggered.internet && !$scope.isInternet) {
+            $scope.alerte("Connexion à Internet perdue.");
+            $scope.infoApplication.Global.alertTriggered.internet = true;
+        }
+        if (!$scope.infoApplication.Global.alertTriggered.accelerometre && !$scope.gestionnaires.accelerometre.actif) {
+            $scope.alerte("L'acceleromètre a été désactivé.");
+            $scope.infoApplication.Global.alertTriggered.accelerometre = true;
+
+        }
+
+    }
 
     // ==========================================================
     //  Intervals et Timeouts stockées dans le scope
@@ -134,7 +169,7 @@ function AppController($scope) {
 
     // Création de l'objet session en cours
     $scope.session = new Session();
-    
+
     // Boolean de surveillance de la pause
     $scope.enPause = false;
 
@@ -193,6 +228,11 @@ function AppController($scope) {
     var interval_etat = setInterval(function() {
         $scope.boucleGps();
         $scope.boucleAccelerometre();
+        if ($scope.testerInternet())
+            $scope.infoApplication.Global.alertTriggered.internet = false;
+
+
+        $scope.alerterEtat();
         $scope.refresh();
     }, 5000);
 
@@ -232,7 +272,9 @@ function AppController($scope) {
     $scope.testerInternet();
     $scope.boucleGps();
     $scope.boucleAccelerometre();
-    
+    $scope.alerterEtat();
     $scope.refresh();
+
+
 
 }
