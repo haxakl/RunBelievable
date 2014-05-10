@@ -141,8 +141,10 @@ function SessionController($scope) {
 
         $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
 		
+		// Création de l'objet session en cours
+    	$scope.session = new Session();
+		
         location = "#statistiquesSession";
-
     };
 
     // Test si le Gps est allumé    
