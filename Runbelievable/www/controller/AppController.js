@@ -2,7 +2,6 @@
 /**
  * Controller principal du début de l'application
  * @param {type} $scope
- * @returns {undefined}
  */
 function AppController($scope) {
 
@@ -12,22 +11,18 @@ function AppController($scope) {
 
     // Déclaration du tableau des gestionnaires
     $scope.gestionnaires = new Array();
-    
-    
 
     // Déclaration des gestionnaires
     $scope.gestionnaires.menu = new Menu();
     $scope.gestionnaires.utilisateurs = new Utilisateurs();
     $scope.gestionnaires.map = new Map($scope);
     $scope.gestionnaires.gps = new Gps($scope);
-
-
-    // Méthodes pour la carte
-
-
+    $scope.gestionnaires.accelerometre = new Accelerometre($scope);
+    $scope.gestionnaires.navigator = navigator;
 
     // Configuration de l'application
     $scope.icones_gps = $("#icone_gps");
+    $scope.icone_accelerometre = $("#icone_accelerometre");
 
     // ==========================================================
     //  Fonctions stockées dans le scope
@@ -44,6 +39,21 @@ function AppController($scope) {
 
     };
 
+
+    // Permet d'afficher une alerte 
+    $scope.alerte = function(texte) {
+        $("#alerte #contenuAlerte").text(texte);
+
+        $("#alerte").fadeIn(500);
+
+        // Fermeture d'alerte
+        $(document).click(function() {
+            $("#alerte").fadeOut(500);
+
+            $(document).unbind('click');
+        });
+    }
+
     // Permet de tester l'internet
     $scope.testerInternet = function() {
 
@@ -53,6 +63,8 @@ function AppController($scope) {
         } else if (navigator.network) {
             var type = navigator.network.connection.type;
         } else {
+            $scope.isInternet = true;
+
             return true;
         }
 
@@ -69,10 +81,33 @@ function AppController($scope) {
 
     };
 
-    // Permet de tester le Gps
-    $scope.testerGps = function() {
-        $scope.gestionnaires.gps.isEnabled(null);
+    // Le gps récupère les données
+    $scope.boucleGps = function() {
+        $scope.gestionnaires.gps.getAcquisition();
     };
+
+    // L'accéléromètre récupère les données
+    $scope.boucleAccelerometre = function() {
+        $scope.gestionnaires.accelerometre.getAcquisition();
+    };
+
+    // Permet de déclencher les alertes 
+    $scope.alerterEtat = function() {
+        if (!$scope.infoApplication.Global.alertTriggered.gps && !$scope.gestionnaires.gps.actif) {
+            $scope.alerte("Le gps a été désactivé.");
+            $scope.infoApplication.Global.alertTriggered.gps = true;
+        }
+        if (!$scope.infoApplication.Global.alertTriggered.internet && !$scope.isInternet) {
+            $scope.alerte("Connexion à Internet perdue.");
+            $scope.infoApplication.Global.alertTriggered.internet = true;
+        }
+        if (!$scope.infoApplication.Global.alertTriggered.accelerometre && !$scope.gestionnaires.accelerometre.actif) {
+            $scope.alerte("L'acceleromètre a été désactivé.");
+            $scope.infoApplication.Global.alertTriggered.accelerometre = true;
+
+        }
+
+    }
 
     // ==========================================================
     //  Intervals et Timeouts stockées dans le scope
@@ -98,7 +133,7 @@ function AppController($scope) {
     // ==========================================================
 
     // Récupération du profil de la session storage
-    $scope.user = $.parseJSON(sessionStorage.getItem("profil"));
+    $scope.user = $.parseJSON(localStorage.getItem("profil"));
 
     // On regarde si on a récupéré un utilisateur du session storage.
     // Si ce n'est pas le cas alors on considère qu'il n'y a pas de profil 
@@ -121,7 +156,7 @@ function AppController($scope) {
             // et dans le session storage.
             if (user !== false) {
                 $scope.user = user;
-                sessionStorage.setItem("profil", JSON.stringify($scope.user));
+                localStorage.setItem("profil", JSON.stringify($scope.user));
                 $scope.refresh();
             }
         });
@@ -134,6 +169,9 @@ function AppController($scope) {
 
     // Création de l'objet session en cours
     $scope.session = new Session();
+
+    // Boolean de surveillance de la pause
+    $scope.enPause = false;
 
     // Pour controler l'acquisition de partout 
     $scope.boucleID = null;
@@ -186,12 +224,17 @@ function AppController($scope) {
     //  Internet et l'accès au Gps
     // ==========================================================
 
-    // Nouvel interval de 30 secondes
+    // Nouvel interval de 5 secondes
     var interval_etat = setInterval(function() {
-        $scope.testerInternet();
-        $scope.testerGps();
+        $scope.boucleGps();
+        $scope.boucleAccelerometre();
+        if ($scope.testerInternet())
+            $scope.infoApplication.Global.alertTriggered.internet = false;
+
+
+        $scope.alerterEtat();
         $scope.refresh();
-    }, 10000);
+    }, 5000);
 
     // On l'ajoute dans les intervals stockées
     $scope.interval.push(interval_etat);
@@ -224,8 +267,14 @@ function AppController($scope) {
     //  pas le cas on demande à l'utilisateur de les allumer.
     // ==========================================================
 
+
+    // Tests de fonctionnement initiaux
     $scope.testerInternet();
-    $scope.testerGps();
+    $scope.boucleGps();
+    $scope.boucleAccelerometre();
+    $scope.alerterEtat();
     $scope.refresh();
+
+
 
 }
