@@ -87,6 +87,7 @@ body {
         height: 100%;
         position: absolute;
     }
+
     img {
         margin: 10px;
     }
@@ -116,6 +117,37 @@ body {
     .close:hover {
         opacity: 0.9;
     }
+}
+
+#alerte {
+    .scroll {
+        padding: 4%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        vertical-align: central;
+
+    }
+    #contenuAlerte{
+        word-wrap: break-word;
+        font-size: 15;
+    }
+
+    position: fixed;
+    height: 30%;
+    width: 60%;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    top: 25%;
+    left: 20%;
+    background: rgba(22, 22, 22, .95);
+    z-index: 100;
+    color: white;
+    text-align: center;
+    display: none;
+
 }
 
 .view {

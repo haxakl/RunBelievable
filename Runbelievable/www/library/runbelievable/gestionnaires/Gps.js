@@ -45,6 +45,7 @@ function Gps($scope) {
         var acquisition = null;
 
         navigator.geolocation.getCurrentPosition(function(position) {
+            $scope.infoApplication.Global.alertTriggered.gps = false;
 
             $scope.gestionnaires.gps.modifIcone("success", "Gps activé");
             $scope.gestionnaires.gps.actif = true;

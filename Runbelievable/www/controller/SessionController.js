@@ -101,6 +101,9 @@ function SessionController($scope) {
             var tempsEntre2Points = (acquisitonActuelle.timestamp - acquisitonPrecedente.timestamp) / 1000;
 
             $scope.vitesseActuelle = 3600 * distance / tempsEntre2Points;
+            if(isNaN($scope.vitesseActuelle))
+                $scope.vitesseActuelle = 0;
+            
             $("#vitesseActuelle").text(Math.round($scope.vitesseActuelle, 0));
         }
     }
@@ -137,9 +140,11 @@ function SessionController($scope) {
         $scope.listeSession.push($scope.session);
 
         $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
-
+		
+		// Création de l'objet session en cours
+    	$scope.session = new Session();
+		
         location = "#statistiquesSession";
-
     };
 
     // Test si le Gps est allumé    
