@@ -52,7 +52,7 @@ function AppController($scope) {
 
             $(document).unbind('click');
         });
-    }
+    };
 
     // Permet de tester l'internet
     $scope.testerInternet = function() {
@@ -107,7 +107,11 @@ function AppController($scope) {
 
         }
 
-    }
+    };
+    
+    $scope.nouvelleSession = function() {
+		$scope.session = new Session();
+	};
 
     // ==========================================================
     //  Intervals et Timeouts stockées dans le scope

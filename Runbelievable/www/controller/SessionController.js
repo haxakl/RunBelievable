@@ -141,8 +141,11 @@ function SessionController($scope) {
 
         $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
 		
-		// Création de l'objet session en cours
-    	$scope.session = new Session();
+    	// RAZ de la session
+    	$scope.nouvelleSession();
+    	$scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
+    	$scope.gestionnaires.gps.gps_acquisition_actif = false;
+    	chronoReset();
 		
         location = "#statistiquesSession";
     };
