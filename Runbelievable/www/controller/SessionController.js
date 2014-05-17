@@ -126,7 +126,7 @@ function SessionController($scope) {
         $scope.chronoPrincipal.chronoStop();
 
         $scope.enPause = true;
-        $scope.chronoPause.chronoContinue();
+        $scope.chronoPause.chronoStart();
 
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.RESTART;
 

@@ -34,9 +34,25 @@ function Chronometre($scope, id) {
         }
         document.getElementById(this.idChrono).innerHTML = this.hr + ":" + this.min + ":" + this.sec;
 
-        
-        this.timerID = setTimeout(function(){$scope.chronoPause.chrono()}, 50);
+        if (this.idChrono === "chronotime") {
+            this.timerID = setTimeout(function() {
+                $scope.chronoPrincipal.chrono()
+            }, 50);
+        }
+
+        else if (this.idChrono === "pauseTime") {
+            this.timerID = setTimeout(function() {
+                $scope.chronoPause.chrono()
+            }, 50);
+        }
     };
+
+    this.chronoStart = function() {
+
+        this.start = new Date()
+        this.chrono();
+    }
+
     this.chronoContinue = function() {
         this.start = new Date() - this.diff;
         this.start = new Date(this.start);
