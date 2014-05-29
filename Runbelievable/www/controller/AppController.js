@@ -275,6 +275,17 @@ function AppController($scope) {
     $scope.alerterEtat();
     $scope.refresh();
 
+    if (JSON.stringify(navigator.accelerometer)) {
+        $("#debug").text("Accelerometre activé");
+    } else {
+        $("#debug").text("Accelerometre désactivé");
+    }
 
+    navigator.notification.alert(
+            'You are the winner!', // message
+            alertDismissed, // callback
+            'Game Over', // title
+            'Done'                  // buttonName
+            );
 
 }
