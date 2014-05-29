@@ -1,26 +1,27 @@
 
 // Gère le chrono
-function Chronometre($scope) {
+function Chronometre($scope, id) {
 
     // Chronometre
 
-    this.start = [];
-    this.end = [];
-    this.diff = [];
-    this.timerID = [];
+    this.idChrono = id;
+    this.start = new Date();
+    this.end = 0;
+    this.diff = 0;
+    this.timerID;
 
 
-    this.chrono = function(id) {
+    this.chrono = function() {
 
 
-        this.end[id] = new Date();
-        this.diff[id] = this.end[id] - this.start[id];
-        this.diff[id] = new Date(this.diff[id]);
+        this.end = new Date();
+        this.diff = this.end - this.start;
+        this.diff = new Date(this.diff);
 
-        this.msec = this.diff[id].getMilliseconds();
-        this.sec = this.diff[id].getSeconds();
-        this.min = this.diff[id].getMinutes();
-        this.hr = this.diff[id].getHours() - 1;
+        this.msec = this.diff.getMilliseconds();
+        this.sec = this.diff.getSeconds();
+        this.min = this.diff.getMinutes();
+        this.hr = this.diff.getHours() - 1;
 
         if (this.min < 10) {
             this.min = "0" + this.min;
@@ -31,35 +32,42 @@ function Chronometre($scope) {
         if (this.msec < 10) {
             this.msec = "00" + this.msec;
         }
-        document.getElementById(id).innerHTML = this.hr + ":" + this.min + ":" + this.sec;
+        document.getElementById(this.idChrono).innerHTML = this.hr + ":" + this.min + ":" + this.sec;
 
-        this.timerID[id] = setInterval(function() {
-            $scope.gestionnaires.chrono.chrono(id)
-        }, 100);
+        if (this.idChrono === "chronotime") {
+            this.timerID = setTimeout(function() {
+                $scope.chronoPrincipal.chrono()
+            }, 50);
+        }
+
+        else if (this.idChrono === "pauseTime") {
+            this.timerID = setTimeout(function() {
+                $scope.chronoPause.chrono()
+            }, 50);
+        }
     };
-    this.chronoStart = function(id) {
-        this.start[id] = new Date();
-        this.chrono(id);
+
+    this.chronoStart = function() {
+
+        this.start = new Date()
+        this.chrono();
+    }
+
+    this.chronoContinue = function() {
+        this.start = new Date() - this.diff;
+        this.start = new Date(this.start);
+        this.chrono();
     };
-    this.chronoContinue = function(id) {
-        this.start[id] = new Date() - this.diff[id];
-        this.start[id] = new Date(this.start[id]);
-        this.chrono(id);
+    this.chronoReset = function() {
+        document.getElementById(this.idChrono).innerHTML = "0:00:00";
+        this.start = new Date();
     };
-    this.chronoReset = function(id) {
-        document.getElementById(id).innerHTML = "0:00:00";
-        this.start[id] = new Date();
+    this.chronoStop = function() {
+        clearTimeout(this.timerID);
     };
-    this.chronoStopReset = function(id) {
-        document.getElementById(id).innerHTML = "0:00:00";
-        document.chronoForm.startstop.onclick = chronoStart;
-    };
-    this.chronoStop = function(id) {
-        clearTimeout(this.timerID[id]);
-    };
-    
-    this.getTime = function(id){
-        return new Date(this.diff[id]);
+
+    this.getTime = function() {
+        return new Date(this.diff);
     }
 }
 
