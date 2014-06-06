@@ -1,14 +1,69 @@
 <section ng-controller="SessionController">
-    <div> <h2></h2>
-        <FORM>
-            <SELECT name="nom" size="1" class="form-control">
-                <OPTION selected>Echauffement
-                <OPTION>Récupération
-                <OPTION> Footing
-                <OPTION> Sprint
-                <OPTION> Marathon
-            </SELECT>
-        </FORM>
+    <div>
+
+
+
+        <table class="table table-striped etapes">
+            <tbody >
+                <tr>
+                    <td>
+                        <select name="nom" size="1" class="form-control">
+                            <option selected>Echauffement</option>
+                            <option>Récupération</option>
+                            <option>Footing</option>
+                            <option>Sprint</option>
+                            <option>Marathon</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" min="0" placeholder="Nombre de seconde">
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-danger" onclick="suppretape($(this))"><i class="fa fa-times"></i></a>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <a class="addetape btn btn-sm btn-primary">Ajouter une étape</a>
+        <a class="finaliserEtape btn btn-sm btn-success">Valider la planification</a>
     </div>
 </section>
+
+<script>
+    var etape = new Array();
+
+    $(".addetape").click(function() {
+        $(".etapes tbody").append("<tr>" + $(".etapes tbody tr:nth-child(1)").html() + "</tr>");
+    });
+
+    $(".finaliserEtape").click(function() {
+        $(".etapes tbody tr").each(function() {
+            $(this).find("select").val();
+            $(this).find("input").val();
+
+            var tmp = new Object();
+            tmp.description = $(this).find("select").val();
+            tmp.secondes = $(this).find("input").val();
+
+            etape.push(tmp);
+
+        });
+        console.log(etape);
+    });
+
+
+    function suppretape(liens) {
+        if ($(".etapes tbody tr").size() > 1)
+            liens.closest("tr").remove();
+    }
+    
+
+
+
+
+//    faire un bouton pour sauvegarder le tableau
+// Mettre toute les lignes dans une fonction [{description: "Marathon", secondes: "30"}]
+// voir comment convertir un obj en json
+</script>
 
