@@ -190,19 +190,17 @@ function AppController($scope, $location) {
     //  - Profil Online
     // ==========================================================
 
-
     // Fonction création d'un profil
-    $scope.creationProfil = function(user) {
-        var user = $scope.gestionnaires.utilisateurs.creerProfil({
-            nom: $("#nom").val()
-        });
-
+    $scope.creationProfil = function(params) {
+        var user = new Utilisateur();
+        user.nom = $("#nom").val();
+        
         // Si l'utilisateur a bien été crée on le stocke dans l'application et dans le session storage.
         if (user !== false) {
             $scope.first = true;
             $scope.user = user;
             localStorage.setItem("profil", JSON.stringify($scope.user));
-            $location.path("/home");
+            $location.path("/compte");
         }
     };
     // Connexion local
@@ -257,7 +255,10 @@ function AppController($scope, $location) {
         //  - Profil Local
         //  - Profil Online
         // ==========================================================
-
+        
+        // Debug
+//        localStorage.removeItem("profil");
+        
         if (localStorage.getItem("profil") && localStorage.getItem("profil") !== null) {
             $scope.user = $.parseJSON(localStorage.getItem("profil"));
             if ($scope.user.email && $scope.user !== "") {
@@ -266,7 +267,7 @@ function AppController($scope, $location) {
                 $location.path("/compte/inscription");
             }
         } else {
-            $location.path("/compte");
+            $location.path("/compte/local");
         }
     }
 
