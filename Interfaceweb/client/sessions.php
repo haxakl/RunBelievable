@@ -21,7 +21,7 @@
             $user->recup($session->user);
 ?>
             <tr>
-                <td><?php echo $session->reference; ?></td>
+                <td><a href="performanceSession.php?session=<?php echo $session->id; ?>"><?php echo $session->reference; ?></a></td>
                 <td><?php echo $user->nom; ?></td>
                 <td><?php echo $session->nom; ?></td>
                 <td><?php echo $session->date; ?></td>
