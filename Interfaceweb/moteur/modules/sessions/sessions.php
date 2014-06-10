@@ -30,5 +30,22 @@ class Sessions {
         // Crée l'utilisateur
         return $tmp;
     }
+    
+    public function getSessionReference($reference){
+        
+        // Préparation de la requete
+        $requete_session = DB()->prepare("SELECT * FROM rb_sessions WHERE ses_reference = :reference;");
+        $requete_session->bindParam(':reference', $reference, PDO::PARAM_STR);
+        
+        // Retourne le résultat
+        $infos = exec_sql($requete_session, true);
+        
+        // Crée la session
+        if (count($infos) == 0) {
+            return new Session();
+        } else {
+            return new Session($infos[0]);
+        }
+    }
 
 }

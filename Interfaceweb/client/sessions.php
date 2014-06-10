@@ -19,7 +19,7 @@
         foreach ($gestionnaire_session->getSessions() as $session) :
             $user = new Utilisateur;
             $user->recup($session->user);
-            ?>
+?>
             <tr>
                 <td><?php echo $session->reference; ?></td>
                 <td><?php echo $user->nom; ?></td>
