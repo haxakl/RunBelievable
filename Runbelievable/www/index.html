@@ -10,7 +10,6 @@
         <link rel="stylesheet" type="text/css" href="ressources/css/style.css" />
         <link rel="stylesheet" type="text/css" href="ressources/css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="ressources/css/font-awesome.css" />
-        <link rel="stylesheet" type="text/css" href="ressources/css/notification.css" />
 
         <!-- Police de caractère -->
         <link href='http://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
@@ -20,7 +19,9 @@
         <!-- Librairies -->
         <script type="text/javascript" src="library/jquery/jquery.js"></script>
         <script type="text/javascript" src="library/jquery/jquery.transit.js"></script>
-        <script type="text/javascript" src="library/angular/angular.min.js"></script>
+        <script type="text/javascript" src="library/jquery/jquery.md5.js"></script>
+        <script type="text/javascript" src="library/angular/angular.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-animate.min.js"></script>
         <script type="text/javascript" src="library/angular/angular-route.min.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4rVRKNBxwsQgz6bo8S8CfTwHh7tTx2Xo&sensor=true">
         </script>
@@ -29,24 +30,24 @@
         <script type="text/javascript" src="controller/Routes.js"></script>
 
         <!-- Entités -->
-        <script src="library/runbelievable/entites/Session.js" type="text/javascript"></script>
-        <script src="library/runbelievable/entites/Utilisateur.js" type="text/javascript"></script>
-        <script src="library/runbelievable/entites/InfoApplication.js" type="text/javascript"></script>
-        <script src="library/runbelievable/entites/Pause.js" type="text/javascript"></script>
+        <script type="text/javascript" src="library/runbelievable/entites/Session.js"></script>
+        <script type="text/javascript" src="library/runbelievable/entites/Utilisateur.js"></script>
+        <script type="text/javascript" src="library/runbelievable/entites/InfoApplication.js"></script>
+        <script type="text/javascript" src="library/runbelievable/entites/Pause.js"></script>
 
         <!-- Gestionnaires -->
-        <script src="library/runbelievable/gestionnaires/Menu.js" type="text/javascript"></script>
-        <script src="library/runbelievable/gestionnaires/Utilisateurs.js" type="text/javascript"></script>
-        <script src="library/runbelievable/gestionnaires/Gps.js" type="text/javascript"></script>
-        <script src="library/runbelievable/gestionnaires/Accelerometre.js" type="text/javascript"></script>
-        <script src="library/runbelievable/gestionnaires/Map.js" type="text/javascript"></script>
-        <script src="library/runbelievable/gestionnaires/Chronometre.js" type="text/javascript"></script>
-
+        <script type="text/javascript" src="library/runbelievable/gestionnaires/Menu.js"></script>
+        <script type="text/javascript" src="library/runbelievable/gestionnaires/Utilisateurs.js"></script>
+        <script type="text/javascript" src="library/runbelievable/gestionnaires/Gps.js"></script>
+        <script type="text/javascript" src="library/runbelievable/gestionnaires/Accelerometre.js"></script>
+        <script type="text/javascript" src="library/runbelievable/gestionnaires/Map.js"></script>
+        <script type="text/javascript" src="library/runbelievable/gestionnaires/Chronometre.js"></script>
+        <script type="text/javascript" src="library/runbelievable/gestionnaires/DonneesTraitees.js"></script>
 
         <!-- JS de Raphaeljs pour les graphiques -->
-        <script src="library/raphael/raphael.1.5.2.min.js" type="text/javascript"></script>
-        <script src="library/raphael/g.raphael-min.js" type="text/javascript"></script>
-        <script src="library/raphael/g.line-min.js" type="text/javascript"></script> 
+        <script type="text/javascript" src="library/raphael/raphael.1.5.2.min.js"></script>
+        <script type="text/javascript" src="library/raphael/g.raphael-min.js"></script>
+        <script type="text/javascript" src="library/raphael/g.line-min.js"></script> 
 
         <!-- Controllers de l'application -->
         <script type="text/javascript" src="controller/AppController.js"></script>
@@ -57,8 +58,9 @@
         <title>Runbelievable</title>
     </head>
 
-    <body >
-        <section id="App"  ng-controller="AppControler">
+    <body>
+
+        <section id="App" ng-controller="AppControler">
 
             <!-- Menu de Gauche -->
             <div id="menuG">
@@ -72,21 +74,20 @@
                     <div class="liens">
                         <a href="#"><i class="fa fa-home"></i> Accueil</a>
                     </div>
-                    <section ng-controller="SessionController">
+                    <section ng-controller="SessionController" style='margin-bottom: 0px'>
                         <div class="title">Sessions</div>
                         <div class="liens">
                             <a href="#sessionEnCours" ng-show="gestionnaires.gps.actif && (session.listeAcquisitions.length > 0)"><i class="fa fa-play"></i> Retour à la session en cours</a>
-                            <a href="#statistiquesSession" ng-show="true"><i class="fa fa-bar-chart-o"></i> Statistiques de la session</a>
-                            <a href="#listeSessions" ng-show="true"><i class="fa fa-align-justify "></i> Mes session</a>
-                            <a href="#planifierSession" ng-show="true"><i class="fa fa-ticket "></i> Planifier une session</a>
-
+                            <a href="#statistiquesSession" ng-show="gestionnaires.gps.actif && (session.listeAcquisitions.length > 0)"><i class="fa fa-bar-chart-o"></i> Statistiques de la session</a>
+                            <a href="#listeSessions"><i class="fa fa-align-justify "></i> Mes session</a>
+                            <a href="#planifierSession"><i class="fa fa-ticket "></i> Planifier une session</a>
                         </div>
                     </section>
                     <div class="title">Profile</div>
                     <div class="liens">
-                        <a href="#profile" ng-show="true"><i class="fa fa-user"></i> Voir le profil</a>
-                        <a href="#ajusterDonnees" ng-show="true"><i class="fa fa-signal"></i> Ajuster les données</a>
-                        <a href="#ajusterDonnees" ng-show="true"><i class="fa fa-bar-chart-o"></i> Statistiques</a>
+                        <a href="#profile"><i class="fa fa-user"></i> Voir le profil</a>
+                        <a href="#ajusterDonnees"><i class="fa fa-signal"></i> Ajuster les données</a>
+                        <a href="#ajusterDonnees"><i class="fa fa-bar-chart-o"></i> Statistiques</a>
                     </div>
                 </div>
             </div>
@@ -101,8 +102,11 @@
                     </div>
                     <div class="title">État</div>
                     <div class="liens">
-                        <div id="icone_Etat" class="infos">
+                        <div id="icone_etat" class="infos">
                             <i class="fa fa-user"></i><label class="label label-info">En pause</label>
+                        </div>
+                        <div id="icone_profil" class="infos">
+                            <i class="fa fa-cloud"></i><label class="label label-info">Local</label>
                         </div>
                         <div id="icone_gps" class="infos">
                             <i class="fa fa-map-marker"></i><label class="label label-warning">En test ...</label>
@@ -110,7 +114,9 @@
                         <div id="icone_accelerometre" class="infos">
                             <i class="fa fa-mobile"></i><label class="label label-warning">En test ...</label>
                         </div>
-                        <div id="icone_internet" class="infos"><i class="fa fa-cloud"></i><label class="label label-success">Internet activé</label></div>
+                        <div id="icone_internet" class="infos">
+                            <i class="fa fa-globe"></i><label class="label label-success">Internet activé</label>
+                        </div>
                     </div>
                     <div class="title">Options</div>
                     <div class="liens">
@@ -128,30 +134,7 @@
             </div>
 
             <!-- Section principale de l'application -->
-            <section class="view" ng-view></section>
-
-            <!-- Connexion au profil -->
-            <div id="new_profil">
-                <div class="scroll">
-                    <img alt="logo" src="ressources/img/logo.png" id="logo_connexion"/>
-                    <h3>Création d'un profil</h3>
-                    <div class="alert-danger alert"></div>
-                    <p>
-                        Vous n'avez pas de profil stocké sur ce téléphone.
-                    </p><br/>
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">Nom de profil</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Nom du profil">
-                            </div>
-                        </div>
-                    </form><br/>
-                    <p>
-                        <a id="new_profil_btn" class="btn btn-primary btn-sm">Créer le profil</a>
-                    </p>
-                </div>
-            </div>
+            <div class="view" ng-view></div>
 
             <!-- Alerte -->
             <div id="alerte">
@@ -162,7 +145,13 @@
                 </div>
             </div>
         </section>
-        
-        <!--<script type="text/javascript" src="phonegap.js"></script>-->
+        <div id="chargement">
+            <div class="scroll">
+                <div>
+                    <span class="loader loader-quart"></span>
+                    Chargement...
+                </div>
+            </div>
+        </div>
     </body>
 </html>

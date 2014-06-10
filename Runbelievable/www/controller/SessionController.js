@@ -5,14 +5,13 @@
 function SessionController($scope) {
 
     var interval_acquisition = 1000;
-
     $scope.vitesseActuelle = 0;
     $scope.session.dureeSession = 0;
     $scope.session.calorie = 0;
-
     // Les 2 chronomètres servant à la session
     $scope.chronoPrincipal = new Chronometre($scope, "chronotime");
-    $scope.chronoPause = new Chronometre($scope, "pauseTime");
+    $scope.chronoPause = new Chronometre($scope);
+    $scope.forcePause = false;
 
     // TODO Enum pour les textes dispo pour le bouton (à déplacer dans un endroit approprié dans le futur) 
     var dico_bouton_acquisition = {
@@ -28,10 +27,10 @@ function SessionController($scope) {
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
     else
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.RESTART;
-
     $scope.clickAcquisition = function() {
         if ($scope.gestionnaires.gps.gps_acquisition_actif) {
             stopAcquisition();
+            $scope.forcePause = true;
         } else {
             lancerAcquisition();
         }
@@ -47,70 +46,75 @@ function SessionController($scope) {
             return false;
         }
 
-        if ($scope.enPause) {
-            $scope.enPause = false;
-            $scope.chronoPause.chronoStop();
-            
-            var pause = new Pause();
-            pause.position = $scope.infoApplication.Global.location;
-            pause.duree = $scope.chronoPause.getTime();
-            
-            $scope.chronoPause.chronoReset();
-            $scope.session.pauses.push(pause);
-        }
+        saveSession();
 
-        // Lancement du chrono
-        $scope.chronoPrincipal.chronoContinue();
-
-        $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
-
-        // Acquisition démarée
-        $scope.gestionnaires.gps.gps_acquisition_actif = true;
+        $scope.forcePause = false;
+        startCourse();
 
         // Boucle de récuperation des données
         $scope.boucleID = setInterval(function() {
-
-            if (!$scope.gestionnaires.gps.actif || !$scope.gestionnaires.gps.gps_acquisition_actif) {
-                // On arrete l'acquisition
-                clearInterval($scope.boucleID);
-            }
-            $scope.gestionnaires.gps.getAcquisition($scope.gestionnaires.map.placerPoint);
-
-            calculerVitesseActuelle();
-            detecterPause();
+            boucleCourse();
         }, interval_acquisition);
+        
     }
 
-    function detecterPause() {
-        if (!$scope.infoApplication.Global.enPause && $scope.infoApplication.Global.location !== null && $scope.infoApplication.Global.lastLocation !== null && $scope.session.listeAcquisitions.length >= 10) {
-            if ($scope.vitesseActuelle <= $scope.infoApplication.Global.vitesseLimite) {
-                $scope.infoApplication.Global.pauseCounter++;
+    /**
+     * Boucle de la course
+     */
+    function boucleCourse() {
+
+        $scope.gestionnaires.gps.getAcquisition($scope.gestionnaires.map.placerPoint);
+
+        saveDonnees();
+
+        // Test si la course est en pause
+        if ($scope.forcePause === false && !$scope.donneesTraitees.detecterPause()) {
+            if ($scope.enPause) {
+                startCourse();
             }
-        }
 
-        if ($scope.infoApplication.Global.pauseCounter === $scope.infoApplication.Global.pauseTrigger) {
+            $("#vitesseActuelle").text(Math.round($scope.donneesTraitees.vitesseActuelle(), 0));
+
+            $scope.donneesTraitees.boucle();
+        } else {
             stopAcquisition();
-            $scope.infoApplication.Global.pauseCounter = 0;
-            $scope.refresh();
-
         }
     }
 
-    function calculerVitesseActuelle() {
+    /**
+     * Lancement course
+     */
+    function startCourse() {
+        $scope.enPause = false;
+        $scope.chronoPrincipal.chronoContinue();
+        $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
+        $scope.gestionnaires.gps.gps_acquisition_actif = true;
+    }
 
-        if ($scope.session.listeAcquisitions.length > 1) {
-            var acquisitonActuelle = $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 1];
-            var acquisitonPrecedente = $scope.session.listeAcquisitions[$scope.session.listeAcquisitions.length - 2];
+    /**
+     * Sauvegarde des données
+     */
+    function saveDonnees() {
+        if ($scope.user.email !== "" && $scope.user.email !== null && $scope.session.getLastDonnees() !== null) {
+            $.post("http://runbelievable.netai.net/moteur/modules/donnees/ajax.php", {
+                fonction: "saveDonnees",
+                reference: $scope.session.reference,
+                data: JSON.stringify($scope.session.getLastDonnees())
+            });
+        }
+    }
 
-            var distance = $scope.gestionnaires.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
-
-            var tempsEntre2Points = (acquisitonActuelle.timestamp - acquisitonPrecedente.timestamp) / 1000;
-
-            $scope.vitesseActuelle = 3600 * distance / tempsEntre2Points;
-            if (isNaN($scope.vitesseActuelle))
-                $scope.vitesseActuelle = 0;
-
-            $("#vitesseActuelle").text(Math.round($scope.vitesseActuelle, 0));
+    /**
+     * Sauvegarde la session
+     */
+    function saveSession() {
+        if ($scope.user.email !== "" && $scope.user.email !== null && !$scope.session.save) {
+            $.post("http://runbelievable.netai.net/moteur/modules/sessions/ajax.php", {
+                fonction: "newSession",
+                reference: $scope.session.reference,
+                email: $scope.user.email
+            });
+            $scope.session.save = true;
         }
     }
 
@@ -124,92 +128,35 @@ function SessionController($scope) {
         }
 
         $scope.chronoPrincipal.chronoStop();
-
         $scope.enPause = true;
         $scope.chronoPause.chronoStart();
-
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.RESTART;
-
         // Acquisition arêtée
         $scope.gestionnaires.gps.gps_acquisition_actif = false;
-
         // Recentrer sur dernière pos connue
         $scope.gestionnaires.map.centrer($scope.infoApplication.Global.location);
-
         $scope.refresh();
-
-
     }
 
     /**
      * Méthode permettant de sauvegarder la session dans la liste des sessions  et de le rediriger sur les stats de la session
-     * TODO vider la session actuelle une fois sauvegardé ?
      */
     $scope.sauvegarderSession = function() {
-        $scope.listeSession.push($scope.session);
 
+        // Ajout de la session dans la liste
+        $scope.listeSession.push(JSON.stringify($scope.session));
+        $scope.sauvegarder();
+        // On change les statistiques sur la page prévu à cet effet
         $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
-
-        // RAZ de la session
+        // Reset de la session
         $scope.nouvelleSession();
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
         $scope.gestionnaires.gps.gps_acquisition_actif = false;
         $scope.chronoPrincipal.chronoReset();
-
+        // Redirection
         location = "#statistiquesSession";
     };
 
     // Test si le Gps est allumé    
     $scope.gestionnaires.gps.isEnabled($scope.gestionnaires.map.initializeMap);
-
 }
-
-// Chronometre
-
-/*var startTime = 0;
- var start = 0;
- var end = 0;
- var diff = 0;
- var timerID = 0;
- function chrono() {
- end = new Date();
- diff = end - start;
- diff = new Date(diff);
- var msec = diff.getMilliseconds();
- var sec = diff.getSeconds();
- var min = diff.getMinutes();
- var hr = diff.getHours() - 1;
- 
- if (min < 10) {
- min = "0" + min;
- }
- if (sec < 10) {
- sec = "0" + sec;
- }
- if (msec < 10) {
- msec = "00" + msec;
- }
- document.getElementById("chronotime").innerHTML = hr + ":" + min + ":" + sec;
- timerID = setTimeout("chrono()", 10);
- }
- function chronoStart() {
- start = new Date();
- chrono();
- }
- function chronoContinue() {
- start = new Date() - diff;
- start = new Date(start);
- chrono();
- }
- function chronoReset() {
- // TODO reset le chrono pause
- document.getElementById("chronotime").innerHTML = "0:00:00";
- start = new Date();
- }
- function chronoStopReset() {
- document.getElementById("chronotime").innerHTML = "0:00:00";
- document.chronoForm.startstop.onclick = chronoStart;
- }
- function chronoStop() {
- clearTimeout(timerID);
- }*/

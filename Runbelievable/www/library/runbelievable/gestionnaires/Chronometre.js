@@ -32,7 +32,10 @@ function Chronometre($scope, id) {
         if (this.msec < 10) {
             this.msec = "00" + this.msec;
         }
-        document.getElementById(this.idChrono).innerHTML = this.hr + ":" + this.min + ":" + this.sec;
+
+        if (this.idChrono && this.idChrono !== null) {
+            document.getElementById(this.idChrono).innerHTML = this.hr + ":" + this.min + ":" + this.sec;
+        }
 
         if (this.idChrono === "chronotime") {
             this.timerID = setTimeout(function() {
@@ -48,27 +51,30 @@ function Chronometre($scope, id) {
     };
 
     this.chronoStart = function() {
-
-        this.start = new Date()
+        this.start = new Date();
         this.chrono();
-    }
+    };
 
     this.chronoContinue = function() {
         this.start = new Date() - this.diff;
         this.start = new Date(this.start);
         this.chrono();
     };
+
     this.chronoReset = function() {
-        document.getElementById(this.idChrono).innerHTML = "0:00:00";
+        if (this.idChrono && this.idChrono !== null) {
+            document.getElementById(this.idChrono).innerHTML = "0:00:00";
+        }
         this.start = new Date();
     };
+    
     this.chronoStop = function() {
         clearTimeout(this.timerID);
     };
 
     this.getTime = function() {
         return new Date(this.diff);
-    }
+    };
 }
 
 
