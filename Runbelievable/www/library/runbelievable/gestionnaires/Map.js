@@ -19,7 +19,7 @@ function Map($scope) {
     this.finalizeMap = function(item, hook) {
         var mapOptions = {
             center: new google.maps.LatLng(item.latitude, item.longitude),
-            zoom: 15,
+            zoom: 17,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         

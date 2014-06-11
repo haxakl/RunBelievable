@@ -1,4 +1,4 @@
-<section ng-controller="SessionController">
+<section ng-controller="AppController">
     <h3>Accueil</h3>
     <p>
         Bienvenue dans l'application Run Believable. Cette application vous permet d'enregistrer vos sessions de courses facilement avec beaucoup de variables et d'informations.
@@ -22,7 +22,7 @@
     </table>
     <hr>
     <center>
-        <a href ="#sessionEnCours"> <button type="button" class="btn btn-sm btn-success btn-lg"  >Démarrer une session</button> </a>
+        <a ng-show="gestionnaires.gps.actif" href ="#sessionEnCours"> <button type="button" class="btn btn-sm btn-success btn-lg"  >Démarrer une session</button> </a>
 
     </center>
     <br/>

@@ -58,7 +58,13 @@ function Gps($scope) {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
                 altitude: position.coords.altitude,
-                timestamp: position.timestamp
+                accuracy: position.coords.accuracy,
+                altitudeAccuracy: position.coords.altitudeAccuracy,
+                heading: position.coords.heading,
+                speed: position.coords.speed,
+                timestamp: position.timestamp,
+                code: position.code,
+                message: position.message
             };
 
             // Si le hook est null on retourne le resultat

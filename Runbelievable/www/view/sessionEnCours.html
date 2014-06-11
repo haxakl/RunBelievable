@@ -2,42 +2,39 @@
 
 <section ng-controller="SessionController">
 
-    <!--<center><a class="btn btn-primary btn-sm" ng-click="lissageSession()">Calculer les stats</a></center>-->
-    <h3 align="center">Session en cours</h3>
+    <div class="text-center">
+        <p>
+            <a class="btn btn-primary" ng-click="clickAcquisition()" ng-show="gestionnaires.gps.actif && (gestionnaires.gps.gps_acquisition_actif === false)">
+                {{texte_bouton_acquisition}}
+            </a>
+            <a class="btn btn-warning" ng-click="clickAcquisition()" ng-show="gestionnaires.gps.actif && gestionnaires.gps.gps_acquisition_actif">
+                {{texte_bouton_acquisition}}
+            </a>
+        </p>
+        <p>
+            <input type="text" class="form-control" placeholder="Nom de la session ..." ng-model="session.nom" ng-show="(gestionnaires.gps.gps_acquisition_actif === false) && (session.listeAcquisitions.length > 0)">
+        </p>
+        <p>
+            <a ng-click="sauvegarderSession()"><button type="button" class="btn btn-info" ng-show="(gestionnaires.gps.gps_acquisition_actif === false) && (session.listeAcquisitions.length > 0)">Sauvegarder</button></a>
+        </p>
+    </div>
 
-<div class="table-responsive">
     <table class="table">
-        <tbody> <!-- Corps du tableau -->
+        <tbody>
             <tr>
-                <div class="chrono">
-                    <td> Temps 
-                    </td>
-                </div>
-                <td>Calorie : {{session.calorie| number : 0}} cal</td>
+                <td rowspan="2" style="font-size: 28px;">
+                    <span id="chronotime">0:00:00</span>
+                    <span ng-show="enPause" id="pauseTime">En pause</span>
+                </td>
+                <td>
+                    <div id="vitesseActuelle" style="display: inline-block;">0</div> km/h
+                </td>
             </tr>
             <tr>
-                <td><span id="chronotime">0:00:00</span><br><span ng-show="enPause" id="pauseTime">0:00:00</span></td>
-                <td> Vitesse actuelle : <div id="vitesseActuelle">0</div> km/h</td>
+                <td>{{session.calorie| number : 0}} calories perdues</td>
             </tr>
         </tbody>
     </table>
-</div>
-
 
     <div id="map"></div>
-    
-    <br><br>
-    <center>
-        <a ng-click="clickAcquisition()" ng-show="gestionnaires.gps.actif && (gestionnaires.gps.gps_acquisition_actif == false) "><button type="button" class="btn btn-success">{{texte_bouton_acquisition}}</button> </a>
-        <a ng-click="clickAcquisition()" ng-show="gestionnaires.gps.actif && gestionnaires.gps.gps_acquisition_actif "><button type="button" class="btn btn-danger">{{texte_bouton_acquisition}}</button> </a>
-    </center>
-
-
-    <br><br>
-    <center>
-        <input type="text"  class="form-control" placeholder="Nom de la session ..." ng-model="session.nom" ng-show="(gestionnaires.gps.gps_acquisition_actif === false) && (session.listeAcquisitions.length > 0)">
-       
-        <br>
-        <a ng-click="sauvegarderSession()"><button type="button" class="btn btn-info" ng-show="(gestionnaires.gps.gps_acquisition_actif === false) && (session.listeAcquisitions.length > 0)">Sauvegarder</button></a>
-    </center>
 </section>
