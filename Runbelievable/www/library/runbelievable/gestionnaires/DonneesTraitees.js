@@ -38,8 +38,8 @@ function DonneesTraitees($scope) {
     this.detecterPause = function() {
 
         // On récupère les données        
-        var lastdonnees = this.scope.session.getLastDonnees();
-        var previousdonnees = this.scope.session.getBeforeLastDonnees();
+        var lastdonnees = this.scope.gestionnaires.gps.lastPosition.coords;
+        var previousdonnees = this.scope.session.getLastDonnees();
 
         // On test si le gps n'est pas bougé
         if (lastdonnees !== null && previousdonnees !== null && lastdonnees.latitude === previousdonnees.latitude && lastdonnees.longitude === previousdonnees.longitude) {
@@ -50,6 +50,7 @@ function DonneesTraitees($scope) {
 
         // On regarde si on est en pause
         if (this.countPause > 2) {
+            console.log("En pause");
             return true;
         }
 

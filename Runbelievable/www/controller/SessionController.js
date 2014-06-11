@@ -32,7 +32,11 @@ function SessionController($scope) {
             stopAcquisition();
             $scope.forcePause = true;
         } else {
-            lancerAcquisition();
+            if (!$scope.enPause) {
+                lancerAcquisition();
+            } else {
+                startCourse();
+            }
         }
     };
 
@@ -40,6 +44,8 @@ function SessionController($scope) {
      * Démarre l'acquisition
      */
     function lancerAcquisition() {
+
+        console.log("Lancer acquisition");
 
         // Test si le Gps n'est pas actif on ne fait rien, et si il n'est pas deja démarré
         if (!$scope.gestionnaires.gps.actif || $scope.gestionnaires.gps.gps_acquisition_actif) {
@@ -62,10 +68,6 @@ function SessionController($scope) {
      * Boucle de la course
      */
     function boucleCourse() {
-
-//        $scope.gestionnaires.gps.getAcquisition($scope.gestionnaires.map.placerPoint);
-
-        saveDonnees();
 
         // Test si la course est en pause
         if ($scope.forcePause === false && !$scope.donneesTraitees.detecterPause()) {
@@ -105,6 +107,7 @@ function SessionController($scope) {
      */
     function startCourse() {
         $scope.enPause = false;
+        $scope.forcePause = false;
         $scope.chronoPrincipal.chronoContinue();
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
         $scope.gestionnaires.gps.gps_acquisition_actif = true;
