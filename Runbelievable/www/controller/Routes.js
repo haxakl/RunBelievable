@@ -19,6 +19,8 @@ app.config(function($routeProvider) {
     // Gestion des comptes
     }).when('/compte', {
         templateUrl: 'view/comptes/accueil.html'
+    }).when('/profile', {
+        templateUrl: 'view/profil.html'
     }).when('/compte/local', {
         templateUrl: 'view/comptes/local.html'
     }).when('/compte/inscription', {

@@ -86,8 +86,6 @@
                     <div class="title">Profile</div>
                     <div class="liens">
                         <a href="#profile"><i class="fa fa-user"></i> Voir le profil</a>
-                        <a href="#ajusterDonnees"><i class="fa fa-signal"></i> Ajuster les données</a>
-                        <a href="#ajusterDonnees"><i class="fa fa-bar-chart-o"></i> Statistiques</a>
                     </div>
                 </div>
             </div>
@@ -106,7 +104,9 @@
                             <i class="fa fa-user"></i><label class="label label-info">En pause</label>
                         </div>
                         <div id="icone_profil" class="infos">
-                            <i class="fa fa-cloud"></i><label class="label label-info">Local</label>
+                            <i class="fa fa-cloud"></i>
+                            <label ng-show="enLigne" class="label label-success">En ligne</label>
+                            <label ng-show="!enLigne" class="label label-info">Local</label>
                         </div>
                         <div id="icone_gps" class="infos">
                             <i class="fa fa-map-marker"></i><label class="label label-warning">En test ...</label>
@@ -147,10 +147,17 @@
         </section>
         <div id="chargement">
             <div class="scroll">
-                <div>
-                    <span class="loader loader-quart"></span>
-                    Chargement...
-                </div>
+                <table class="table" style="margin-bottom: 0px;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    <span class="loader loader-quart"></span>
+                                    Chargement...
+                                </div>
+                            </td>
+                        </tr>
+                </table>
             </div>
         </div>
     </body>

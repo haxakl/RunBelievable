@@ -95,8 +95,8 @@ function SessionController($scope) {
      * Sauvegarde des données
      */
     function saveDonnees() {
-        if ($scope.user.email !== "" && $scope.user.email !== null && $scope.session.getLastDonnees() !== null) {
-            $.post("http://runbelievable.netai.net/moteur/modules/donnees/ajax.php", {
+        if ($scope.enLigne && $scope.user.email !== "" && $scope.user.email !== null && $scope.session.getLastDonnees() !== null) {
+            $.post("http://runbelievable.honor.es/moteur/modules/donnees/ajax.php", {
                 fonction: "saveDonnees",
                 reference: $scope.session.reference,
                 data: JSON.stringify($scope.session.getLastDonnees())
@@ -109,7 +109,7 @@ function SessionController($scope) {
      */
     function saveSession() {
         if ($scope.user.email !== "" && $scope.user.email !== null && !$scope.session.save) {
-            $.post("http://runbelievable.netai.net/moteur/modules/sessions/ajax.php", {
+            $.post("http://runbelievable.honor.es/moteur/modules/sessions/ajax.php", {
                 fonction: "newSession",
                 reference: $scope.session.reference,
                 email: $scope.user.email

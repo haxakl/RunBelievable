@@ -34,6 +34,7 @@ function AppController($scope, $location) {
     $scope.donneesTraitees = new DonneesTraitees($scope);
     $scope.icones_gps = $("#icone_gps");
     $scope.icone_accelerometre = $("#icone_accelerometre");
+    $scope.enLigne = false;
     // ==========================================================
     //  Fonctions stockées dans le scope
     // ==========================================================
@@ -218,7 +219,7 @@ function AppController($scope, $location) {
     // Inscription online
     $scope.inscription = function() {
         $scope.chargement();
-        $.post("http://runbelievable.netai.net/moteur/modules/utilisateurs/ajax.php", {
+        $.post("http://runbelievable.honor.es/moteur/modules/utilisateurs/ajax.php", {
             fonction: "inscription",
             nom: $scope.user.nom,
             email: $("#email").val(),
@@ -232,13 +233,14 @@ function AppController($scope, $location) {
     // Connexion online
     $scope.connexion = function() {
         $scope.chargement();
-        $.post("http://runbelievable.netai.net/moteur/modules/utilisateurs/ajax.php", {
+        $.post("http://runbelievable.honor.es/moteur/modules/utilisateurs/ajax.php", {
             fonction: "connexion",
             email: $("#email").val(),
             password: $("#password").val()
         }).done(function(msg) {
             if (msg === "OK") {
                 $scope.user.email = $("#email").val();
+                $scope.enLigne = true;
                 localStorage.setItem("profil", JSON.stringify($scope.user));
                 $scope.connexionLocal();
             } else {

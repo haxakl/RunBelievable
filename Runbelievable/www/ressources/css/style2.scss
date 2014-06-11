@@ -322,6 +322,15 @@ body {
     font-size: 20px;
     display: none;
 
+    .table {
+        height: 100%;
+
+        td {
+            vertical-align: middle;
+            border-top: none;
+        }
+    }
+
     .scroll {
         padding: 4%;
         overflow-x: hidden;
@@ -346,11 +355,11 @@ body {
             margin-right: 20px;
         }
 
-/*        .loader-double {
-            position: relative;
-            border-radius: 50px;
-            border: 6px solid rgba(255, 255, 255, 0.4);
-        }*/
+        /*        .loader-double {
+                    position: relative;
+                    border-radius: 50px;
+                    border: 6px solid rgba(255, 255, 255, 0.4);
+                }*/
 
         .loader-quart:after {
             position: absolute;
