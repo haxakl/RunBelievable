@@ -140,8 +140,6 @@ function AppController($scope, $location) {
     $scope.listeSession = JSON.parse(localStorage.getItem("listeSessions"));
     $scope.listeSessionPersonnalises = JSON.parse(localStorage.getItem("listeSessionPersonnalises"));
 
-console.log(localStorage.getItem("listeSessions"));
-
 // ==========================================================
 //  Gestion des deux menus
 // ==========================================================

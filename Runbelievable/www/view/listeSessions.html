@@ -2,8 +2,8 @@
     <fieldset>
         <legend>Mes sessions</legend>
 
-        <a class="btn btn-block btn-default" ng-repeat="session in listeSession track by $index">
-            {{session.date| date:'dd/MM'}} - {{session.nom}} - {{session.dureeSessionString}}
+        <a ng-click="afficherSession($index);" class="btn btn-block btn-default" ng-repeat="session in listeSession track by $index">
+            {{session.reference}} - {{session.date| date:'dd/MM'}}<br/>{{session.nom}}
         </a>
     </fieldset><br/><br/>
 

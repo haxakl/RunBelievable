@@ -166,20 +166,20 @@ function SessionController($scope) {
     $scope.sauvegarderSession = function() {
 
         $scope.chargement();
-        
+
         // Ajout de la session dans la liste
         $scope.listeSession.push($scope.session);
-        localStorage.setItem("listeSession", JSON.stringify($scope.listeSession));
-        
+        localStorage.setItem("listeSessions", JSON.stringify($scope.listeSession));
+
         // On change les statistiques sur la page prévu à cet effet
         $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
-        
+
         // Reset de la session
         $scope.nouvelleSession();
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
         $scope.gestionnaires.gps.gps_acquisition_actif = false;
         $scope.chronoPrincipal.chronoReset();
-        
+
         // Redirection
         $scope.finchargement();
         location = "#statistiquesSession";
@@ -196,7 +196,7 @@ function SessionController($scope) {
             nom: $("#nom").val(),
             listeEtapes: new Array()
         });
-        
+
         var etapes = new Array();
         $("#etapes tbody tr").each(function() {
             var tmp = new Object();
@@ -205,11 +205,11 @@ function SessionController($scope) {
             etapes.push(tmp);
         });
         sessionperso.listeEtapes = etapes;
-        
+
         // Sauvegarde de la session
         $scope.listeSessionPersonnalises.push(sessionperso);
         localStorage.setItem("listeSessionPersonnalises", JSON.stringify($scope.listeSessionPersonnalises));
-        
+
         // Redirection
         $scope.finchargement();
         location = "#listeSessions";
