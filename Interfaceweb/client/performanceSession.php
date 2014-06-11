@@ -78,8 +78,8 @@ $distance = round($session->getDistanceParcourue(), 2);
                 <td>
                     <?php foreach (json_decode($donnee->data) as $key => $datas) :
                         if(is_object($datas)):
-                            foreach(get_object_vars($datas) as $key => $donnee_tmp) {
-                                echo '<span style="display: block; margin-bottom: 10px;" class="label label-info">'.$key.': '.$donnee_tmp.'</span>';
+                            foreach(get_object_vars($datas) as $key_tmp => $donnee_tmp) {
+                                echo '<span style="display: block; margin-bottom: 10px;" class="label label-info">'.$key_tmp.': '.$donnee_tmp.'</span>';
                             }
                         ?>
                     
