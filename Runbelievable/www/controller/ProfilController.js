@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 function ProfilController($scope) {
+    
+    function sauvegarderUser() {
+        localStorage.setItem("profil", JSON.stringify($scope.user));
+    }
+    
     $("#profil_etat_civil").click(function() {
         $scope.user.nom = $("#nom").val();
         $scope.user.prenom = $("#prenom").val();
@@ -18,7 +23,8 @@ function ProfilController($scope) {
         if($scope.user.sexe == "homme")
             var s = 1;
         $scope.user.img = ($scope.user.imc *1.20) + (0.23* $scope.user.age) - (10.8*s) - 5.4;
-    })
+        sauvegarderUser();
+    });
     
     $("#profil_mensuration").click(function() {
         $scope.user.taille = $("#taille").val();
@@ -40,7 +46,8 @@ function ProfilController($scope) {
         
         if($scope.user.imc == "" || $scope.user.age == "" )
             $scope.user.img == "";
-    })
+        sauvegarderUser();
+    });
     
     $("#profil_habitudes").click(function() {
         $scope.user.course1 = $("#typeCourse1").val();
@@ -54,7 +61,8 @@ function ProfilController($scope) {
         $scope.user.blessureAutre = $("#blessureAutre").val();  
         $scope.user.asthmatique = $("#asthmatique").val(); 
         
-    })
+        sauvegarderUser();
+    });
     
     $("#profil_cardio").click(function() {
         $scope.user.FCRepos = $("#FCRepos").val();
@@ -75,7 +83,8 @@ function ProfilController($scope) {
         if($scope.user.vitesseMaxAnaerobie =="")
            $scope.user.VO2MAX ="";
         
-    })
+        sauvegarderUser();
+    });
     
     $("#profil_explosivite").click(function() {
         $scope.user.detente = $("#detente").val();
@@ -84,7 +93,9 @@ function ProfilController($scope) {
         $scope.user.frequenceMax = $("#frequenceMax").val();
         $scope.user.pentabond = $("#pentabond").val();
         
-    })
+        sauvegarderUser();
+    });
+    
     $("#profil_allure").click(function() {
         $scope.user.vitesseMax = $("#vitesseMax").val();
         $scope.user.resistance = $("#resistance").val();
@@ -93,8 +104,11 @@ function ProfilController($scope) {
         $scope.user.vitesseMaxAerobie = $("#vitesseMaxAerobie").val();        
         $scope.user.puissanceMaxAerobie = $("#puissanceMaxAerobie").val();
         $scope.user.vitesseAscensionnelle = $("#vitesseAscensionnelle").val();
-        $scope.user.VO2MAX = 14,49 + 2,143 * $scope.user.vitesseMaxAnaerobie + 0,0324 * ($scope.user.vitesseMaxAnaerobie*$scope.user.vitesseMaxAnaerobie) ; 
-    })
+        $scope.user.VO2MAX = 14,49 + 2,143 * $scope.user.vitesseMaxAnaerobie + 0,0324 * ($scope.user.vitesseMaxAnaerobie*$scope.user.vitesseMaxAnaerobie);
+        
+        sauvegarderUser();
+    });
+    
     $("#profil_performance").click(function() {
         $scope.user.cinquante = $("#cinquante").val();
         $scope.user.cent = $("#cent").val();
@@ -113,6 +127,8 @@ function ProfilController($scope) {
         $scope.user.uneheure = $("#uneheure").val();
         $scope.user.sixheure = $("#sixheure").val();
         $scope.user.vingtquatreheure = $("#vingtquatreheure").val();
-    })
+        
+        sauvegarderUser();
+    });
     
 }
