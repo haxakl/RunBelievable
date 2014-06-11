@@ -23,14 +23,20 @@ class Session extends ClassBdd {
 
     /** @ValueBdd("ses_reference") * */
     public $reference;
+    
+    public $donnees;
 
     /**
      * Retourne les données de la session
      * @return array Données de la session
      */
     public function getDonnees() {
-        $gestionnaire_donnes = new Donnees();
-        return $gestionnaire_donnes->getDonneesSession($this->id);
+        if (!isset($this->donnees) || $this->donnees == null) {
+            $gestionnaire_donnes = new Donnees();
+            $this->donnees = $gestionnaire_donnes->getDonneesSession($this->id);
+        }
+        
+        return $this->donnees;
     }
 
     /**
@@ -47,11 +53,28 @@ class Session extends ClassBdd {
      */
     public function getDuree() {
         $donnees = $this->getDonnees();
-        
+
         $debut = date_create_from_format('Y-m-d H:i:s', $donnees[0]->date);
         $fin = date_create_from_format('Y-m-d H:i:s', $donnees[count($donnees) - 1]->date);
-//        return $fin->diff($debut);
         return time_diff($donnees[0]->date, $donnees[count($donnees) - 1]->date);
     }
 
+    /**
+     * Retourne la distance parcourue
+     * @return type 
+     */
+    public function getDistanceParcourue() {
+        $donnees = $this->getDonnees();
+        $distance = 0;
+        for($i = 1; $i < count($donnees) ; $i++) {
+            $distance += distance($donnees[$i-1], $donnees[$i]);
+        }
+        return $distance;
+    }
+    
+    
+    public function getVitesse($offset1, $offset2) {
+        
+    }
+    
 }

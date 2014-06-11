@@ -139,3 +139,21 @@ function time_diff($dt1, $dt2) {
     $r2 = date('U', mktime($h2, $i2, $s2, $m2, $d2, $y2));
     return ($r1 - $r2);
 }
+
+function distance($point1, $point2) {
+    
+    $infos1 = json_decode($point1->data);
+    $infos2 = json_decode($point2->data);
+    
+    //Conversion des latitudes/longitudes en degrés vers du radian
+    $lat1Rad = deg2rad($infos1->latitude);
+    $lon1Rad = deg2rad($infos1->longitude);
+    $lat2Rad = deg2rad($infos2->latitude);
+    $lon2Rad = deg2rad($infos2->longitude);
+    
+    // On calcul la distance en radian entre les 2 points GPS
+    $distanceRad = 2 * asin(sqrt(pow((sin(($lat1Rad - $lat2Rad) / 2)), 2) + cos($lat1Rad) * cos($lat2Rad) * (pow(sin((($lon1Rad - $lon2Rad) / 2)), 2))));
+
+    // On calcule cette distance en km grace au rayon de la terre
+    return $distanceRad * 6366;
+}

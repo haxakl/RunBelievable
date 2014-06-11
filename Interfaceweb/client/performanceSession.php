@@ -6,6 +6,7 @@ $session->recup($_GET['session']);
 
 $duree = $session->getDuree();
 $nbDonnees = $session->nombreDonnees();
+$distance = round($session->getDistanceParcourue(), 2);
 ?>
 
 <div class="page-header">
@@ -28,12 +29,22 @@ $nbDonnees = $session->nombreDonnees();
             <p>
                 Date de la session : <?php echo $session->date ?>
             </p>
+        </fieldset>
+        <fieldset>
+            <legend>Informations</legend>
             <p>
                 Durée : <?php echo $duree; ?> secondes
             </p>
             <p>
                 Nombre de données : <?php echo $nbDonnees; ?>
             </p>
+            <p>
+                Vitesse moyenne : <?php echo round($distance*3600/$duree, 2); ?> km/h
+            </p>
+            <p>
+                Distance parcourue : <?php echo $distance; ?> km
+            </p>
+            <hr>
             <p>
                 <?php if ($duree == $nbDonnees - 1) : ?>
                     <span class="label label-success">Toutes les données ont été récupérées</span>
@@ -62,25 +73,19 @@ $nbDonnees = $session->nombreDonnees();
         function animate(t) {
 
             data = [];
-            offset = 2 * Math.PI * (t - start) / 10000;
 
             // Sample the sine function
-            for (i = 0; i < 4 * Math.PI; i += 0.2) {
-                data.push([i, Math.sin(i - offset)]);
+            for (i = 0; i < <?php echo $duree; ?>; i += 0.2) {
+                data.push([i, 0]);
             }
 
             // Draw Graph
-            graph = Flotr.draw(container, [data], {
-                yaxis: {
-                    max: 2,
-                    min: -2
-                }
-            });
+            graph = Flotr.draw(container, [data]);
 
             // Animate
             setTimeout(function() {
                 animate((new Date).getTime());
-            }, 16);
+            }, 1000);
         }
 
         animate(start);
