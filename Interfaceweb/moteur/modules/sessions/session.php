@@ -72,9 +72,22 @@ class Session extends ClassBdd {
         return $distance;
     }
     
-    
+    /**
+     * Retourne la vitesse dans un intervalle de données
+     * @param type $offset1
+     * @param type $offset2
+     */
     public function getVitesse($offset1, $offset2) {
+        $donnees = $this->getDonnees();
         
+        $distance = distance($donnees[$offset1], $donnees[$offset2]);
+        $duree = time_diff($donnees[$offset1]->date, $donnees[$offset2]->date);
+        
+        if($duree == 0) {
+            return 0;
+        }
+        
+        return round($distance*3600/$duree, 2);
     }
     
 }

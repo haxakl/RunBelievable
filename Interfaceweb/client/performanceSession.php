@@ -62,6 +62,25 @@ $distance = round($session->getDistanceParcourue(), 2);
     </div>
 </div>
 
+<table class='table table-striped'>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Données</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($session->getDonnees() as $donnee) :
+            ?>
+            <tr>
+                <td><?php echo $donnee->date; ?></td>
+                <td><?php echo $donnee->data; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
 <script>
     (function() {
         var
@@ -75,10 +94,10 @@ $distance = round($session->getDistanceParcourue(), 2);
             data = [];
 
             // Sample the sine function
-            for (i = 0; i < <?php echo $duree; ?>; i += 0.2) {
-                data.push([i, 0]);
-            }
-
+            <?php for($i = 0 ; $i < $duree; $i++) : ?>
+                data.push([<?php echo $i; ?>, <?php echo $session->getVitesse($i, $i+1) ?>]);
+            <?php endfor; ?>
+                
             // Draw Graph
             graph = Flotr.draw(container, [data]);
 
