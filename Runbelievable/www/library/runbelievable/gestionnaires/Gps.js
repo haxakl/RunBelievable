@@ -42,8 +42,6 @@ function Gps($scope) {
      */
     this.getAcquisition = function(hook) {
 
-        var acquisition = null;
-
         navigator.geolocation.getCurrentPosition(function(position) {
             $scope.infoApplication.Global.alertTriggered.gps = false;
 
@@ -52,9 +50,8 @@ function Gps($scope) {
 
             $scope.gestionnaires.gps.positions.push(position);
             $scope.gestionnaires.gps.lastPosition = position;
-
-            // On créer l'objet contenant les informations de l'acquisition de données
-            acquisition = {
+            
+            var acquisition = {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
                 altitude: position.coords.altitude,
@@ -66,13 +63,10 @@ function Gps($scope) {
                 code: position.code,
                 message: position.message
             };
-
-            // Si le hook est null on retourne le resultat
-            if (typeof hook === "undefined")
-                return acquisition;
-
-            hook(acquisition);
-
+            
+            if(typeof hook !== "undefined") {
+                hook(acquisition);
+            }
         }, function(error) {
             $scope.gestionnaires.gps.modifIcone("danger", "Gps désactivé");
             $scope.gestionnaires.gps.actif = false;

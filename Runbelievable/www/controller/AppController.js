@@ -170,7 +170,7 @@ function AppController($scope, $location) {
         $scope.boucleAccelerometre();
         $scope.testerInternet();
         $scope.refresh();
-    }, 5000);
+    }, 1000);
     // On l'ajoute dans les intervals stockées
     $scope.interval.push(interval_etat);
     // ==========================================================

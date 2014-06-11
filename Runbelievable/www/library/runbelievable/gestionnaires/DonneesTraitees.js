@@ -1,6 +1,6 @@
 
 /**
- * Cette classe contient le gestionnaire du Gps et de l'Accéléromètre
+ * Cette classe contient le gestionnaire du Gps,de l'Accéléromètre  et l'utilisateur.
  * Il vous permet de traiter les données en implémentant divers fonctions.
  * @param $scope Scope de l'application
  */
@@ -37,7 +37,7 @@ function DonneesTraitees($scope) {
      */
     this.detecterPause = function() {
 
-        // On récupère les données
+        // On récupère les données        
         var lastdonnees = this.scope.session.getLastDonnees();
         var previousdonnees = this.scope.session.getBeforeLastDonnees();
 
@@ -93,8 +93,7 @@ function DonneesTraitees($scope) {
      * Boucle de calcule des différentes données
      */
     this.boucle = function() {
-//        this.nbCaloriesPerdues();
-        this.scope.session.vitesseactuelle = this.vitesseActuelle();
+        return this.getDonnees();
     };
 
 }

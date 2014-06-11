@@ -55,7 +55,7 @@ function SessionController($scope) {
         $scope.boucleID = setInterval(function() {
             boucleCourse();
         }, interval_acquisition);
-        
+
     }
 
     /**
@@ -63,7 +63,7 @@ function SessionController($scope) {
      */
     function boucleCourse() {
 
-        $scope.gestionnaires.gps.getAcquisition($scope.gestionnaires.map.placerPoint);
+//        $scope.gestionnaires.gps.getAcquisition($scope.gestionnaires.map.placerPoint);
 
         saveDonnees();
 
@@ -73,9 +73,28 @@ function SessionController($scope) {
                 startCourse();
             }
 
-            $("#vitesseActuelle").text(Math.round($scope.donneesTraitees.vitesseActuelle(), 0));
+            // On récupère les données du gps
+            acquisition_tmp = {
+                latitude: $scope.gestionnaires.gps.lastPosition.coords.latitude,
+                longitude: $scope.gestionnaires.gps.lastPosition.coords.longitude,
+                altitude: $scope.gestionnaires.gps.lastPosition.coords.altitude,
+                accuracy: $scope.gestionnaires.gps.lastPosition.coords.accuracy,
+                altitudeAccuracy: $scope.gestionnaires.gps.lastPosition.coords.altitudeAccuracy,
+                heading: $scope.gestionnaires.gps.lastPosition.coords.heading,
+                speed: $scope.gestionnaires.gps.lastPosition.coords.speed,
+                timestamp: $scope.gestionnaires.gps.lastPosition.timestamp,
+                code: $scope.gestionnaires.gps.lastPosition.code,
+                message: $scope.gestionnaires.gps.lastPosition.message,
+                acceleration_x: $scope.gestionnaires.accelerometre.lastMesure.x,
+                acceleration_y: $scope.gestionnaires.accelerometre.lastMesure.y,
+                acceleration_z: $scope.gestionnaires.accelerometre.lastMesure.z,
+                donnees: $scope.donneesTraitees.boucle()
+            };
 
-            $scope.donneesTraitees.boucle();
+            // On met à jour l'interface
+            $("#vitesseActuelle").text(Math.round($scope.donneesTraitees.vitesseActuelle(), 0));
+            $scope.gestionnaires.map.placerPoint(acquisition_tmp);
+
         } else {
             stopAcquisition();
         }
@@ -108,7 +127,7 @@ function SessionController($scope) {
      * Sauvegarde la session
      */
     function saveSession() {
-        if ($scope.user.email !== "" && $scope.user.email !== null && !$scope.session.save) {
+        if ($scope.enLigne && $scope.user.email !== "" && $scope.user.email !== null && !$scope.session.save) {
             $.post("http://runbelievable.honor.es/moteur/modules/sessions/ajax.php", {
                 fonction: "newSession",
                 reference: $scope.session.reference,
