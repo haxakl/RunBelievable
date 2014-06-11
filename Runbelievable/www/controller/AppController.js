@@ -122,22 +122,25 @@ function AppController($scope, $location) {
     $scope.enPause = false;
     // Pour controler l'acquisition de partout 
     $scope.boucleID = null;
+
+//    localStorage.removeItem("listeSessions");
+//    localStorage.removeItem("listeSessionPersonnalises");
+
     // Si aucune liste de session n'existe, on en crée une dans le WebStorage
     // TODO remettre le if après la fin des tests
     if (localStorage.getItem("listeSessions") === null) {
-        localStorage.setItem("listeSessions", new Array());
+        localStorage.setItem("listeSessions", JSON.stringify(new Array()));
     }
 
-// On récupere la liste des sessions déjà présentes dans le WebStorage
-    $scope.listeSession = (Array)(localStorage.getItem("listeSessions"));
-    /* Petite verification car lors de l'initialisation de la liste, celle-ci lorsqu'elle
-     est castée dans le scope est considérée comme possédant un string "" en premier item
-     alors qu'elle est effectivement vide */
-    if ($scope.listeSession.length === 1) {
-        if ($scope.listeSession[0] === "") {
-            $scope.listeSession.pop();
-        }
+    if (localStorage.getItem("listeSessionPersonnalises") === null) {
+        localStorage.setItem("listeSessionPersonnalises", JSON.stringify(new Array()));
     }
+
+    // On récupere les liste des sessions déjà présentes dans le WebStorage
+    $scope.listeSession = JSON.parse(localStorage.getItem("listeSessions"));
+    $scope.listeSessionPersonnalises = JSON.parse(localStorage.getItem("listeSessionPersonnalises"));
+
+console.log(localStorage.getItem("listeSessions"));
 
 // ==========================================================
 //  Gestion des deux menus
@@ -195,7 +198,7 @@ function AppController($scope, $location) {
     $scope.creationProfil = function(params) {
         var user = new Utilisateur();
         user.nom = $("#nom").val();
-        
+
         // Si l'utilisateur a bien été crée on le stocke dans l'application et dans le session storage.
         if (user !== false) {
             $scope.first = true;
@@ -257,10 +260,10 @@ function AppController($scope, $location) {
         //  - Profil Local
         //  - Profil Online
         // ==========================================================
-        
+
         // Debug
 //        localStorage.removeItem("profil");
-        
+
         if (localStorage.getItem("profil") && localStorage.getItem("profil") !== null) {
             $scope.user = $.parseJSON(localStorage.getItem("profil"));
             if ($scope.user.email && $scope.user !== "") {

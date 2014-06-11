@@ -1,10 +1,9 @@
 <section ng-controller="SessionController">
     <div>
+        <p><input type="text" id="nom" class="form-control" placeholder="Nom de la session personnalisée" /></p>
 
-
-
-        <table class="table table-striped etapes">
-            <tbody >
+        <table id="etapes" class="table table-striped etapes">
+            <tbody>
                 <tr>
                     <td>
                         <select name="nom" size="1" class="form-control">
@@ -21,12 +20,11 @@
                     <td>
                         <a class="btn btn-sm btn-danger" onclick="suppretape($(this))"><i class="fa fa-times"></i></a>
                     </td>
-
                 </tr>
             </tbody>
         </table>
-        <a class="addetape btn btn-sm btn-primary">Ajouter une étape</a>
-        <a class="finaliserEtape btn btn-sm btn-success">Valider la planification</a>
+        <a class="addetape btn btn-sm btn-primary"><i class="fa fa-plus"></i> Ajouter une étape</a>
+        <a ng-click="sauvegarderSessionPersonnalises()" class="finaliserEtape btn btn-sm btn-success"><i class="fa fa-plus"></i> Valider la planification</a>
     </div>
 </section>
 
@@ -58,7 +56,7 @@
         if ($(".etapes tbody tr").size() > 1)
             liens.closest("tr").remove();
     }
-    
+
 
 
 

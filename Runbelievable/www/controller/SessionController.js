@@ -165,18 +165,54 @@ function SessionController($scope) {
      */
     $scope.sauvegarderSession = function() {
 
+        $scope.chargement();
+        
         // Ajout de la session dans la liste
-        $scope.listeSession.push(JSON.stringify($scope.session));
-        $scope.sauvegarder();
+        $scope.listeSession.push($scope.session);
+        localStorage.setItem("listeSession", JSON.stringify($scope.listeSession));
+        
         // On change les statistiques sur la page prévu à cet effet
         $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
+        
         // Reset de la session
         $scope.nouvelleSession();
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
         $scope.gestionnaires.gps.gps_acquisition_actif = false;
         $scope.chronoPrincipal.chronoReset();
+        
         // Redirection
+        $scope.finchargement();
         location = "#statistiquesSession";
+    };
+
+    /**
+     * Méthode permettant de sauvegarder la session dans la liste des sessions  et de le rediriger sur les stats de la session
+     */
+    $scope.sauvegarderSessionPersonnalises = function() {
+
+        $scope.chargement();
+
+        sessionperso = new SessionPersonnalises({
+            nom: $("#nom").val(),
+            listeEtapes: new Array()
+        });
+        
+        var etapes = new Array();
+        $("#etapes tbody tr").each(function() {
+            var tmp = new Object();
+            tmp.etape = $(this).find("select").val();
+            tmp.secondes = $(this).find("input").val();
+            etapes.push(tmp);
+        });
+        sessionperso.listeEtapes = etapes;
+        
+        // Sauvegarde de la session
+        $scope.listeSessionPersonnalises.push(sessionperso);
+        localStorage.setItem("listeSessionPersonnalises", JSON.stringify($scope.listeSessionPersonnalises));
+        
+        // Redirection
+        $scope.finchargement();
+        location = "#listeSessions";
     };
 
     // Test si le Gps est allumé    

@@ -136,8 +136,6 @@ function StatistiquesSessionController($scope) {
             if (isNaN(vitesse))
                 vitesse = 0;
 
-			console.log("Point de controle " + i + " : " + distanceParcourue + " km parcouru pour " + dureeTotale + " à " +vitesse+ " km/h");
-
             // On créer l'objet contenant les informations du point de controle
             stats = {
                 distance: distanceParcourue,
