@@ -1,0 +1,134 @@
+<section ng-controller="ProfilController">
+
+    <center> <h1> Profil et habitudes d'entraînement </h1> </center>
+
+    </br></br</br>
+
+    <div class="form-group">
+
+
+        <label for="typeCourse1" class="col-sm-2 control-label">Type de course 1 :</label>
+        <div class="col-sm-10">
+            <select name="typeCourse1" size="1" id="typeCourse1">
+                <option ng-selected="user.course1==='Non renseigné'" value ="Non renseigné">Non renseigné</option>
+                <option ng-selected="user.course1==='Sprinter court'" value ="Sprinter court">Sprinter court</option>
+                <option ng-selected="user.course1==='Sprinter long'" value ="Sprinter long">Sprinter long</option>
+                <option ng-selected="user.course1==='Demi fond court'" value ="Demi fond court">Demi fond court</option>
+                <option ng-selected="user.course1==='Demi fond long'" value ="Demi fond long">Demi fond long</option>
+                <option ng-selected="user.course1==='Coureur de fond'" value ="Coureur de fond">Coureur de fond</option>
+                <option ng-selected="user.course1==='Ultrafond'" value ="Ultrafond">Ultrafond</option>
+                <option ng-selected="user.course1==='Trailler'"  value ="Trailler">Trailler</option>
+                <option ng-selected="user.course1==='Crossman'" value ="Crossman">Crossman</option>
+                <option ng-selected="user.course1==='Montagne'" value ="Montagne">Montagne</option>
+                <option ng-selected="user.course1==='Triathlete'" value ="Triathlete">Triathlete</option>    
+            </select>
+        </div>
+        </br>
+        <label for="typeCourse2" class="col-sm-2 control-label">Type de course 2 :</label>
+        <div class="col-sm-10">
+            <select name="typeCourse2" size="1" id="typeCourse2">
+                <option ng-selected="user.course2==='Non renseigné'" value ="Non renseigné">Non renseigné</option>
+                <option ng-selected="user.course2==='Sprinter court'" value ="Sprinter court">Sprinter court</option>
+                <option ng-selected="user.course2==='Sprinter long'" value ="Sprinter long">Sprinter long</option>
+                <option ng-selected="user.course2==='Demi fond court'" value ="Demi fond court">Demi fond court</option>
+                <option ng-selected="user.course2==='Demi fond long'" value ="Demi fond long">Demi fond long</option>
+                <option ng-selected="user.course2==='Coureur de fond'" value ="Coureur de fond">Coureur de fond</option>
+                <option ng-selected="user.course2==='Ultrafond'" value ="Ultrafond">Ultrafond</option>
+                <option ng-selected="user.course2==='Trailler'"  value ="Trailler">Trailler</option>
+                <option ng-selected="user.course2==='Crossman'" value ="Crossman">Crossman</option>
+                <option ng-selected="user.course2==='Montagne'" value ="Montagne">Montagne</option>
+                <option ng-selected="user.course2==='Triathlete'" value ="Triathlete">Triathlete</option>    
+            </select>
+        </div>
+        </br>
+        <label for="typeCourse3" class="col-sm-2 control-label" >Type de course 3 :</label>
+        <div class="col-sm-10">
+            <select name="typeCourse3" size="1" id="typeCourse3">
+                <option ng-selected="user.course3==='Non renseigné'" value ="Non renseigné">Non renseigné</option>
+                <option ng-selected="user.course3==='Sprinter court'" value ="Sprinter court">Sprinter court</option>
+                <option ng-selected="user.course3==='Sprinter long'" value ="Sprinter long">Sprinter long</option>
+                <option ng-selected="user.course3==='Demi fond court'" value ="Demi fond court">Demi fond court</option>
+                <option ng-selected="user.course3==='Demi fond long'" value ="Demi fond long">Demi fond long</option>
+                <option ng-selected="user.course3==='Coureur de fond'" value ="Coureur de fond">Coureur de fond</option>
+                <option ng-selected="user.course3==='Ultrafond'" value ="Ultrafond">Ultrafond</option>
+                <option ng-selected="user.course3==='Trailler'"  value ="Trailler">Trailler</option>
+                <option ng-selected="user.course3==='Crossman'" value ="Crossman">Crossman</option>
+                <option ng-selected="user.course3==='Montagne'" value ="Montagne">Montagne</option>
+                <option ng-selected="user.course3==='Triathlete'" value ="Triathlete">Triathlete</option>    
+            </select>
+        </div>
+        </br>
+        <label for="pratique" class="col-sm-2 control-label" >Type de pratique :</label>
+        <div class="col-sm-10">
+            <select name="pratique" size="1" id ="pratique">
+                <option ng-selected="user.pratique ==='Compétitions nationales et plus'" value ="Compétitions nationales et plus">Compétitions nationales et plus</option>
+                <option ng-selected="user.pratique ==='Compétitions régionales et moins'" value ="Compétitions régionales et moins">Compétitions régionales et moins</option>
+                <option ng-selected="user.pratique ==='Compétitions occasionnelles'" value ="Compétitions occasionnelles">Compétitions occasionnelles</option>
+                <option ng-selected="user.pratique ==='Loisir'" value ="Loisir">Loisir</option>
+                <option ng-selected="user.pratique ==='Débutant'" value ="Débutant">Débutant</option>  
+            </select>
+        </div>
+        </br>
+        <label for="situation" class="col-sm-2 control-label" >Situation actuelle :</label>
+        <div class="col-sm-10">
+            <select name="situation" size="1" id="situation">
+                <option ng-selected="user.situation ==='Débutant complet'" value ="Débutant complet">Débutant complet</option>
+                <option ng-selected="user.situation ==='En reprise après arrêt de plus de six mois'" value ="En reprise après arrêt de plus de six mois">En reprise après arrêt de plus de six mois</option>
+                <option ng-selected="user.situation ==='En reprise après arrêt de moins de six mois'" value ="En reprise après arrêt de moins de six mois">En reprise après arrêt de moins de six mois</option>
+                <option ng-selected="user.situation ==='Entraînement continue depuis moins d’un an'" value ="Entraînement continue depuis moins d’un an">Entraînement continue depuis moins d’un an</option>
+                <option ng-selected="user.situation ==='Entraînement continue depuis plus d’un an'" value ="Entraînement continue depuis plus d’un an">Entraînement continue depuis plus d’un an</option>  
+            </select>
+        </div>
+        
+        </br>
+        <label for="anneePratique" class="col-sm-2 control-label" >Nombre d'années de pratique :</label>
+        <div class="col-sm-10">
+            <input type="number" name="anneePratique" class="form-control" id="anneePratique" placeholder="Nombre d'années de pratique" value ="{{user.anneePratique}}">
+        </div>
+
+        </br>
+        <label for="nbEntrainement" class="col-sm-2 control-label" > Nombre d'entrainement par semaine :</label>
+        <div class="col-sm-10">
+            <input type="number" name="nbEntrainement" class="form-control" id="nbEntrainement" placeholder="Nombre d'entrainement par semaine" value ="{{user.nbEntrainement}}">
+        </div>
+        
+        </br>
+        <label for="blessureMusculaire" class="col-sm-2 control-label" > Blessure musculaire :</label>
+        <div class="col-sm-10">
+            <select name="blessureMusculaire" size="1" id="blessureMusculaire">
+                <option ng-selected="user.blessureMusculaire ==='Jamais'" value ="Jamais">Jamais</option>
+                <option ng-selected="user.blessureMusculaire ==='Occasionnellement'"  value ="Occasionnellement">Occasionnellement</option>
+                <option ng-selected="user.blessureMusculaire ==='Une fois par an'" value ="Une fois par an">Une fois par an</option>
+                <option ng-selected="user.blessureMusculaire ==='Souvent'" value ="Souvent">Souvent</option> 
+            </select>
+        </div>
+        
+        </br>
+        <label for="blessureAutre" class="col-sm-2 control-label"> Blessure tendineux/articulaire/inflammatoire :</label>
+        <div class="col-sm-10">
+            <select name="blessureAutre" size="1" id="blessureAutre">
+                <option ng-selected="user.blessureAutre ==='Jamais'" value ="Jamais">Jamais</option>
+                <option ng-selected="user.blessureAutre ==='Occasionnellement'"  value ="Occasionnellement">Occasionnellement</option>
+                <option ng-selected="user.blessureAutre ==='Une fois par an'" value ="Une fois par an">Une fois par an</option>
+                <option ng-selected="user.blessureAutre ==='Souvent'" value ="Souvent">Souvent</option> 
+            </select>
+        </div>
+               
+        </br>
+        <label for="asthmatique" class="col-sm-2 control-label"> Asthmatique :</label>
+        <div class="col-sm-10">
+            <select name="asthmatique" size="1"  id="asthmatique">
+                <option ng-selected="user.asthmatique ==='Non'" value ="Non">Non</option>
+                <option ng-selected="user.asthmatique ==='Oui'" value ="Oui">Oui</option>
+                <option ng-selected="user.asthmatique ==='Severe'" value ="Severe">Severe</option>
+            </select>
+        </div>
+        
+        </br>
+        </br>
+        <a id="profil_habitudes" class="btn btn-primary btn-sm" href="#profil" >Valider</a>
+        <a id="" class="btn btn-primary btn-sm" href="#profil" >Retour</a>
+    </div>
+
+
+</section>

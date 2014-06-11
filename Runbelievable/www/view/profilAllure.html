@@ -1,0 +1,58 @@
+<section ng-controller="ProfilController">
+    
+    <center> <h1> Allure de course  </h1> </center>
+    
+    </br></br</br>
+
+        <div class="form-group">
+
+        <label for="vitesseMax" class="col-sm-2 control-label">Vitesse maximale (sprint) : </label>
+        <div class="col-sm-10">
+            <input type="text" name="vitesseMax" class="form-control" id="vitesseMax" placeholder="Vitesse maximale (sprint)" value="{{user.vitesseMax}}">
+        </div>
+        </br>
+        
+        <label for="resistance" class="col-sm-2 control-label"> Résistance-vitesse (sprint long) :</label>
+        <div class="col-sm-10">
+            <input type="text" name="resistance" class="form-control" id="resistance" placeholder="Résistance-vitesse (sprint long)" value="{{user.resistance}}">
+        </div>
+        </br>
+        
+        <label for="vitesseMaxAnaerobie" class="col-sm-2 control-label">Vitesse maximale anaérobie (VMA) :</label>
+        <div class="col-sm-10">
+            <input type="text" name="vitesseMaxAnaerobie" class="form-control" id="vitesseMaxAnaerobie" placeholder="Vitesse maximale anaérobie (VMA) " value="{{user.vitesseMaxAnaerobie}}">
+        </div>
+        </br>
+        
+        <label for="puissanceMaxAnaerobie" class="col-sm-2 control-label">  Puissance maximale anaérobie (PMA) :</label>
+        <div class="col-sm-10">
+            <input type="text" name="puissanceMaxAnaerobie" class="form-control" id="puissanceMaxAnaerobie" placeholder="Puissance maximale anaérobie (PMA)" value="{{user.puissanceMaxAnaerobie}}">
+        </div>
+        </br>
+        
+        
+        <label for="vitesseMaxAerobie" class="col-sm-2 control-label"> Vitesse maximale aérobie (Seuil) :</label>
+        <div class="col-sm-10">
+            <input type="text" name="vitesseMaxAerobie" class="form-control" id="vitesseMaxAerobie" placeholder="Vitesse maximale aérobie (Seuil)" value="{{user.vitesseMaxAerobie}}">
+        </div>
+        </br>
+        
+        <label for="puissanceMaxAerobie" class="col-sm-2 control-label">  Puissance maximale aérobie (Endurance fondamentale) :</label>
+        <div class="col-sm-10">
+            <input type="text" name="puissanceMaxAerobie" class="form-control" id="puissanceMaxAerobie" placeholder=" Puissance maximale aérobie (Endurance fondamentale)" value="{{user.puissanceMaxAerobie}}">
+        </div>
+        </br>
+        
+        
+        <label for="vitesseAscensionnelle" class="col-sm-2 control-label">  Vitesse ascensionnelle (dénivelé positif par heure de course) :</label>
+        <div class="col-sm-10">
+            <input type="text" name="vitesseAscensionnelle" class="form-control" id="vitesseAscensionnelle" placeholder=" Vitesse ascensionnelle (dénivelé positif par heure de course) " value="{{user.vitesseAscensionnelle}}">
+        </div>
+        </br>
+        </br>
+        
+        <a id="profil_allure" class="btn btn-primary btn-sm" href="#profil" >Valider</a>
+        <a id="" class="btn btn-primary btn-sm" href="#profil" >Retour</a>
+    </div>
+
+</section>

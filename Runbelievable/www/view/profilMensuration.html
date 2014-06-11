@@ -1,0 +1,61 @@
+<section ng-controller="ProfilController">
+
+    <center> <h1> Profil </h1> </center>
+
+    </br></br</br>
+
+
+
+
+    </br></br>
+    <h4> Mensuration </h4>
+
+    </br></br></br>
+
+    <div class="form-group">
+
+        <label for="taille" class="col-sm-2 control-label">Taille :</label>
+        <div class="col-sm-10">
+            <input type="text" name="taille" class="form-control" id="taille" placeholder="Taille" value ="{{user.taille}}">
+        </div>
+        </br>
+        <label for="poids" class="col-sm-2 control-label">Poids :</label>
+        <div class="col-sm-10">
+            <input type="text" name="poids" class="form-control" id="poids" placeholder="Poids" value ="{{user.poids}}">
+        </div>
+        </br>
+        <label for="poitrine" class="col-sm-2 control-label">Tour de poitrine :</label>
+        <div class="col-sm-10">
+            <input type="text" name="poitrine" class="form-control" id="poitrine" placeholder="Tour de poitrine" value ="{{user.poitrine}}">
+        </div>
+        </br>
+        <label for="poignet" class="col-sm-2 control-label">Poignet :</label>
+        <div class="col-sm-10">
+            <input type="text" name="poignet" class="form-control" id="poignet" placeholder="Tour de poignet" value ="{{user.poignet}}">
+        </div>
+        </br>
+        <label for="entrejambe" class="col-sm-2 control-label">Entrejambe :</label>
+        <div class="col-sm-10">
+            <input type="text" name="entrejambe" class="form-control" id="entrejambe" placeholder="Hauteur de l'entrejambe" value ="{{user.entrejambe}}">
+        </div>
+        </br>
+        
+        <label for="souplesse" class="col-sm-2 control-label">Souplesse :</label>
+        <div class="col-sm-10">
+            <select name="souplesse" size="1" id="souplesse" >
+                <option ng-selected="user.souplesse==='Poser entièrement les mains au sol'" value ="Poser entièrement les mains au sol">Poser entièrement les mains au sol</option>
+                <option ng-selected="user.souplesse==='Poser les doigts au sol'" value ="Poser les doigts au sol">Poser les doigts au sol</option>
+                <option ng-selected="user.souplesse==='Toucher/frôler le sol du bout des doigts'" value ="Toucher/frôler le sol du bout des doigts">Toucher/frôler le sol du bout des doigts</option>
+                <option ng-selected="user.souplesse==='Être entre 3 et 10 cm du sol'" value ="Être entre 3 et 10 cm du sol">Être entre 3 et 10 cm du sol</option>
+                <option ng-selected="user.souplesse==='Être à plus de 10 cm du sol'" value ="Être à plus de 10 cm du sol">Être à plus de 10 cm du sol</option>
+            </select>
+        </div>
+
+        </br>
+        </br>
+        <a id="profil_mensuration" class="btn btn-primary btn-sm" href="#profil" >Valider</a>
+        <a id="" class="btn btn-primary btn-sm" href="#profil" >Retour</a>
+    </div>
+
+</section>
+

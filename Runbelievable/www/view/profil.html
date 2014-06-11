@@ -1,0 +1,163 @@
+<section ng-controller="ProfilController">
+    
+    <center> <h1> Profil </h1> </center>
+    
+    </br></br</br>
+    
+
+    
+    <h4> Etat civil </h4>
+    </br>
+    <a href="#profilEtatCivil" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    </br>
+    </br>
+    <b>Nom :</b>  {{user.nom}}
+    </br>
+    <b>Prenom :</b> {{user.prenom}}
+    </br>
+    <b>Age :</b> {{user.age}}
+    </br>
+    <b>Sexe :</b> {{user.sexe}}
+    
+    </br></br>
+    <h4> Mensuration </h4>
+    </br>
+    <a href="#profilMensuration" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    </br>
+    </br>
+    <b>Taille :</b> {{user.taille}}
+    </br>
+    <b>Poids :</b> {{user.poids}}
+    </br>
+    <b>IMC :</b> {{user.imc}}
+    </br>
+    <b>Taux de masse grasse :</b> {{user.img}}
+    </br>
+    <b>Tour de poitrine :</b> {{user.poitrine}}
+    </br>
+    <b>Tour de poignet :</b> {{user.poignet}}
+    </br>
+    <b>Hauteur de l'entrejambe :</b> {{user.entrejambe}}
+    </br>
+    <b>Souplesse :</b> {{user.souplesse}}
+    
+    </br></br>
+    <h4> Profil et habitudes d'entraînement </h4>
+    </br>
+    <a href="#profilHabitudes" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    </br>
+    </br>
+    <b>Type de course 1 :</b> {{user.course1}}
+    </br>
+    <b>Type de course 2 : </b>{{user.course2}}
+    </br>
+    <b>Type de course 3 :</b> {{user.course3}}
+    </br>
+    <b>Type de pratique :</b> {{user.pratique}}
+    </br>
+    <b>Situation actuelle :</b> {{user.situation}}
+    </br>
+    <b>Nombre d'années de pratique : </b>{{user.anneePratique}}
+    </br>
+    <b>Nombre d'entrainement par semaine :</b> {{user.nbEntrainement}}
+    </br>
+    <b>Blessure musculaire :</b> {{user.blessureMusculaire}}
+    </br>
+    <b>Blessure tendineux/articulaire/inflammatoire :</b> {{user.blessureAutre}}
+    </br>
+    <b>Asthmatique :</b> {{user.asthmatique}}
+    
+    
+    </br></br>
+    <h4> Données physiologiques cardio-vasculaire  </h4>
+    </br>
+    <a href="#profilCardio" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    </br>
+    </br>
+    <b>FC repos  : </b>{{user.FCRepos}}
+    </br>
+    <b>FC max :</b> {{user.FCMax}}
+    </br>
+    <b>FC anaérobie : </b>{{user.FCAnaerobie}}
+    </br>
+    <b>FC aerobie :</b> {{user.FCAerobie}}
+    </br> 
+    <b>VO2 max :</b> {{user.VO2MAX}}
+
+    
+    </br></br>
+    <h4> Explosivité  </h4>
+    </br>
+    <a href="#profilExplosivite" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    </br>
+    </br>
+    <b>Détente sèche  :</b> {{user.detente}}
+    </br>
+    <b>Qualité de pied (hauteur moyenne) :</b> {{user.hauteurMoy}}
+    </br>
+    <b>Qualité de pied ( temps au sol moyen) : </b>{{user.tempsAuSol}}
+    </br>
+    <b>Frequence maximal de mouvement :</b> {{user.frequenceMax}}
+    </br>
+    <b>Pentabond : </b>{{user.pentabond}}
+    
+    
+    </br></br>
+    <h4> Allure de course  </h4>
+    </br>
+    <a href="#profilAllure" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    </br>
+    </br>
+    <b>Vitesse maximale (sprint) :</b> {{user.vitesseMax}}
+    </br>
+    <b>Résistance-vitesse (sprint long) :</b> {{user.resistance}}
+    </br>
+    <b>Vitesse maximale anaérobie (VMA) : </b>{{user.vitesseMaxAnaerobie}}
+    </br>
+    <b>Puissance maximale anaérobie (PMA) : </b>{{user.puissanceMaxAnaerobie}}
+    </br>
+    <b>Vitesse maximale aérobie (Seuil) : </b>{{user.vitesseMaxAerobie}}
+    </br>
+    <b>Puissance maximale aérobie (Endurance fondamentale) :</b> {{user.puissanceMaxAerobie}}
+    </br>
+    <b>Vitesse ascensionnelle (dénivelé positif par heure de course) :</b> {{user.vitesseAscensionnelle}}
+    
+    </br></br>
+    <h4> Meilleures performances  </h4>
+    </br>
+    <a href="#profilPerformance" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    </br>
+    </br>
+    <b>50m :</b> {{user.cinquante}}
+    </br>
+    <b>100m :</b> {{user.cent}}
+    </br>
+    <b>200m :</b> {{user.deuxcent}}
+    </br>
+    <b>400m :</b> {{user.quatrecent}}
+    </br>
+    <b>800m :</b> {{user.huitcent}}
+    </br>
+    <b>1000m :</b>  {{user.mille}}
+    </br>
+    <b>1500m :</b> {{user.millecinqcent}}
+    </br>
+    <b>3000m :</b> {{user.troismille}}
+    </br>
+    <b>5000m :</b> {{user.cinqmille}}
+    </br>
+    <b>10km :</b> {{user.dixkils}}
+    </br>
+    <b>21km :</b> {{user.vingtetunkils}}
+    </br>
+    <b>42km :</b> {{user.quarantedeuxkils}}
+    </br>
+    <b>100km :</b> {{user.centkils}}
+    </br>
+    <b>1h :</b> {{user.uneheure}}
+    </br>
+    <b>6h :</b> {{user.sixheure}}
+    </br>
+    <b>24h :</b> {{user.vingtquatreheure}}
+
+</section>
