@@ -21,10 +21,10 @@ function DonneesTraitees($scope) {
     this.nbCaloriesPerdues = function() {
 
         // Récupération du poids de l'utilisateur
-        var poidKg = this.utilisateurs.poids;
+        var poidKg = this.scope.user.poids;
 
         // Récupération de la distance parcourue
-        var distanceKm = this.gps;
+        var distanceKm = this.scope.session.distanceParcouru;
 
         // On retourne le nombre de calories
         return poidKg * distanceKm;
@@ -50,7 +50,6 @@ function DonneesTraitees($scope) {
 
         // On regarde si on est en pause
         if (this.countPause > 2) {
-            console.log("En pause");
             return true;
         }
 
@@ -65,13 +64,13 @@ function DonneesTraitees($scope) {
 
         // Il nous faut au minimum 2 acquisition
         if (this.scope.session.listeAcquisitions.length > 1) {
-            var acquisitonActuelle = $scope.session.getLastDonnees();
-            var acquisitonPrecedente = $scope.session.getBeforeLastDonnees();
+            var acquisitonActuelle = this.scope.session.getLastDonnees();
+            var acquisitonPrecedente = this.scope.session.getBeforeLastDonnees();
 
-            var distance = $scope.gestionnaires.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
+            var distance = this.scope.gestionnaires.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
             var tempsEntre2Points = (acquisitonActuelle.timestamp - acquisitonPrecedente.timestamp) / 1000;
 
-            if (isNaN($scope.vitesseActuelle)) {
+            if (isNaN(this.scope.vitesseActuelle)) {
                 return 0;
             }
 
@@ -86,7 +85,7 @@ function DonneesTraitees($scope) {
     this.getDonnees = function() {
         var tmp = new Object();
 //        tmp.vitesse = this.vitesseActuelle();
-//        tmp.calorie = this.nbCaloriesPerdues();
+        tmp.calorie = this.nbCaloriesPerdues();
         return tmp;
     };
 

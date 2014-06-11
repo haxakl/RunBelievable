@@ -45,14 +45,10 @@ function SessionController($scope) {
      */
     function lancerAcquisition() {
 
-        console.log("Lancer acquisition");
-
         // Test si le Gps n'est pas actif on ne fait rien, et si il n'est pas deja démarré
         if (!$scope.gestionnaires.gps.actif || $scope.gestionnaires.gps.gps_acquisition_actif) {
             return false;
         }
-
-        saveSession();
 
         $scope.forcePause = false;
         startCourse();
@@ -116,27 +112,19 @@ function SessionController($scope) {
     /**
      * Sauvegarde des données
      */
-    function saveDonnees() {
+    function saveDonnees(fonc) {
         if ($scope.enLigne && $scope.user.email !== "" && $scope.user.email !== null && $scope.session.getLastDonnees() !== null) {
-            $.post("http://runbelievable.honor.es/moteur/modules/donnees/ajax.php", {
-                fonction: "saveDonnees",
-                reference: $scope.session.reference,
-                data: JSON.stringify($scope.session.getLastDonnees())
-            });
-        }
-    }
-
-    /**
-     * Sauvegarde la session
-     */
-    function saveSession() {
-        if ($scope.enLigne && $scope.user.email !== "" && $scope.user.email !== null && !$scope.session.save) {
             $.post("http://runbelievable.honor.es/moteur/modules/sessions/ajax.php", {
-                fonction: "newSession",
-                reference: $scope.session.reference,
-                email: $scope.user.email
+                fonction: "saveSession",
+                email: $scope.user.email,
+                data: JSON.stringify($scope.session)
+            }).done(function() {
+                fonc();
+            }).fail(function() {
+                fonc();
             });
-            $scope.session.save = true;
+        } else {
+            fonc();
         }
     }
 
@@ -170,19 +158,21 @@ function SessionController($scope) {
         // Ajout de la session dans la liste
         $scope.listeSession.push($scope.session);
         localStorage.setItem("listeSessions", JSON.stringify($scope.listeSession));
+        
+        saveDonnees(function() {
+            // On change les statistiques sur la page prévu à cet effet
+            $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
 
-        // On change les statistiques sur la page prévu à cet effet
-        $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
+            // Reset de la session
+            $scope.nouvelleSession();
+            $scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
+            $scope.gestionnaires.gps.gps_acquisition_actif = false;
+            $scope.chronoPrincipal.chronoReset();
 
-        // Reset de la session
-        $scope.nouvelleSession();
-        $scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
-        $scope.gestionnaires.gps.gps_acquisition_actif = false;
-        $scope.chronoPrincipal.chronoReset();
-
-        // Redirection
-        $scope.finchargement();
-        location = "#statistiquesSession";
+            // Redirection
+            $scope.finchargement();
+            location = "#statistiquesSession";
+        });
     };
 
     /**
