@@ -39,7 +39,7 @@ $distance = round($session->getDistanceParcourue(), 2);
                 Nombre de données : <?php echo $nbDonnees; ?>
             </p>
             <p>
-                Vitesse moyenne : <?php echo round($distance*3600/$duree, 2); ?> km/h
+                Vitesse moyenne : <?php echo round($distance * 3600 / $duree, 2); ?> km/h
             </p>
             <p>
                 Distance parcourue : <?php echo $distance; ?> km
@@ -75,7 +75,11 @@ $distance = round($session->getDistanceParcourue(), 2);
             ?>
             <tr>
                 <td><?php echo $donnee->date; ?></td>
-                <td><?php echo $donnee->data; ?></td>
+                <td>
+                    <?php foreach (json_decode($donnee->data) as $key => $datas) : ?>
+                        <span style="display: block; margin-bottom: 10px;" class="label label-primary"><?php echo $key . ": " . $datas; ?></span>
+                    <?php endforeach; ?>
+                </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
@@ -94,10 +98,10 @@ $distance = round($session->getDistanceParcourue(), 2);
             data = [];
 
             // Sample the sine function
-            <?php for($i = 0 ; $i < $duree; $i++) : ?>
-                data.push([<?php echo $i; ?>, <?php echo $session->getVitesse($i, $i+1) ?>]);
-            <?php endfor; ?>
-                
+<?php for ($i = 0; $i < $duree; $i++) : ?>
+                data.push([<?php echo $i; ?>, <?php echo $session->getVitesse($i, $i + 1) ?>]);
+<?php endfor; ?>
+
             // Draw Graph
             graph = Flotr.draw(container, [data]);
 

@@ -15,4 +15,8 @@ class Utilisateur extends ClassBdd {
     /** @ValueBdd("usr_email") * */
     public $email;
     
+    public function nombreSessions() {
+        return 0;
+    }
+    
 }

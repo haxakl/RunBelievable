@@ -25,7 +25,11 @@
             <tr>
                 <td><?php echo $user->nom; ?></td>
                 <td><?php echo $session->reference; ?></td>
-                <td><?php echo $donnee->data; ?></td>
+                <td>
+                    <?php foreach (json_decode($donnee->data) as $key => $datas) : ?>
+                    <span style="display: block; margin-bottom: 10px;" class="label label-primary"><?php echo $key.": ".$datas; ?></span>
+                    <?php endforeach; ?>
+                </td>
                 <td><?php echo $donnee->date; ?></td>
             </tr>
         <?php endforeach; ?>

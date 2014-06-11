@@ -19,7 +19,7 @@
         foreach ($gestionnaire_session->getSessions() as $session) :
             $user = new Utilisateur;
             $user->recup($session->user);
-?>
+            ?>
             <tr>
                 <td><a href="performanceSession.php?session=<?php echo $session->id; ?>"><?php echo $session->reference; ?></a></td>
                 <td><?php echo $user->nom; ?></td>

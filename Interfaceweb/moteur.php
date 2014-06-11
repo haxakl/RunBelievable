@@ -14,4 +14,5 @@ include_once $root.'moteur/modules/utilisateurs/utilisateurs.php';
 include_once $root.'moteur/modules/donnees/donnee.php';
 include_once $root.'moteur/modules/donnees/donnees.php';
 
-
+include_once $root.'moteur/modules/sessions/session.php';
+include_once $root.'moteur/modules/sessions/sessions.php';

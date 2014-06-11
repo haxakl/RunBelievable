@@ -13,9 +13,9 @@ switch ($fonction) {
     case 'saveDonnees':
         if ($_POST['data'] != "") {
             $donnee = new Donnee();
-            $gestionnaire_user = new Utilisateurs();
-            $user = $gestionnaire_user->login($_POST['email']);
-            $donnee->user = $user->id;
+            $gestionnaire_session = new Sessions();
+            $session = $gestionnaire_session->getSessionReference($_POST['reference']);
+            $donnee->session = $session->id;
             $donnee->data = $_POST['data'];
             
             $infos = json_decode($_POST['data']);

@@ -19,7 +19,7 @@
         <tr>
             <td><?php echo $user->nom; ?></td>
             <td><?php echo $user->email; ?></td>
-            <td></td>
+            <td><?php echo $user->nombreSessions(); ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>

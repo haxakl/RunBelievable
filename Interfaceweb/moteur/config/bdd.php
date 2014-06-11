@@ -4,9 +4,9 @@
 function DB() {
 
     // Base de données
-    $PARAM_hote = 'mysql13.000webhost.com';
-    $PARAM_utilisateur = 'a9382398_ggolfie';
-    $PARAM_nom_bd = 'a9382398_rb';
+    $PARAM_hote = 'mysql.2freehosting.com';
+    $PARAM_utilisateur = 'u428167889_rb';
+    $PARAM_nom_bd = 'u428167889_rb';
     $PARAM_mot_passe = 'rb2014';
 
     try {
