@@ -66,7 +66,7 @@ function DonneesTraitees($scope) {
         if (this.scope.session.listeAcquisitions.length > 1) {
             var acquisitonActuelle = this.scope.session.getLastDonnees();
             var acquisitonPrecedente = this.scope.session.getBeforeLastDonnees();
-
+			
             var distance = this.scope.gestionnaires.gps.getDistance2Points(
                     acquisitonActuelle.latitude,
                     acquisitonActuelle.longitude,
@@ -74,12 +74,14 @@ function DonneesTraitees($scope) {
                     acquisitonPrecedente.longitude);
             var tempsEntre2Points = (acquisitonActuelle.timestamp - acquisitonPrecedente.timestamp) / 1000;
 
-            if (isNaN(this.scope.vitesseActuelle)) {
-                return 0;
-            }
-
+			if (isNaN(3600 * distance / tempsEntre2Points)) {
+				return 0;
+			}
+			
             return 3600 * distance / tempsEntre2Points;
         }
+        else {return 0;}
+        
 
     };
 
