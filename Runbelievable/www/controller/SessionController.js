@@ -86,7 +86,7 @@ function SessionController($scope) {
                 acceleration_x: $scope.gestionnaires.accelerometre.lastMesure.x,
                 acceleration_y: $scope.gestionnaires.accelerometre.lastMesure.y,
                 acceleration_z: $scope.gestionnaires.accelerometre.lastMesure.z,
-                donnees: $scope.donneesTraitees.boucle()
+                donnees: $scope.donneesTraitees.getDonnees()
             };
 
             // On met à jour l'interface
@@ -102,6 +102,7 @@ function SessionController($scope) {
      * Lancement course
      */
     function startCourse() {
+        $("#sauvegarde").hide();
         $scope.enPause = false;
         $scope.forcePause = false;
         $scope.chronoPrincipal.chronoContinue();
@@ -145,7 +146,8 @@ function SessionController($scope) {
         $scope.gestionnaires.gps.gps_acquisition_actif = false;
         // Recentrer sur dernière pos connue
         $scope.gestionnaires.map.centrer($scope.infoApplication.Global.location);
-        $scope.refresh();
+        $("#sauvegarde").show();
+//        $scope.refresh();
     }
 
     /**
