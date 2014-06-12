@@ -11,12 +11,14 @@
                 {{texte_bouton_acquisition}}
             </a>
         </p>
-        <p>
-            <input type="text" class="form-control" placeholder="Nom de la session ..." ng-model="session.nom" ng-show="(gestionnaires.gps.gps_acquisition_actif === false) && (session.listeAcquisitions.length > 0)">
-        </p>
-        <p>
-            <a ng-click="sauvegarderSession()"><button type="button" class="btn btn-info" ng-show="(gestionnaires.gps.gps_acquisition_actif === false) && (session.listeAcquisitions.length > 0)">Sauvegarder</button></a>
-        </p>
+        <div id="sauvegarde">
+            <p>
+                <input type="text" class="form-control" placeholder="Nom de la session ..." ng-model="session.nom" ng-show="enPause && session.listeAcquisitions.length > 0">
+            </p>
+            <p>
+                <a ng-click="sauvegarderSession()"><button type="button" class="btn btn-info" ng-show="enPause && (session.listeAcquisitions.length > 0)">Sauvegarder</button></a>
+            </p>
+        </div>
     </div>
 
     <table class="table">

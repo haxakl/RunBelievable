@@ -10,7 +10,7 @@ function DonneesTraitees($scope) {
     this.scope = $scope;
     this.gps = $scope.gestionnaires.gps;
     this.accelerometre = $scope.gestionnaires.accelerometre;
-    this.utilisateurs = $scope.gestionnaires.utilisateurs;
+    this.utilisateur = $scope.user;
     this.countPause = 0;
 
     /**
@@ -67,7 +67,11 @@ function DonneesTraitees($scope) {
             var acquisitonActuelle = this.scope.session.getLastDonnees();
             var acquisitonPrecedente = this.scope.session.getBeforeLastDonnees();
 
-            var distance = this.scope.gestionnaires.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
+            var distance = this.scope.gestionnaires.gps.getDistance2Points(
+                    acquisitonActuelle.latitude,
+                    acquisitonActuelle.longitude,
+                    acquisitonPrecedente.latitude,
+                    acquisitonPrecedente.longitude);
             var tempsEntre2Points = (acquisitonActuelle.timestamp - acquisitonPrecedente.timestamp) / 1000;
 
             if (isNaN(this.scope.vitesseActuelle)) {
@@ -76,7 +80,7 @@ function DonneesTraitees($scope) {
 
             return 3600 * distance / tempsEntre2Points;
         }
-        
+
     };
 
     /**
@@ -84,16 +88,8 @@ function DonneesTraitees($scope) {
      */
     this.getDonnees = function() {
         var tmp = new Object();
-//        tmp.vitesse = this.vitesseActuelle();
         tmp.calorie = this.nbCaloriesPerdues();
         return tmp;
-    };
-
-    /**
-     * Boucle de calcule des différentes données
-     */
-    this.boucle = function() {
-        return this.getDonnees();
     };
 
 }
