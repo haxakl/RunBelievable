@@ -24,6 +24,11 @@
             <input type="text" name="prenom" class="form-control" id="prenom" placeholder="Prenom" value ="{{user.prenom}}" >
         </div>
         </br>
+        <label for="email" class="col-sm-2 control-label">Email :</label>
+        <div class="col-sm-10">
+            <input type="text" name="email" class="form-control" id="email" placeholder="Email" value ="{{user.email}}" >
+        </div>
+        </br>
         <label for="naissance" class="col-sm-2 control-label">Date de naissance :</label>
         <div class="col-sm-10">
             <input type="date" name="naissance" class="form-control" id="naissance">
@@ -32,8 +37,8 @@
         
         <label for="sexe" class="col-sm-2 control-label">Sexe :</label>
         <div class="col-sm-10">
-            <input type="radio" name="sexe"  value="homme" id="sexe"> Homme </br>
-            <input type="radio" name="sexe" value="femme" id="sexe"> Femme </br>
+            <input type="radio" name="sexe"  value="Homme" id="sexe"> Homme </br>
+            <input type="radio" name="sexe" value="Femme" id="sexe"> Femme </br>
         </div>
         
         <a id="profil_etat_civil" class="btn btn-primary btn-sm" href="#profil" >Valider</a>

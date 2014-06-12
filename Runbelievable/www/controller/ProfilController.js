@@ -8,38 +8,24 @@ function ProfilController($scope) {
         $scope.user.nom = $("#nom").val();
         $scope.user.prenom = $("#prenom").val();
         $scope.user.age = $("#age").val();
-        $scope.user.sexe = $("#sexe").val();
-        $scope.user.age = 20;
-        $scope.user.FCMax =  206,9 - 0,67 * $scope.user.age;
-        $scope.user.FCAnaerobie =  ($scope.user.FCMax - $scope.user.FCRepos) * 0.8;      
-        $scope.user.FCAerobie =  ($scope.user.FCMax - $scope.user.FCRepos) * 0.5;
-        $scope.user.imc = $scope.user.poids / ($scope.user.taille * $scope.user.taille);
-        var s = 0;
-        if($scope.user.sexe == "homme")
-            var s = 1;
-        $scope.user.img = ($scope.user.imc *1.20) + (0.23* $scope.user.age) - (10.8*s) - 5.4;
+        $scope.user.sexe =$('input:radio[name=sexe]:checked').val(); 
+        $scope.user.email = $("#email").val();
+        calcul();
     })
     
     $("#profil_mensuration").click(function() {
+        
         $scope.user.taille = $("#taille").val();
+        
+        if($scope.user.taille > 3)
+            $scope.user.taille = $scope.user.taille/100;
         $scope.user.poids = $("#poids").val();
         $scope.user.poitrine = $("#poitrine").val();
         $scope.user.poignet = $("#poignet").val();
         $scope.user.entrejambe = $("#entrejambe").val();
         $scope.user.souplesse = $("#souplesse").val();
-        
-        $scope.user.imc = $scope.user.poids / ($scope.user.taille * $scope.user.taille);
-        var s = 0;
-        if($scope.user.sexe == "homme")
-            var s = 1;
-        $scope.user.img = ($scope.user.imc *1.20) + (0.23* $scope.user.age) - (10.8*s) - 5.4;
-        
-        
-        if($scope.user.poids == "" || $scope.user.taille == "")
-            $scope.user.imc == "";
-        
-        if($scope.user.imc == "" || $scope.user.age == "" )
-            $scope.user.img == "";
+
+        calcul();
     })
     
     $("#profil_habitudes").click(function() {
@@ -54,27 +40,12 @@ function ProfilController($scope) {
         $scope.user.blessureAutre = $("#blessureAutre").val();  
         $scope.user.asthmatique = $("#asthmatique").val(); 
         
+        calcul();
     })
     
     $("#profil_cardio").click(function() {
-        $scope.user.FCRepos = $("#FCRepos").val();
-        $scope.user.FCMax =  206,9 - 0,67 * $scope.user.age;
-        $scope.user.FCAnaerobie =  ($scope.user.FCMax - $scope.user.FCRepos) * 0.8;
-        $scope.user.FCAerobie =  ($scope.user.FCMax - $scope.user.FCRepos) * 0.5;
-        $scope.user.VO2MAX = 14,49 + 2,143 * $scope.user.vitesseMaxAnaerobie + 0,0324 * ($scope.user.vitesseMaxAnaerobie*$scope.user.vitesseMaxAnaerobie) ;   
-        
-        if($scope.user.age =="")
-           $scope.user.FCMax ="";
-       
-        if($scope.user.FCMax =="" || $scope.user.FCRepos =="" )
-            $scope.user.FCAnaerobie ="";
-       
-        if($scope.user.FCMax =="" || $scope.user.FCRepos =="" )
-            $scope.user.FCAerobie ="";
-        
-        if($scope.user.vitesseMaxAnaerobie =="")
-           $scope.user.VO2MAX ="";
-        
+        $scope.user.FCRepos = $("#FCRepos").val();  
+        calcul();
     })
     
     $("#profil_explosivite").click(function() {
@@ -83,8 +54,9 @@ function ProfilController($scope) {
         $scope.user.tempsAuSol = $("#tempsAuSol").val();
         $scope.user.frequenceMax = $("#frequenceMax").val();
         $scope.user.pentabond = $("#pentabond").val();
-        
+        calcul();
     })
+    
     $("#profil_allure").click(function() {
         $scope.user.vitesseMax = $("#vitesseMax").val();
         $scope.user.resistance = $("#resistance").val();
@@ -93,7 +65,7 @@ function ProfilController($scope) {
         $scope.user.vitesseMaxAerobie = $("#vitesseMaxAerobie").val();        
         $scope.user.puissanceMaxAerobie = $("#puissanceMaxAerobie").val();
         $scope.user.vitesseAscensionnelle = $("#vitesseAscensionnelle").val();
-        $scope.user.VO2MAX = 14,49 + 2,143 * $scope.user.vitesseMaxAnaerobie + 0,0324 * ($scope.user.vitesseMaxAnaerobie*$scope.user.vitesseMaxAnaerobie) ; 
+        calcul();
     })
     $("#profil_performance").click(function() {
         $scope.user.cinquante = $("#cinquante").val();
@@ -113,6 +85,45 @@ function ProfilController($scope) {
         $scope.user.uneheure = $("#uneheure").val();
         $scope.user.sixheure = $("#sixheure").val();
         $scope.user.vingtquatreheure = $("#vingtquatreheure").val();
+        calcul();
     })
     
+    function calcul(){
+        $scope.user.age = 20;
+        $scope.user.FCMax =  206,9 - 0,67 * $scope.user.age;
+        $scope.user.FCAnaerobie =  ($scope.user.FCMax - $scope.user.FCRepos) * 0.8;      
+        $scope.user.FCAerobie =  ($scope.user.FCMax - $scope.user.FCRepos) * 0.5;
+
+        $scope.user.imc = $scope.user.poids / ($scope.user.taille * $scope.user.taille);
+
+        
+        if($scope.user.sexe == "Homme")
+            var s = 1;
+        $scope.user.img = ($scope.user.imc *1.20) + (0.23* $scope.user.age) - (10.8*s) - 5.4;
+        
+        if(isNaN($scope.user.imc))
+            $scope.user.imc = "Données manquantes";
+        
+        if(isNaN($scope.user.img))
+            $scope.user.img = "Données manquantes";
+        var s = 0;
+        
+
+        
+        $scope.user.FCMax =  206,9 - 0,67 * $scope.user.age;
+        $scope.user.FCAnaerobie =  ($scope.user.FCMax - $scope.user.FCRepos) * 0.8;
+        $scope.user.FCAerobie =  ($scope.user.FCMax - $scope.user.FCRepos) * 0.5;
+        $scope.user.VO2MAX = 14,49 + 2,143 * $scope.user.vitesseMaxAnaerobie + 0,0324 * ($scope.user.vitesseMaxAnaerobie*$scope.user.vitesseMaxAnaerobie) ;  
+        
+        if($scope.user.vitesseMaxAnaerobie == "")
+            $scope.user.VO2MAX = "";
+        
+        if($scope.user.age == 0)
+            $scope.user.FCMax = "";
+        
+        if(isNaN($scope.user.FCMax) || $scope.user.FCRepos == ""){
+            $scope.user.FCAnaerobie = "";
+            $scope.user.FCAerobie = "";
+        }
+    }
 }

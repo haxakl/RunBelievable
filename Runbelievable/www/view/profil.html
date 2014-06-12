@@ -11,7 +11,7 @@
     <a href="#profilEtatCivil" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
     </br>
     </br>
-    <b>Nom :</b>  {{user.nom}}
+    <b>Nom :</b>  {{user.nom }}
     </br>
     <b>Prenom :</b> {{user.prenom}}
     <br/>
@@ -31,9 +31,9 @@
     </br>
     <b>Poids :</b> {{user.poids}}
     </br>
-    <b>IMC :</b> {{user.imc}}
+    <b>IMC :</b> {{user.imc | number : 2}}
     </br>
-    <b>Taux de masse grasse :</b> {{user.img}}
+    <b>Taux de masse grasse :</b> {{user.img | number : 2 }}
     </br>
     <b>Tour de poitrine :</b> {{user.poitrine}}
     </br>
