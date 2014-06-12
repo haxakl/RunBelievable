@@ -39,7 +39,7 @@ $distance = round($session->getDistanceParcourue(), 2);
                 Nombre de données : <?php echo $nbDonnees; ?>
             </p>
             <p>
-                Vitesse moyenne : <?php echo round($distance * 3600 / $duree, 2); ?> km/h
+                Vitesse moyenne : <?php if($duree != 0) echo round($distance * 3600 / $duree, 2); else echo 0; ?> km/h
             </p>
             <p>
                 Distance parcourue : <?php echo $distance; ?> km
