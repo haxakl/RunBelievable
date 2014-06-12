@@ -29,18 +29,19 @@
             <input type="text" name="email" class="form-control" id="email" placeholder="Email" value ="{{user.email}}" >
         </div>
         </br>
-        <label for="naissance" class="col-sm-2 control-label">Date de naissance :</label>
+        <label for="naissance" class="col-sm-2 control-label">Age :</label>
         <div class="col-sm-10">
-            <input type="date" name="naissance" class="form-control" id="naissance">
+            <input type="number" name="naissance" class="form-control" id="naissance" value ="{{user.age}}">
         </div>
         </br>
         
         <label for="sexe" class="col-sm-2 control-label">Sexe :</label>
         <div class="col-sm-10">
-            <input type="radio" name="sexe"  value="Homme" id="sexe"> Homme </br>
-            <input type="radio" name="sexe" value="Femme" id="sexe"> Femme </br>
+            <input ng-checked=" user.sexe==='Homme'"  type="radio" name="sexe"  value="Homme" id="sexe"> Homme </br>
+            <input ng-checked=" user.sexe==='Femme'" type="radio" name="sexe" value="Femme" id="sexe"> Femme </br>
         </div>
-        
+        </br>
+        </br>
         <a id="profil_etat_civil" class="btn btn-primary btn-sm" href="#profil" >Valider</a>
         <a id="" class="btn btn-primary btn-sm" href="#profil" >Retour</a>
     </div>

@@ -8,7 +8,7 @@
     
     <h4> Etat civil </h4>
     </br>
-    <a href="#profilEtatCivil" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    <a href="#profilEtatCivil" ng-show="true"><i class="fa fa-pencil "></i> Modifier</a>
     </br>
     </br>
     <b>Nom :</b>  {{user.nom }}
@@ -24,7 +24,7 @@
     </br></br>
     <h4> Mensuration </h4>
     </br>
-    <a href="#profilMensuration" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    <a href="#profilMensuration" ng-show="true"><i class="fa fa-pencil "></i> Modifier</a>
     </br>
     </br>
     <b>Taille :</b> {{user.taille}}
@@ -46,7 +46,7 @@
     </br></br>
     <h4> Profil et habitudes d'entraînement </h4>
     </br>
-    <a href="#profilHabitudes" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    <a href="#profilHabitudes" ng-show="true"><i class="fa fa-pencil "></i> Modifier</a>
     </br>
     </br>
     <b>Type de course 1 :</b> {{user.course1}}
@@ -73,24 +73,24 @@
     </br></br>
     <h4> Données physiologiques cardio-vasculaire  </h4>
     </br>
-    <a href="#profilCardio" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    <a href="#profilCardio" ng-show="true"><i class="fa fa-pencil "></i> Modifier</a>
     </br>
     </br>
-    <b>FC repos  : </b>{{user.FCRepos}}
+    <b>FC repos  : </b>{{user.FCRepos | number : 2}}
     </br>
-    <b>FC max :</b> {{user.FCMax}}
+    <b>FC max :</b> {{user.FCMax | number : 2}}
     </br>
-    <b>FC anaérobie : </b>{{user.FCAnaerobie}}
+    <b>FC anaérobie : </b>{{user.FCAnaerobie | number : 2}}
     </br>
-    <b>FC aerobie :</b> {{user.FCAerobie}}
+    <b>FC aerobie :</b> {{user.FCAerobie | number : 2}}
     </br> 
-    <b>VO2 max :</b> {{user.VO2MAX}}
+    <b>VO2 max :</b> {{user.VO2MAX | number : 2}}
 
     
     </br></br>
     <h4> Explosivité  </h4>
     </br>
-    <a href="#profilExplosivite" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    <a href="#profilExplosivite" ng-show="true"><i class="fa fa-pencil "></i> Modifier</a>
     </br>
     </br>
     <b>Détente sèche  :</b> {{user.detente}}
@@ -107,7 +107,7 @@
     </br></br>
     <h4> Allure de course  </h4>
     </br>
-    <a href="#profilAllure" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    <a href="#profilAllure" ng-show="true"><i class="fa fa-pencil "></i> Modifier</a>
     </br>
     </br>
     <b>Vitesse maximale (sprint) :</b> {{user.vitesseMax}}
@@ -127,7 +127,7 @@
     </br></br>
     <h4> Meilleures performances  </h4>
     </br>
-    <a href="#profilPerformance" ng-show="true"><i class="fa fa-align-justify "></i> Modifier</a>
+    <a href="#profilPerformance" ng-show="true"><i class="fa fa-pencil "></i> Modifier</a>
     </br>
     </br>
     <b>50m :</b> {{user.cinquante}}

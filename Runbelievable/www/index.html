@@ -31,6 +31,7 @@
 
         <!-- Entités -->
         <script type="text/javascript" src="library/runbelievable/entites/Session.js"></script>
+        <script type="text/javascript" src="library/runbelievable/entites/SessionPersonnalises.js"></script>
         <script type="text/javascript" src="library/runbelievable/entites/Utilisateur.js"></script>
         <script type="text/javascript" src="library/runbelievable/entites/InfoApplication.js"></script>
         <script type="text/javascript" src="library/runbelievable/entites/Pause.js"></script>
@@ -80,6 +81,7 @@
                         <div class="liens">
                             <a href="#sessionEnCours" ng-show="gestionnaires.gps.actif && (session.listeAcquisitions.length > 0)"><i class="fa fa-play"></i> Retour à la session en cours</a>
                             <a href="#statistiquesSession" ng-show="gestionnaires.gps.actif && (session.listeAcquisitions.length > 0)"><i class="fa fa-bar-chart-o"></i> Statistiques de la session</a>
+                            <a href="#sessionEnCours" ng-show="session.listeAcquisitions.length === 0"><i class="fa fa-arrow-right "></i> Démarrer une session</a>
                             <a href="#listeSessions"><i class="fa fa-align-justify "></i> Mes session</a>
                             <a href="#planifierSession"><i class="fa fa-ticket "></i> Planifier une session</a>
                         </div>

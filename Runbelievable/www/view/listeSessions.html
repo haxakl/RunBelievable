@@ -1,10 +1,18 @@
 <section ng-controller="ListeSessionsController">
-    <h3 align="center">Mes session</h3>
-	<br>
-	<ul id="listeSessions">
-		<!-- Affichage de la liste des sessions de l'utilisateur -->
-		<li ng-repeat="session in listeSession" >
-			<a ng-click="afficherSession($index);" ><button type="button" class="btn btn-default">{{session.date | date:'dd/MM'}} - {{session.nom}} - {{session.dureeSessionString}}</button></a>
-		</li>
-	</ul>
+    <fieldset>
+        <legend>Mes sessions</legend>
+
+        <a ng-click="afficherSession($index);" class="btn btn-block btn-default" ng-repeat="session in listeSession track by $index">
+            {{session.reference}} - {{session.date| date:'dd/MM'}}<br/>{{session.nom}}
+        </a>
+    </fieldset><br/><br/>
+
+    <fieldset>
+        <legend>Sessions personnalisées</legend>
+
+        <!-- Affichage de la liste des sessions de l'utilisateur -->
+        <a class="btn btn-block btn-default" ng-repeat="session in listeSessionPersonnalises track by $index" >
+            {{session.nom}}
+        </a>
+    </fieldset>
 </section>

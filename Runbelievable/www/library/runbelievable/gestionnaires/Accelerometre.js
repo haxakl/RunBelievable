@@ -21,7 +21,7 @@ function Accelerometre($scope) {
      * Récuperer l'acquisition actuelle et appel le hook passé en paramètre.
      * @param {type} hook Hook de la fonction
      */
-    this.getAcquisition = function(hook) {
+    this.getAcquisition = function() {
 
         if (typeof navigator.accelerometer === "undefined") {
             $scope.gestionnaires.accelerometre.modifIcone("danger", "Accéléromètre désactivé");
@@ -37,11 +37,6 @@ function Accelerometre($scope) {
 
                 $scope.gestionnaires.accelerometre.mesures.push(position);
                 $scope.gestionnaires.accelerometre.lastMesure = position;
-
-                // Si le hook est null on retourne le resultat
-                if (typeof hook !== "undefined" && hook !== null)
-                    hook(acquisition);
-
             }, function(error) {
                 $scope.gestionnaires.accelerometre.modifIcone("danger", "Accéléromètre désactivé");
                 $scope.gestionnaires.accelerometre.actif = false;

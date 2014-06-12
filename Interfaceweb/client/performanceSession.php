@@ -46,7 +46,7 @@ $distance = round($session->getDistanceParcourue(), 2);
             </p>
             <hr>
             <p>
-                <?php if ($duree == $nbDonnees - 1) : ?>
+                <?php if ($duree < $nbDonnees) : ?>
                     <span class="label label-success">Toutes les données ont été récupérées</span>
                 <?php else: ?>
                     <span class="label label-danger">Pas toutes les données récupérées</span>
@@ -76,9 +76,16 @@ $distance = round($session->getDistanceParcourue(), 2);
             <tr>
                 <td><?php echo $donnee->date; ?></td>
                 <td>
-                    <?php foreach (json_decode($donnee->data) as $key => $datas) : ?>
+                    <?php foreach (json_decode($donnee->data) as $key => $datas) :
+                        if(is_object($datas)):
+                            foreach(get_object_vars($datas) as $key_tmp => $donnee_tmp) {
+                                echo '<span style="display: block; margin-bottom: 10px;" class="label label-info">'.$key_tmp.': '.$donnee_tmp.'</span>';
+                            }
+                        ?>
+                    
+                    <?php else: ?>
                         <span style="display: block; margin-bottom: 10px;" class="label label-primary"><?php echo $key . ": " . $datas; ?></span>
-                    <?php endforeach; ?>
+                    <?php endif; endforeach; ?>
                 </td>
             </tr>
         <?php endforeach; ?>

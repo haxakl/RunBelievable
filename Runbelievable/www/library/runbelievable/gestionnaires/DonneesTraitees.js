@@ -1,6 +1,6 @@
 
 /**
- * Cette classe contient le gestionnaire du Gps et de l'Accéléromètre
+ * Cette classe contient le gestionnaire du Gps,de l'Accéléromètre  et l'utilisateur.
  * Il vous permet de traiter les données en implémentant divers fonctions.
  * @param $scope Scope de l'application
  */
@@ -21,10 +21,10 @@ function DonneesTraitees($scope) {
     this.nbCaloriesPerdues = function() {
 
         // Récupération du poids de l'utilisateur
-        var poidKg = this.utilisateurs.poids;
+        var poidKg = this.scope.user.poids;
 
         // Récupération de la distance parcourue
-        var distanceKm = this.gps;
+        var distanceKm = this.scope.session.distanceParcouru;
 
         // On retourne le nombre de calories
         return poidKg * distanceKm;
@@ -37,9 +37,9 @@ function DonneesTraitees($scope) {
      */
     this.detecterPause = function() {
 
-        // On récupère les données
-        var lastdonnees = this.scope.session.getLastDonnees();
-        var previousdonnees = this.scope.session.getBeforeLastDonnees();
+        // On récupère les données        
+        var lastdonnees = this.scope.gestionnaires.gps.lastPosition.coords;
+        var previousdonnees = this.scope.session.getLastDonnees();
 
         // On test si le gps n'est pas bougé
         if (lastdonnees !== null && previousdonnees !== null && lastdonnees.latitude === previousdonnees.latitude && lastdonnees.longitude === previousdonnees.longitude) {
@@ -64,13 +64,13 @@ function DonneesTraitees($scope) {
 
         // Il nous faut au minimum 2 acquisition
         if (this.scope.session.listeAcquisitions.length > 1) {
-            var acquisitonActuelle = $scope.session.getLastDonnees();
-            var acquisitonPrecedente = $scope.session.getBeforeLastDonnees();
+            var acquisitonActuelle = this.scope.session.getLastDonnees();
+            var acquisitonPrecedente = this.scope.session.getBeforeLastDonnees();
 
-            var distance = $scope.gestionnaires.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
+            var distance = this.scope.gestionnaires.gps.getDistance2Points(acquisitonActuelle.latitude, acquisitonActuelle.longitude, acquisitonPrecedente.latitude, acquisitonPrecedente.longitude);
             var tempsEntre2Points = (acquisitonActuelle.timestamp - acquisitonPrecedente.timestamp) / 1000;
 
-            if (isNaN($scope.vitesseActuelle)) {
+            if (isNaN(this.scope.vitesseActuelle)) {
                 return 0;
             }
 
@@ -85,7 +85,7 @@ function DonneesTraitees($scope) {
     this.getDonnees = function() {
         var tmp = new Object();
 //        tmp.vitesse = this.vitesseActuelle();
-//        tmp.calorie = this.nbCaloriesPerdues();
+        tmp.calorie = this.nbCaloriesPerdues();
         return tmp;
     };
 
@@ -93,8 +93,7 @@ function DonneesTraitees($scope) {
      * Boucle de calcule des différentes données
      */
     this.boucle = function() {
-//        this.nbCaloriesPerdues();
-        this.scope.session.vitesseactuelle = this.vitesseActuelle();
+        return this.getDonnees();
     };
 
 }

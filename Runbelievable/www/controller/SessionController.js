@@ -32,7 +32,11 @@ function SessionController($scope) {
             stopAcquisition();
             $scope.forcePause = true;
         } else {
-            lancerAcquisition();
+            if (!$scope.enPause) {
+                lancerAcquisition();
+            } else {
+                startCourse();
+            }
         }
     };
 
@@ -46,8 +50,6 @@ function SessionController($scope) {
             return false;
         }
 
-        saveSession();
-
         $scope.forcePause = false;
         startCourse();
 
@@ -55,7 +57,7 @@ function SessionController($scope) {
         $scope.boucleID = setInterval(function() {
             boucleCourse();
         }, interval_acquisition);
-        
+
     }
 
     /**
@@ -63,19 +65,34 @@ function SessionController($scope) {
      */
     function boucleCourse() {
 
-        $scope.gestionnaires.gps.getAcquisition($scope.gestionnaires.map.placerPoint);
-
-        saveDonnees();
-
         // Test si la course est en pause
         if ($scope.forcePause === false && !$scope.donneesTraitees.detecterPause()) {
             if ($scope.enPause) {
                 startCourse();
             }
 
-            $("#vitesseActuelle").text(Math.round($scope.donneesTraitees.vitesseActuelle(), 0));
+            // On récupère les données du gps
+            acquisition_tmp = {
+                latitude: $scope.gestionnaires.gps.lastPosition.coords.latitude,
+                longitude: $scope.gestionnaires.gps.lastPosition.coords.longitude,
+                altitude: $scope.gestionnaires.gps.lastPosition.coords.altitude,
+                accuracy: $scope.gestionnaires.gps.lastPosition.coords.accuracy,
+                altitudeAccuracy: $scope.gestionnaires.gps.lastPosition.coords.altitudeAccuracy,
+                heading: $scope.gestionnaires.gps.lastPosition.coords.heading,
+                speed: $scope.gestionnaires.gps.lastPosition.coords.speed,
+                timestamp: $scope.gestionnaires.gps.lastPosition.timestamp,
+                code: $scope.gestionnaires.gps.lastPosition.code,
+                message: $scope.gestionnaires.gps.lastPosition.message,
+                acceleration_x: $scope.gestionnaires.accelerometre.lastMesure.x,
+                acceleration_y: $scope.gestionnaires.accelerometre.lastMesure.y,
+                acceleration_z: $scope.gestionnaires.accelerometre.lastMesure.z,
+                donnees: $scope.donneesTraitees.boucle()
+            };
 
-            $scope.donneesTraitees.boucle();
+            // On met à jour l'interface
+            $("#vitesseActuelle").text(Math.round($scope.donneesTraitees.vitesseActuelle(), 0));
+            $scope.gestionnaires.map.placerPoint(acquisition_tmp);
+
         } else {
             stopAcquisition();
         }
@@ -86,6 +103,7 @@ function SessionController($scope) {
      */
     function startCourse() {
         $scope.enPause = false;
+        $scope.forcePause = false;
         $scope.chronoPrincipal.chronoContinue();
         $scope.texte_bouton_acquisition = dico_bouton_acquisition.STOP;
         $scope.gestionnaires.gps.gps_acquisition_actif = true;
@@ -94,27 +112,19 @@ function SessionController($scope) {
     /**
      * Sauvegarde des données
      */
-    function saveDonnees() {
+    function saveDonnees(fonc) {
         if ($scope.enLigne && $scope.user.email !== "" && $scope.user.email !== null && $scope.session.getLastDonnees() !== null) {
-            $.post("http://runbelievable.honor.es/moteur/modules/donnees/ajax.php", {
-                fonction: "saveDonnees",
-                reference: $scope.session.reference,
-                data: JSON.stringify($scope.session.getLastDonnees())
-            });
-        }
-    }
-
-    /**
-     * Sauvegarde la session
-     */
-    function saveSession() {
-        if ($scope.user.email !== "" && $scope.user.email !== null && !$scope.session.save) {
             $.post("http://runbelievable.honor.es/moteur/modules/sessions/ajax.php", {
-                fonction: "newSession",
-                reference: $scope.session.reference,
-                email: $scope.user.email
+                fonction: "saveSession",
+                email: $scope.user.email,
+                data: JSON.stringify($scope.session)
+            }).done(function() {
+                fonc();
+            }).fail(function() {
+                fonc();
             });
-            $scope.session.save = true;
+        } else {
+            fonc();
         }
     }
 
@@ -143,18 +153,56 @@ function SessionController($scope) {
      */
     $scope.sauvegarderSession = function() {
 
+        $scope.chargement();
+
         // Ajout de la session dans la liste
-        $scope.listeSession.push(JSON.stringify($scope.session));
-        $scope.sauvegarder();
-        // On change les statistiques sur la page prévu à cet effet
-        $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
-        // Reset de la session
-        $scope.nouvelleSession();
-        $scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
-        $scope.gestionnaires.gps.gps_acquisition_actif = false;
-        $scope.chronoPrincipal.chronoReset();
+        $scope.listeSession.push($scope.session);
+        localStorage.setItem("listeSessions", JSON.stringify($scope.listeSession));
+        
+        saveDonnees(function() {
+            // On change les statistiques sur la page prévu à cet effet
+            $scope.infoApplication.sessionAfficheeStatistiques = $scope.session;
+
+            // Reset de la session
+            $scope.nouvelleSession();
+            $scope.texte_bouton_acquisition = dico_bouton_acquisition.START;
+            $scope.gestionnaires.gps.gps_acquisition_actif = false;
+            $scope.chronoPrincipal.chronoReset();
+
+            // Redirection
+            $scope.finchargement();
+            location = "#statistiquesSession";
+        });
+    };
+
+    /**
+     * Méthode permettant de sauvegarder la session dans la liste des sessions  et de le rediriger sur les stats de la session
+     */
+    $scope.sauvegarderSessionPersonnalises = function() {
+
+        $scope.chargement();
+
+        sessionperso = new SessionPersonnalises({
+            nom: $("#nom").val(),
+            listeEtapes: new Array()
+        });
+
+        var etapes = new Array();
+        $("#etapes tbody tr").each(function() {
+            var tmp = new Object();
+            tmp.etape = $(this).find("select").val();
+            tmp.secondes = $(this).find("input").val();
+            etapes.push(tmp);
+        });
+        sessionperso.listeEtapes = etapes;
+
+        // Sauvegarde de la session
+        $scope.listeSessionPersonnalises.push(sessionperso);
+        localStorage.setItem("listeSessionPersonnalises", JSON.stringify($scope.listeSessionPersonnalises));
+
         // Redirection
-        location = "#statistiquesSession";
+        $scope.finchargement();
+        location = "#listeSessions";
     };
 
     // Test si le Gps est allumé    
